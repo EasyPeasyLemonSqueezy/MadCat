@@ -59,5 +59,17 @@ namespace NutEngine
             position = new Vector2(position3.X, position3.Y);
             scale = new Vector2(scale3.X, scale3.Y);
         }
+
+        /// <summary>
+        /// Умножить эту матрицу преобразования на какую-то другую.
+        /// Это приведет к тому, что те же самые преобразовния уже
+        /// будут в новой системе координат (родителя).
+        /// </summary>
+        public static Transform2D operator *(Transform2D tranform1, Transform2D transform2)
+        {
+            Transform2D result = new Transform2D();
+            result.matrix = tranform1.matrix * transform2.matrix;
+            return result;
+        }
     }
 }
