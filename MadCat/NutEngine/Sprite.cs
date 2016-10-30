@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace NutEngine
 {
-    public class Sprite : Node
+    public class Sprite : Node, IDrawable
     {
         private Texture2D texture;
 
@@ -12,10 +12,8 @@ namespace NutEngine
             this.texture = texture;
         }
 
-        public override void Visit(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Transform2D currentTransform)
         {
-            base.Visit(spriteBatch); /// Применили все преобразования
-
             Vector2 position, scale;
             float rotation;
 
