@@ -1,10 +1,10 @@
-﻿namespace NutPacker
+﻿using System.CodeDom;
+using System.Reflection;
+
+using System.Drawing;
+
+namespace NutPacker
 {
-    using System.CodeDom;
-    using System.Reflection;
-
-    using System.Drawing;
-
     /// <summary>
     /// Generation code of sprite/spriteSheet classes.
     /// </summary>

@@ -37,11 +37,13 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SpriteSheetPacker.XnaExporters">
-      <HintPath>..\..\..\..\..\Documents\SpriteSheetPacker\SpriteSheetPacker.XnaExporters.dll</HintPath>
+    <Reference Include="SpriteSheetPacker.XnaExporters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ThirdParty\SpriteSheetPacker.XnaExporters.dll</HintPath>
     </Reference>
-    <Reference Include="sspack">
-      <HintPath>..\..\..\..\..\Documents\SpriteSheetPacker\sspack.exe</HintPath>
+    <Reference Include="sspack, Version=1.0.3736.34175, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ThirdParty\sspack.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -49,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
+    <Compile Include="NaturalFileInfoNameComparer.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="ISpriteSheet.cs" />
     <Compile Include="Packer.cs" />
@@ -62,6 +65,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
