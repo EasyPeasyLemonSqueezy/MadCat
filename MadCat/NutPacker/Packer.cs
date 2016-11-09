@@ -27,6 +27,7 @@ namespace NutPacker
         {
             var directory = new DirectoryInfo(path);
 
+            /// Delete previous sprite.
             File.Delete(Path.Combine(outputImagePath, directory.Name + ".png"));
 
             /// Dictionary: full filename -> rectangle in output image.
@@ -83,7 +84,7 @@ namespace NutPacker
             var cp = new CompilerParameters(
                   new string[] {
                         "sspack.exe"
-                      , "NutPacker.exe"
+                      , "NutPackerLib.dll"
                       , "System.Drawing.dll"
                   }
                 , Path.Combine(outputImagePath, directory.Name + ".dll")

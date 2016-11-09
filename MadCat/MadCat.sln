@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutEngine", "NutEngine\NutE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutPacker", "NutPacker\NutPacker.csproj", "{16CCD5B0-EBA9-4BCC-8BE4-11F393072410}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutPackerLib", "NutPackerLib\NutPackerLib.csproj", "{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,14 @@ Global
 		{16CCD5B0-EBA9-4BCC-8BE4-11F393072410}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16CCD5B0-EBA9-4BCC-8BE4-11F393072410}.Release|x86.ActiveCfg = Release|Any CPU
 		{16CCD5B0-EBA9-4BCC-8BE4-11F393072410}.Release|x86.Build.0 = Release|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Debug|x86.Build.0 = Debug|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Release|x86.ActiveCfg = Release|Any CPU
+		{20B6F5A5-0C3A-438F-AB19-E6B9A185C5A5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
