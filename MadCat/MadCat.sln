@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadCat", "MadCat\MadCat.csproj", "{DFE20B1B-A22B-4AD5-ABE8-28C4F74B94F9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2C4BAFB-DFBD-4AE2-88B6-5FD943A48C10} = {B2C4BAFB-DFBD-4AE2-88B6-5FD943A48C10}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutEngine", "NutEngine\NutEngine.csproj", "{B2C4BAFB-DFBD-4AE2-88B6-5FD943A48C10}"
 EndProject
