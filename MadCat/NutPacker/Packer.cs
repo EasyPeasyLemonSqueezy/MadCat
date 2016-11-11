@@ -18,7 +18,7 @@ namespace NutPacker
         /// Path to the directory with pictures (or folders with pictures).
         /// </param>
         /// <param name="outputImagePath">
-        /// Path to the directory where sprite and .dll will be saved.
+        /// Path to the directory where atlas and .dll will be saved.
         /// </param>
         /// <param name="generateSourceFile">
         /// Generate .cs file or not.
@@ -57,7 +57,7 @@ namespace NutPacker
 
             var codeUnit = new CodeCompileUnit();
 
-            var codeNameSpace = new CodeNamespace("NutPacker.SpriteSheet");
+            var codeNameSpace = new CodeNamespace("NutPacker.SpriteGroup");
             codeUnit.Namespaces.Add(codeNameSpace);
 
             /// Generate code.

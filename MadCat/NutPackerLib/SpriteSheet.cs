@@ -5,7 +5,7 @@
     /// <summary>
     /// Contains array of <see cref="Rectangle"/> and indexed property getter for it.
     /// </summary>
-    public abstract class Sprite
+    public abstract class SpriteSheet
     {
         protected Rectangle[] Frames;
 

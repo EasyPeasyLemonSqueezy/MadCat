@@ -11,40 +11,40 @@ namespace NutPacker
     internal static class CodeGenerator
     {
         /// <summary>
-        /// Generate code of new SpriteSheet class.
+        /// Generate code of new spriteGroup class.
         /// </summary>
-        /// <param name="spriteSheetName"> Name of new class/spriteSheet. </param>
+        /// <param name="spriteGroup"> Name of new class/spriteGroup. </param>
         /// <returns>
         /// <code>
-        /// public class <paramref name="spriteSheetName"/> : <see cref="ISpriteSheet"/> { }
+        /// public class <paramref name="spriteGroup"/> : <see cref="ISpriteGroup"/> { }
         /// </code>
         /// </returns>
-        public static CodeTypeDeclaration GenerateSpriteSheetClass(
-            string spriteSheetName)
+        public static CodeTypeDeclaration GenerateSpriteGroupClass(
+            string spriteGroup)
         {
-            /// New public class with <param name="spriteSheetName"></param> name.
-            var spriteSheetClass = new CodeTypeDeclaration() {
-                  Name = spriteSheetName
+            /// New public class with <param name="spriteGroup"></param> name.
+            var spriteGroupClass = new CodeTypeDeclaration() {
+                  Name = spriteGroup
                 , IsClass = true
                 , TypeAttributes = TypeAttributes.Public
             };
 
-            /// Inherited from <see cref="ISpriteSheet"/>.
-            spriteSheetClass.BaseTypes.Add(new CodeTypeReference(typeof(ISpriteSheet)));
+            /// Inherited from <see cref="ISpriteGroup"/>.
+            spriteGroupClass.BaseTypes.Add(new CodeTypeReference(typeof(ISpriteGroup)));
 
-            return spriteSheetClass;
+            return spriteGroupClass;
         }
 
         /// <summary>
-        /// Generate code of new Sprite class.
+        /// Generate code of new SpriteSheet class.
         /// </summary>
-        /// <param name="spriteName"> Name of new class/sprite. </param>
-        /// <param name="rectangles"> Array of rectangles <see cref="Sprite.Frames"/>. </param>
+        /// <param name="spriteSheetName"> Name of new class/spriteSheet. </param>
+        /// <param name="rectangles"> Array of rectangles <see cref="SpriteSheet.Frames"/>. </param>
         /// <returns>
         /// <code>
-        /// public class <paramref name="spriteName"/> : <see cref="Sprite"/>
+        /// public class <paramref name="spriteSheetName"/> : <see cref="SpriteSheet"/>
         /// {
-        ///     public <paramref name="spriteName"/>() {
+        ///     public <paramref name="spriteSheetName"/>() {
         ///         this.Frames = new Rectangle[] {
         ///             <paramref name="rectangles"/>
         ///         }
@@ -52,19 +52,19 @@ namespace NutPacker
         /// }
         /// </code>
         /// </returns>
-        public static CodeTypeDeclaration GenerateSpriteClass(
-              string spriteName
+        public static CodeTypeDeclaration GenerateSpriteSheetClass(
+              string spriteSheetName
             , params Rectangle[] rectangles)
         {
-            /// New public class with <param name="spriteName"></param> name.
-            CodeTypeDeclaration spriteClass = new CodeTypeDeclaration() {
-                  Name = spriteName
+            /// New public class with <param name="spriteSheetName"></param> name.
+            CodeTypeDeclaration spriteSheetClass = new CodeTypeDeclaration() {
+                  Name = spriteSheetName
                 , IsClass = true
                 , TypeAttributes = TypeAttributes.Public
             };
 
-            /// Inherited from <see cref="Sprite"/>.
-            spriteClass.BaseTypes.Add(new CodeTypeReference(typeof(Sprite)));
+            /// Inherited from <see cref="SpriteSheet"/>.
+            spriteSheetClass.BaseTypes.Add(new CodeTypeReference(typeof(SpriteSheet)));
 
             /// Array of expressions which create rectangles.
             CodeExpression[] createRectangles = new CodeExpression[rectangles.Length];
@@ -102,16 +102,16 @@ namespace NutPacker
 
             /// Create constructor.
             CodeConstructor constructor = new CodeConstructor() {
-                  Name = spriteName
+                  Name = spriteSheetName
                 , Attributes = MemberAttributes.Public
             };
 
             /// Add assignment to constructor.
             constructor.Statements.Add(assign);
             /// Add constuctor to class.
-            spriteClass.Members.Add(constructor);
+            spriteSheetClass.Members.Add(constructor);
 
-            return spriteClass;
+            return spriteSheetClass;
         }
     }
 }

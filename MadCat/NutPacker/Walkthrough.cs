@@ -38,8 +38,8 @@ namespace NutPacker
         }
 
         /// <summary>
-        /// Generate code which implements <see cref="ISpriteSheet"/>
-        /// or inherited from <see cref="Sprite"/>.
+        /// Generate code which implements <see cref="ISpriteGroup"/>
+        /// or inherited from <see cref="SpriteSheet"/>.
         /// </summary>
         /// <remarks>
         /// Using DFS to get CodeDom.
@@ -78,7 +78,7 @@ namespace NutPacker
             }
 
             /// If in this directory not only files or not only another directories
-            /// (It's not <see cref="Sprite"/> and not <see cref="ISpriteSheet"/>).
+            /// (It's not <see cref="SpriteSheet"/> and not <see cref="ISpriteGroup"/>).
             if (dirs.Count() != 0 && files.Count() != 0) {
                 throw new ApplicationException(
                      $"Directory `{directory.Name}` "
@@ -102,15 +102,15 @@ namespace NutPacker
                 Array.Sort(files, new NaturalFileInfoNameComparer());
 
                 /// Generate sprite.
-                currentClass = CodeGenerator.GenerateSpriteClass(
+                currentClass = CodeGenerator.GenerateSpriteSheetClass(
                       RemoveSpaces(directory.Name)
                     , files.Select(pic => map[pic.FullName])
                            .ToArray()
                     );
             }
             else {
-                /// Generate sprite sheet.
-                currentClass = CodeGenerator.GenerateSpriteSheetClass(RemoveSpaces(directory.Name));
+                /// Generate group of sprites.
+                currentClass = CodeGenerator.GenerateSpriteGroupClass(RemoveSpaces(directory.Name));
                 
                 foreach (var dir in dirs) {
                     /// Generate class for subdirectory.
@@ -132,8 +132,7 @@ namespace NutPacker
         /// by default - <see cref="SearchOption.TopDirectoryOnly"/>.
         /// </param>
         /// <param name="extensions">
-        /// Acceptable file extensions. (with dot before),
-        /// by default = { ".jpg", ".png" }.
+        /// Acceptable file extensions. (with dot before)
         /// </param>
         /// <returns>
         /// Files that meet the requirements.
