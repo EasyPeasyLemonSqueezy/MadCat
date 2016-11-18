@@ -10,6 +10,9 @@ namespace NutPacker
 {
     class ParseOptions
     {
+        [Option('n', "name", Required = true, HelpText = "Name of result files.")]
+        public string Name { get; set; }
+
         [Option('s', "sprites", HelpText = "Path to folder with sprites.")]
         public string Sprites { get; set; }
 

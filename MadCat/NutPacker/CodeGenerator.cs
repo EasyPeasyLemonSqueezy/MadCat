@@ -2,13 +2,14 @@
 using System.Reflection;
 
 using System.Drawing;
+using System.IO;
 
 namespace NutPacker
 {
     /// <summary>
     /// Generation code of sprite/spriteSheet classes.
     /// </summary>
-    internal static class CodeGenerator
+    public static class CodeGenerator
     {
         /// <summary>
         /// Generate code of new spriteGroup class.
@@ -112,6 +113,72 @@ namespace NutPacker
             spriteSheetClass.Members.Add(constructor);
 
             return spriteSheetClass;
+        }
+
+        /// <summary>
+        /// Generate code of new pictureGroup class
+        /// </summary>
+        /// <param name="pictureGroup"> Name of new class. </param>
+        /// <returns>
+        /// <code>
+        /// public class <paramref name="pictureGroup"/> : <see cref="NutPacker.IPictureGroup"/> { }
+        /// </code>
+        /// </returns>
+        public static CodeTypeDeclaration GeneratePictureGroupClass(
+              string pictureGroup)
+        {
+            /// New public class with <param name="pictureGroup"></param> name.
+            var pictureGroupClass = new CodeTypeDeclaration() {
+                  Name = pictureGroup
+                , IsClass = true
+                , TypeAttributes = TypeAttributes.Public
+            };
+
+            /// Inherited from <see cref="IPictureGroup"/>.
+            pictureGroupClass.BaseTypes.Add(new CodeTypeReference(typeof(IPictureGroup)));
+
+            return pictureGroupClass;
+        }
+
+        /// <summary>
+        /// Generate new property <see cref="Rectangle"/>.
+        /// </summary>
+        /// <param name="picture"> Name of new property. </param>
+        /// <param name="rectangle"> Location in atlas. </param>
+        /// <returns>
+        /// <code>
+        /// public static <see cref="Rectangle"/> <paramref name="picture"/> {
+        ///     get {
+        ///         // r - <paramref name="rectangle"/>.
+        ///         return new <see cref="Rectangle"/>(r.X, r.Y, r.Height, r.Width);
+        ///     }
+        /// }
+        /// </code>
+        /// </returns>
+        public static CodeMemberProperty GeneratePictureProperty(
+              string picture
+            , Rectangle rectangle)
+        {
+            /// New public static class, with getter and type <see cref="Rectangle"/>.
+            CodeMemberProperty pic = new CodeMemberProperty() {
+                  Attributes = MemberAttributes.Public | MemberAttributes.Static
+                , Name = Path.GetFileNameWithoutExtension(picture)
+                , HasGet = true
+                , Type = new CodeTypeReference(typeof(Rectangle))
+            };
+
+            /// Add expression to getter: return new <see cref="Rectangle"/>(r.X, r.Y, r.Height, r.Width);
+            /// r - <param name="rectangle"></param>
+            pic.GetStatements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeObjectCreateExpression(typeof(Rectangle)
+                        , new CodePrimitiveExpression(rectangle.X)
+                        , new CodePrimitiveExpression(rectangle.Y)
+                        , new CodePrimitiveExpression(rectangle.Height)
+                        , new CodePrimitiveExpression(rectangle.Width)
+                )));
+            
+            return pic;
         }
     }
 }

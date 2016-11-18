@@ -47,16 +47,16 @@ namespace NutPacker
         /// <param name="directory"> Current directory. </param>
         /// <param name="map">
         /// Dictionary, where key - fullname of picture;
-        /// value - <see cref="Rectangle"/> location in sprite.
+        /// value - <see cref="Rectangle"/> location in atlas.
         /// </param>
         /// <param name="extensions">
         /// Acceptable file extensions (with dot before),
         /// by default = { ".jpg", ".png" }
         /// </param>
         /// <returns>
-        /// Code of sprite/spritesheet.
+        /// SpriteSheet or SpriteGroup.
         /// </returns>
-        public static CodeTypeDeclaration GenerateCodeDom(
+        public static CodeTypeDeclaration GenerateAtlasCodeDom(
               DirectoryInfo directory
             , Dictionary<string, Rectangle> map
             , string[] extensions = null)
@@ -89,7 +89,7 @@ namespace NutPacker
             CodeTypeDeclaration currentClass;
 
             if (files.Count() != 0) {
-                /// Sort file by name,
+                /// Sort files by name,
                 /// <see cref="NaturalFileInfoNameComparer"/> - uses StrCmpLogicalW from winapi
                 /// Why not just <see cref="Array.Sort(Array)"/>?
                 /// look:
@@ -110,14 +110,70 @@ namespace NutPacker
             }
             else {
                 /// Generate group of sprites.
-                currentClass = CodeGenerator.GenerateSpriteGroupClass(RemoveSpaces(directory.Name));
+                currentClass = CodeGenerator.GenerateSpriteGroupClass(
+                    RemoveSpaces(directory.Name));
                 
                 foreach (var dir in dirs) {
                     /// Generate class for subdirectory.
-                    var newClass = GenerateCodeDom(dir, map);
+                    var newClass = GenerateAtlasCodeDom(dir, map);
                     /// Add to current class.
                     currentClass.Members.Add(newClass);
                 }
+            }
+
+            return currentClass;
+        }
+
+        /// <summary>
+        /// Generate code which implemented <see cref="IPictureGroup"/>.
+        /// </summary>
+        /// <remarks>
+        /// Using DFS to get CodeDom.
+        /// </remarks>
+        /// <param name="directory"> Current directory. </param>
+        /// <param name="map">
+        /// Dictionary, where key - fullname of picture;
+        /// value - <see cref="Rectangle"/> location in atlas.
+        /// </param>
+        /// <param name="extensions">
+        /// Acceptable file extensions (with dot before),
+        /// by default = { ".jpg", ".png" }
+        /// </param>
+        /// <returns>
+        /// Code of pictureGroup class.
+        /// </returns>
+        public static CodeTypeDeclaration GeneratePicturesCodeDom(
+              DirectoryInfo directory
+            , Dictionary<string, Rectangle> map
+            , string[] extensions = null)
+        {
+            extensions = extensions ?? new string[] { ".jpg", ".png" };
+
+            var dirs = directory.EnumerateDirectories();
+            var files = GetFiles(directory, SearchOption.TopDirectoryOnly, extensions);
+
+            /// Groups by name without spaces.
+            /// check that the names don't match.
+            var groups = dirs.Select(dir => dir.Name).Union(files.Select(file => file.Name)).GroupBy(name => RemoveSpaces(name)).Where(g => g.Count() != 1);
+            if (groups.Count() != 0) {
+                throw new ApplicationException(String.Concat(
+                      "I don't know what I should do with these directories or files: "
+                    , String.Join(", ", groups.Select(g => String.Join(", ", g)))
+                    ));
+            }
+
+            /// Generate PictureGroup.
+            CodeTypeDeclaration currentClass = CodeGenerator.GeneratePictureGroupClass(
+                RemoveSpaces(directory.Name));
+
+            /// Generate PictureGroups and add them to current class.
+            foreach (var dir in dirs) {
+                var newClass = GeneratePicturesCodeDom(dir, map);
+                currentClass.Members.Add(newClass);
+            }
+            /// Generate properties and add them to current class.
+            foreach (var pic in files) {
+                currentClass.Members.Add(CodeGenerator.GeneratePictureProperty(pic.Name, map[pic.FullName]));
             }
 
             return currentClass;
