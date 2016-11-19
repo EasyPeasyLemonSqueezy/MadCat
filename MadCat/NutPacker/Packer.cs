@@ -4,7 +4,6 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 
 namespace NutPacker
 {
@@ -115,7 +114,7 @@ namespace NutPacker
                   new string[] {
                         "sspack.exe"
                       , "NutPackerLib.dll"
-                      , "System.Drawing.dll"
+                      , "Microsoft.Xna.Framework.dll"
                   }
                 , Path.Combine(opt.Output, String.Concat(opt.Name, ".dll"))
                 , false

@@ -2,6 +2,7 @@
 using System.Reflection;
 
 using System.Drawing;
+using Xna = Microsoft.Xna.Framework;
 using System.IO;
 
 namespace NutPacker
@@ -73,7 +74,7 @@ namespace NutPacker
             for (int i = 0; i < rectangles.Length; i++) {
                 /// One rectangle
                 /// new Rectangle(X, Y, Height, Width);
-                CodeExpression rectangle = new CodeObjectCreateExpression(typeof(Rectangle)
+                CodeExpression rectangle = new CodeObjectCreateExpression(typeof(Xna.Rectangle)
                     , new CodePrimitiveExpression(rectangles[i].X)
                     , new CodePrimitiveExpression(rectangles[i].Y)
                     , new CodePrimitiveExpression(rectangles[i].Height)
@@ -86,7 +87,7 @@ namespace NutPacker
             /// Array of rectangles.
             /// new Rectangles[rectangles.Length] { <param name="rectangles"></param> };
             CodeArrayCreateExpression createArray = new CodeArrayCreateExpression(
-                  new CodeTypeReference(typeof(Rectangle))
+                  new CodeTypeReference(typeof(Xna.Rectangle))
                 , createRectangles);
 
             /// Create field - "Frames".
@@ -164,14 +165,14 @@ namespace NutPacker
                   Attributes = MemberAttributes.Public | MemberAttributes.Static
                 , Name = Path.GetFileNameWithoutExtension(picture)
                 , HasGet = true
-                , Type = new CodeTypeReference(typeof(Rectangle))
+                , Type = new CodeTypeReference(typeof(Xna.Rectangle))
             };
 
             /// Add expression to getter: return new <see cref="Rectangle"/>(r.X, r.Y, r.Height, r.Width);
             /// r - <param name="rectangle"></param>
             pic.GetStatements.Add(
                 new CodeMethodReturnStatement(
-                    new CodeObjectCreateExpression(typeof(Rectangle)
+                    new CodeObjectCreateExpression(typeof(Xna.Rectangle)
                         , new CodePrimitiveExpression(rectangle.X)
                         , new CodePrimitiveExpression(rectangle.Y)
                         , new CodePrimitiveExpression(rectangle.Height)

@@ -1,6 +1,6 @@
 ﻿namespace NutPacker
 {
-    using System.Drawing;
+    using Microsoft.Xna.Framework;
 
     /// <summary>
     /// Contains array of <see cref="Rectangle"/> and indexed property getter for it.
