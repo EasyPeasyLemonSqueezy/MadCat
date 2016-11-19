@@ -29,19 +29,14 @@ namespace NutPacker
         /// <param name="generateSourceFile">
         /// Generate .cs file or not.
         /// </param>
-        public static void Pack(
-              string name
-            , string sprites
-            , string pictures
-            , string output
-            , bool generateSourceFile = false)
+        public static void Pack(IPackOptions opt)
         {
-            if (sprites == null && pictures == null) {
+            if (opt.Sprites == null && opt.Pictures == null) {
                 throw new ApplicationException("Nothing to pack here.");
             }
 
             /// Delete previous atlas.
-            File.Delete(Path.Combine(output, String.Concat(name, ".png")));
+            File.Delete(Path.Combine(opt.Output, String.Concat(opt.Name, ".png")));
 
             /// Dictionary: full filename -> rectangle in output image.
             Dictionary<string, Rectangle> outputMap;
@@ -51,13 +46,13 @@ namespace NutPacker
             var images = new List<string>();
 
             /// Get all ".jpg" and ".png" files in folder and all subfolders.
-            if (sprites != null) {
-                var spritesDirectory = new DirectoryInfo(sprites);
+            if (opt.Sprites != null) {
+                var spritesDirectory = new DirectoryInfo(opt.Sprites);
 
                 images.AddRange(Walkthrough.GetFileNames(spritesDirectory));
             }
-            if (pictures != null) {
-                var picturesDirectory = new DirectoryInfo(pictures);
+            if (opt.Pictures != null) {
+                var picturesDirectory = new DirectoryInfo(opt.Pictures);
                 
                 images.AddRange(Walkthrough.GetFileNames(picturesDirectory));
             }
@@ -86,13 +81,13 @@ namespace NutPacker
             codeUnit.Namespaces.Add(codeNameSpace);
 
             /// Generate code.
-            if (sprites != null) {
-                var spritesDirectory = new DirectoryInfo(sprites);
+            if (opt.Sprites != null) {
+                var spritesDirectory = new DirectoryInfo(opt.Sprites);
 
                 codeNameSpace.Types.Add(Walkthrough.GenerateAtlasCodeDom(spritesDirectory, outputMap));
             }
-            if (pictures != null) {
-                var picturesDirectory = new DirectoryInfo(pictures);
+            if (opt.Pictures != null) {
+                var picturesDirectory = new DirectoryInfo(opt.Pictures);
 
                 codeNameSpace.Types.Add(Walkthrough.GeneratePicturesCodeDom(picturesDirectory, outputMap));
             }
@@ -105,9 +100,9 @@ namespace NutPacker
             };
 
             /// Create file with source code.
-            if (generateSourceFile) {
+            if (opt.GenerateSource) {
                 using (var sourceWriter =
-                    new StreamWriter(Path.Combine(output, String.Concat(name, ".cs")))) {
+                    new StreamWriter(Path.Combine(opt.Output, String.Concat(opt.Name, ".cs")))) {
                     codeDomProvider.GenerateCodeFromCompileUnit(
                           codeUnit
                         , sourceWriter
@@ -122,7 +117,7 @@ namespace NutPacker
                       , "NutPackerLib.dll"
                       , "System.Drawing.dll"
                   }
-                , Path.Combine(output, String.Concat(name, ".dll"))
+                , Path.Combine(opt.Output, String.Concat(opt.Name, ".dll"))
                 , false
                 ) {
                     GenerateInMemory = false
@@ -139,7 +134,7 @@ namespace NutPacker
             /// If no error - save the sprite.
             if (compile.Errors.Count == 0) {
                 using (var streamWriter =
-                    new StreamWriter(Path.Combine(output, String.Concat(name, ".png")))) {
+                    new StreamWriter(Path.Combine(opt.Output, String.Concat(opt.Name, ".png")))) {
                     outputImageBitmap.Save(
                           streamWriter.BaseStream
                         , System.Drawing.Imaging.ImageFormat.Png

@@ -10,16 +10,10 @@ namespace NutPacker
 
             if (CommandLine.Parser.Default.ParseArgumentsStrict(args, opt)) {
                 try {
-                    Packer.Pack(
-                          opt.Name
-                        , opt.Sprites
-                        , opt.Pictures
-                        , opt.Output
-                        , opt.GenerateSource
-                        );
+                    Packer.Pack(opt);
                 }
                 catch (ApplicationException e) {
-                    Console.Error.WriteLine(e.Message);
+                    Console.Error.WriteLine(String.Concat("Error: ", e.Message));
                 }
             }
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NutPacker
 {
-    class ParseOptions
+    class ParseOptions : IPackOptions
     {
         [Option('n', "name", Required = true, HelpText = "Name of result files.")]
         public string Name { get; set; }
@@ -25,6 +25,21 @@ namespace NutPacker
         [Option("generate-source", DefaultValue = false, HelpText = "Generate .cs file with source code.")]
         public bool GenerateSource { get; set; }
 
+        [Option("require-power-of-two", DefaultValue = false, HelpText = "Require power of two output.")]
+        public bool PowerOfTwo { get; set; }
+
+        [Option("require-square", DefaultValue = false, HelpText = "Require square output.")]
+        public bool Square { get; set; }
+
+        [Option("width", DefaultValue = 256 * 256, HelpText = "Maximum atlas width.")]
+        public int MaxWidth { get; set; }
+
+        [Option("height", DefaultValue = 256 * 256, HelpText = "Maximum atlas height.")]
+        public int MaxHeight { get; set; }
+
+        [Option("padding", DefaultValue = 0, HelpText = "Image padding.")]
+        public int Padding { get; set; }
+
         [HelpOption]
         public string GetUsage()
         {
@@ -32,13 +47,14 @@ namespace NutPacker
                   Heading = new HeadingInfo("NutPacker", "0.2")
                 , Copyright = new CopyrightInfo("EasyPeasyLemonSqueezy", 2016)
                 , AddDashesToOption = true
+                , MaximumDisplayWidth = Console.BufferWidth
             };
 
             help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH] [--pictures[-p] PATH] [--output[-o] PATH] [--generate-source [= false]]");
             help.AddOptions(this);
 
             if (LastParserState?.Errors.Any() == true) {
-                var errors = help.RenderParsingErrorsText(this, 2); // indent with two spaces.
+                var errors = help.RenderParsingErrorsText(this, 2); // Indent with two spaces.
 
                 if (!string.IsNullOrEmpty(errors)) {
                     help.AddPreOptionsLine(string.Concat(Environment.NewLine, "Error:"));

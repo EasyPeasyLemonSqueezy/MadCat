@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
+    <Compile Include="IPackOptions.cs" />
     <Compile Include="NaturalFileInfoNameComparer.cs" />
     <Compile Include="Packer.cs" />
     <Compile Include="ParseOptions.cs" />
