@@ -114,7 +114,8 @@ namespace NutPacker
                   new string[] {
                         "sspack.exe"
                       , "NutPackerLib.dll"
-                      , "Microsoft.Xna.Framework.dll"
+                      , "MonoGame.Framework.dll"
+                      , "System.Runtime.dll"
                   }
                 , Path.Combine(opt.Output, String.Concat(opt.Name, ".dll"))
                 , false
