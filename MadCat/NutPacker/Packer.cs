@@ -122,7 +122,7 @@ namespace NutPacker
                       , "NutPackerLib.dll"
                       , "System.Drawing.dll"
                   }
-                , Path.Combine(output, String.Concat(output, ".dll"))
+                , Path.Combine(output, String.Concat(name, ".dll"))
                 , false
                 ) {
                     GenerateInMemory = false
