@@ -34,6 +34,10 @@ namespace NutPacker
                 throw new ApplicationException("Nothing to pack here.");
             }
 
+            if (!opt.GenerateSource && !opt.GenerateLib) {
+                throw new ApplicationException("Generate source code or dll library.");
+            }
+
             /// Delete previous atlas.
             File.Delete(Path.Combine(opt.Output, String.Concat(opt.Name, ".png")));
 
@@ -109,19 +113,34 @@ namespace NutPacker
                 }
             }
 
+            CompilerParameters cp;
+            if (opt.GenerateLib) {
+                cp = new CompilerParameters(
+                      new string[] {
+                                        "sspack.exe"
+                                      , "NutPackerLib.dll"
+                                      , "MonoGame.Framework.dll"
+                                      , "System.Runtime.dll"
+                      }
+                    , Path.Combine(opt.Output, String.Concat(opt.Name, ".dll"))
+                    , false
+                    ) {
+                    GenerateInMemory = false
+                };
 
-            var cp = new CompilerParameters(
-                  new string[] {
+            }
+            else {
+                cp = new CompilerParameters(
+                      new string[] {
                         "sspack.exe"
                       , "NutPackerLib.dll"
                       , "MonoGame.Framework.dll"
                       , "System.Runtime.dll"
-                  }
-                , Path.Combine(opt.Output, String.Concat(opt.Name, ".dll"))
-                , false
-                ) {
-                    GenerateInMemory = false
+                      }
+                    ) {
+                    GenerateInMemory = true
                 };
+            }
             
             /// Compile the CodeDom.
             var compile = codeDomProvider.CompileAssemblyFromDom(cp, codeUnit);
