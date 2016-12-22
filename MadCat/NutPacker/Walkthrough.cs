@@ -69,7 +69,7 @@ namespace NutPacker
 
             /// Groups by name without spaces.
             /// check that the names don't match.
-            var groups = dirs.GroupBy(dir => RemoveSpaces(dir.Name)).Where(g => g.Count() != 1);
+            var groups = dirs.GroupBy(dir => VariableName(dir.Name)).Where(g => g.Count() != 1);
             if (groups.Count() != 0) {
                 throw new ApplicationException(String.Format(
                       "I don't know what I should do with these directories: {0}"
@@ -103,7 +103,7 @@ namespace NutPacker
 
                 /// Generate sprite.
                 currentClass = CodeGenerator.GenerateSpriteSheetClass(
-                      RemoveSpaces(directory.Name)
+                      VariableName(directory.Name)
                     , files.Select(pic => map[pic.FullName])
                            .ToArray()
                     );
@@ -111,7 +111,7 @@ namespace NutPacker
             else {
                 /// Generate group of sprites.
                 currentClass = CodeGenerator.GenerateSpriteGroupClass(
-                    RemoveSpaces(directory.Name));
+                    VariableName(directory.Name));
                 
                 foreach (var dir in dirs) {
                     /// Generate class for subdirectory.
@@ -154,7 +154,7 @@ namespace NutPacker
 
             /// Groups by name without spaces.
             /// check that the names don't match.
-            var groups = dirs.Select(dir => dir.Name).Union(files.Select(file => file.Name)).GroupBy(name => RemoveSpaces(name)).Where(g => g.Count() != 1);
+            var groups = dirs.Select(dir => dir.Name).Union(files.Select(file => file.Name)).GroupBy(name => VariableName(name)).Where(g => g.Count() != 1);
             if (groups.Count() != 0) {
                 throw new ApplicationException(String.Concat(
                       "I don't know what I should do with these directories or files: "
@@ -164,7 +164,7 @@ namespace NutPacker
 
             /// Generate PictureGroup.
             CodeTypeDeclaration currentClass = CodeGenerator.GeneratePictureGroupClass(
-                RemoveSpaces(directory.Name));
+                VariableName(directory.Name));
 
             /// Generate PictureGroups and add them to current class.
             foreach (var dir in dirs) {
@@ -202,9 +202,14 @@ namespace NutPacker
                             .Where(file => extensions?.Contains(file.Extension) ?? true);
         }
 
-        private static string RemoveSpaces(string name)
+        private static string VariableName(string name)
         {
-            return Regex.Replace(name, @"\s+", String.Empty);
+            var r = Regex.Replace(name, @"^(\d)", m => String.Concat((m.Groups[0].Success ? "_" : String.Empty), m.Groups[0].Value));
+                r = Regex.Replace(r, @"^.*?([a-zA-Z])", m => m.Groups[0].Value.ToUpper());
+                r = Regex.Replace(r, @"(\s+(?<char>.))", m => m.Groups["char"].Value.ToUpper());
+                r = Regex.Replace(r, @"\W", "_");
+
+            return r;
         }
     }
 }
