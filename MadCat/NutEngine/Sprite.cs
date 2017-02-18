@@ -13,7 +13,7 @@ namespace NutEngine
         public SpriteEffects Effects { get; set; }
         public float LayerDepth { get; set; }
 
-        public Sprite(Texture2D atlas, Rectangle? frame) : base()
+        public Sprite(Texture2D atlas, Rectangle? frame = null) : base()
         {
             Atlas = atlas;
             Frame = frame;
