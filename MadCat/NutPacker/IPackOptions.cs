@@ -9,6 +9,7 @@ namespace NutPacker
         [Option] string Pictures { get; set; }
         [Option] string Output { get; set; }
         [Option] bool GenerateSource { get; set; }
+        [Option] bool GenerateLib { get; set; }
         [Option] bool PowerOfTwo { get; set; }
         [Option] bool Square { get; set; }
         [Option] int MaxWidth { get; set; }

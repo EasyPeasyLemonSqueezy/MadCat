@@ -25,6 +25,9 @@ namespace NutPacker
         [Option("generate-source", DefaultValue = false, HelpText = "Generate .cs file with source code.")]
         public bool GenerateSource { get; set; }
 
+        [Option("generate-dll", DefaultValue = false, HelpText = "Generate .dll lib.")]
+        public bool GenerateLib { get; set; }
+
         [Option("require-power-of-two", DefaultValue = false, HelpText = "Require power of two output.")]
         public bool PowerOfTwo { get; set; }
 
