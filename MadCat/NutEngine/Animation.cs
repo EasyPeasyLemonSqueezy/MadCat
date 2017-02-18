@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using NutPacker;
-using Microsoft.Xna.Framework;
 
 namespace NutEngine
 {
@@ -15,7 +10,9 @@ namespace NutEngine
         public Texture2D Atlas { get; }
         public SpriteSheet SpriteSheet { get; }
 
-        public int CurrentIndex { get; }
+        private float ElapsedTime;
+
+        private int CurrentIndex;
         public Rectangle CurrentFrame {
             get {
                 return SpriteSheet[CurrentIndex];
@@ -25,6 +22,7 @@ namespace NutEngine
         public int  Duration { get; set; }
         public bool Repeat { get; set; }
         public bool Enabled { get; set; }
+        public AnimationType AnimationType { get; set; }
 
         public Color Color { get; set; }
         public Vector2 Origin { get; set; }
@@ -36,11 +34,14 @@ namespace NutEngine
         {
             Atlas = atlas;
             SpriteSheet = spriteSheet;
-            CurrentIndex = 0;
 
+            ElapsedTime = 0;
+
+            CurrentIndex = 0;
             Duration = 0;
             Repeat = true;
             Enabled = true;
+            AnimationType = AnimationTypes.Linear;
 
             Color = Color.White;
 
@@ -51,11 +52,25 @@ namespace NutEngine
             LayerDepth = 0;
         }
 
-        public override void Visit(SpriteBatch spriteBatch, Transform2D currentTransform)
+        public void Update(float deltaTime)
         {
+            if (Enabled) {
+                ElapsedTime += deltaTime;
 
-
-            base.Visit(spriteBatch, currentTransform);
+                if (ElapsedTime >= Duration) {
+                    if (Repeat) {
+                        ElapsedTime %= Duration;
+                        CurrentIndex = AnimationType(SpriteSheet.Length, Duration, ElapsedTime);
+                    }
+                    else {
+                        ElapsedTime = Duration;
+                        CurrentIndex = SpriteSheet.Length - 1;
+                    }
+                }
+                else {
+                    CurrentIndex = AnimationType(SpriteSheet.Length, Duration, ElapsedTime);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch, Transform2D currentTransform)

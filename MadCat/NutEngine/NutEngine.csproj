@@ -80,6 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="AnimationType.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Node.cs" />
