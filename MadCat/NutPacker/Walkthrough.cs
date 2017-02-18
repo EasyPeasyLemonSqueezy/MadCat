@@ -173,7 +173,10 @@ namespace NutPacker
             }
             /// Generate properties and add them to current class.
             foreach (var pic in files) {
-                currentClass.Members.Add(CodeGenerator.GeneratePictureProperty(pic.Name, map[pic.FullName]));
+                currentClass.Members.Add(CodeGenerator.GeneratePictureProperty(
+                      VariableName(Path.GetFileNameWithoutExtension(pic.Name))
+                    , map[pic.FullName])
+                    );
             }
 
             return currentClass;
