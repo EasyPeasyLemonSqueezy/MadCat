@@ -25,6 +25,8 @@ namespace NutEngine
         public AnimationType AnimationType { get; set; }
 
         public Color Color { get; set; }
+
+        /// Center of the rotation, by default - center of the first frame.
         public Vector2 Origin { get; set; }
         public SpriteEffects Effects { get; set; }
         public float LayerDepth { get; set; }

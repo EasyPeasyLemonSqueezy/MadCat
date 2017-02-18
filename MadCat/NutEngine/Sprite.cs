@@ -9,6 +9,8 @@ namespace NutEngine
 
         public Rectangle? Frame { get; set; }
         public Color Color { get; set; }
+
+        /// Center of the rotation, by default - center of the frame/atlas.
         public Vector2 Origin { get; set; }
         public SpriteEffects Effects { get; set; }
         public float LayerDepth { get; set; }
