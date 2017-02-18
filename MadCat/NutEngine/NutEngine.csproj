@@ -82,6 +82,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="Picture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
