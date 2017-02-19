@@ -105,7 +105,7 @@ namespace NutPacker
             /// Create file with source code.
             if (opt.GenerateSource) {
                 using (var sourceWriter =
-                    new StreamWriter(Path.Combine(opt.Output, String.Concat(opt.Name, ".cs")))) {
+                    new StreamWriter(Path.Combine(opt.Output, String.Concat(Walkthrough.VariableName(opt.Name), ".cs")))) {
                     codeDomProvider.GenerateCodeFromCompileUnit(
                           codeUnit
                         , sourceWriter
@@ -122,7 +122,7 @@ namespace NutPacker
                                       , "MonoGame.Framework.dll"
                                       , "System.Runtime.dll"
                       }
-                    , Path.Combine(opt.Output, String.Concat(opt.Name, ".dll"))
+                    , Path.Combine(opt.Output, String.Concat(Walkthrough.VariableName(opt.Name), ".dll"))
                     , false
                     ) {
                     GenerateInMemory = false
@@ -153,7 +153,7 @@ namespace NutPacker
             /// If no error - save the sprite.
             if (compile.Errors.Count == 0) {
                 using (var streamWriter =
-                    new StreamWriter(Path.Combine(opt.Output, String.Concat(opt.Name, ".png")))) {
+                    new StreamWriter(Path.Combine(opt.Output, String.Concat(Walkthrough.VariableName(opt.Name), ".png")))) {
                     outputImageBitmap.Save(
                           streamWriter.BaseStream
                         , System.Drawing.Imaging.ImageFormat.Png
