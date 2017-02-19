@@ -22,7 +22,6 @@ namespace NutEngine
         /// Родитель узла. Если он равен null, то
         /// это корень графа сцены.
         private Node parent;
-        private List<Node> children; /// Дети узла
 
         /// Позиция, поворот и масштаб узла, хранимые
         /// в одной матрице. Она необходима для того, 
@@ -32,7 +31,7 @@ namespace NutEngine
         protected Transform2D transform;
 
         public Node Parent { get { return parent; } }
-        public List<Node> Children { get { return children; } }
+        public List<Node> Children { get; }
         public Vector2 Position { get; set; } /// Позиция
         public Vector2 Scale { get; set; } /// Масштаб
         public float Rotation { get; set; } /// Поворот
@@ -42,7 +41,7 @@ namespace NutEngine
         public Node()
         {
             transform = new Transform2D();
-            children = new List<Node>();
+            Children = new List<Node>();
             Position = Vector2.Zero;
             Scale = Vector2.One;
             Rotation = 0.0f;
@@ -70,7 +69,7 @@ namespace NutEngine
             currentTransform = transform * currentTransform;
 
             /// Упорядочить детей по Z индексу
-            var orderedChildren = children.OrderBy(node => node.ZOrder).GetEnumerator();
+            var orderedChildren = Children.OrderBy(node => node.ZOrder).GetEnumerator();
             bool next = orderedChildren.MoveNext();
 
             /// Узлы с ZOrder меньше нуля
@@ -98,7 +97,7 @@ namespace NutEngine
         public void AddChild(Node child)
         {
             child.parent = this;
-            children.Add(child);
+            Children.Add(child);
         }
 
         /// <summary>
@@ -107,7 +106,24 @@ namespace NutEngine
         public void RemoveChild(Node child)
         {
             child.parent = null;
+            foreach (var c in child.Children) {
+                c.parent = null;
+            }
+
             Children.Remove(child);
+        }
+
+        /// <summary>
+        /// Remove current node.
+        /// </summary>
+        public void CommitSuicide()
+        {
+            parent?.Children.Remove(this);
+            parent = null;
+            
+            foreach (var child in Children) {
+                child.parent = null;
+            }
         }
     }
 }
