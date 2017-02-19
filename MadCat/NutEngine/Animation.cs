@@ -18,6 +18,10 @@ namespace NutEngine
                 spriteSheet = value;
                 ElapsedTime = 0;
                 CurrentIndex = 0;
+
+                var currentFrame = value[CurrentIndex];
+                var center = currentFrame.Center - currentFrame.Location;
+                Origin = new Vector2(center.X, center.Y);
             }
         }
 
@@ -58,7 +62,7 @@ namespace NutEngine
 
             Color = Color.White;
 
-            var center = CurrentFrame.Center;
+            var center = CurrentFrame.Center - CurrentFrame.Location;
             Origin = new Vector2(center.X, center.Y);
 
             Effects = SpriteEffects.None;
