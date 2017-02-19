@@ -8,7 +8,17 @@ namespace NutEngine
     public class Animation : Node, IDrawable
     {
         public Texture2D Atlas { get; }
-        public SpriteSheet SpriteSheet { get; }
+
+        private SpriteSheet spriteSheet;
+        public SpriteSheet SpriteSheet {
+            get {
+                return spriteSheet;
+            }
+            set {
+                spriteSheet = value;
+                ElapsedTime = 0;
+            }
+        }
 
         private float ElapsedTime;
 
