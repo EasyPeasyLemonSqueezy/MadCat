@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
@@ -13,7 +12,7 @@ namespace NutEngine
 
         /// Корень графа сцены, который является родителем
         /// для всех объектов в мире игры.
-        protected Node RootNode { get; set; }
+        protected Node World { get; set; }
 
         /// <summary>
         /// Сохраняем в сцене ссылки на нашу игру, то, чем рисуем
@@ -24,7 +23,7 @@ namespace NutEngine
             App = app;
             Batcher = app.Batcher;
             Content = app.Content;
-            RootNode = new Node();
+            World = new Node();
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace NutEngine
             Batcher.Begin();
 
             Transform2D transform = new Transform2D();
-            RootNode.Visit(Batcher, transform);
+            World.Visit(Batcher, transform);
 
             Batcher.End();
         }
