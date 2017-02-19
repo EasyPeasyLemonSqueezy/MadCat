@@ -77,6 +77,7 @@ namespace NutEngine
                     else {
                         ElapsedTime = Duration;
                         CurrentIndex = SpriteSheet.Length - 1;
+                        Enabled = false;
                     }
                 }
                 else {
