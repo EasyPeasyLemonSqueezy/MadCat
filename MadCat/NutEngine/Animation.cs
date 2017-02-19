@@ -17,6 +17,7 @@ namespace NutEngine
             set {
                 spriteSheet = value;
                 ElapsedTime = 0;
+                CurrentIndex = 0;
             }
         }
 
