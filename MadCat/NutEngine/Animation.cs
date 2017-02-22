@@ -69,6 +69,30 @@ namespace NutEngine
             LayerDepth = 0;
         }
 
+        public void Start()
+        {
+            Enabled = true;
+        }
+
+        public void Stop()
+        {
+            Enabled = false;
+            ElapsedTime = 0;
+            CurrentIndex = 0;
+        }
+
+        public void Pause()
+        {
+            Enabled = false;
+        }
+
+        public void Restart()
+        {
+            Enabled = true;
+            ElapsedTime = 0;
+            CurrentIndex = 0;
+        }
+
         public void Update(float deltaTime)
         {
             if (Enabled) {
