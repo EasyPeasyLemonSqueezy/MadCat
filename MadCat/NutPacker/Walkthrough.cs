@@ -154,7 +154,11 @@ namespace NutPacker
 
             /// Groups by name without spaces.
             /// check that the names don't match.
-            var groups = dirs.Select(dir => dir.Name).Union(files.Select(file => file.Name)).GroupBy(name => VariableName(name)).Where(g => g.Count() != 1);
+            var groups = dirs.Select(dir => dir.Name)
+                             .Union(files.Select(file => file.Name))
+                             .GroupBy(name => VariableName(name))
+                             .Where(g => g.Count() != 1);
+
             if (groups.Count() != 0) {
                 throw new ApplicationException(String.Concat(
                       "I don't know what I should do with these directories or files: "
@@ -205,7 +209,7 @@ namespace NutPacker
                             .Where(file => extensions?.Contains(file.Extension) ?? true);
         }
 
-        private static string VariableName(string name)
+        public static string VariableName(string name)
         {
             var r = Regex.Replace(name, @"^(\d)", m => String.Concat((m.Groups[0].Success ? "_" : String.Empty), m.Groups[0].Value));
                 r = Regex.Replace(r, @"^.*?([a-zA-Z])", m => m.Groups[0].Value.ToUpper());
