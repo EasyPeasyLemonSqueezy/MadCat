@@ -1,10 +1,8 @@
-﻿using CommandLine;
-using CommandLine.Text;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using CommandLine;
+using CommandLine.Text;
 
 namespace NutPacker
 {
@@ -13,11 +11,11 @@ namespace NutPacker
         [Option('n', "name", Required = true, HelpText = "Name of result files.")]
         public string Name { get; set; }
 
-        [Option('s', "sprites", HelpText = "Path to folder with sprites.")]
-        public string Sprites { get; set; }
+        [OptionArray('s', "sprites", HelpText = "Path to folder with sprites.")]
+        public string[] Sprites { get; set; }
 
-        [Option('p', "pictures", HelpText = "Path to folder with pictures.")]
-        public string Pictures { get; set; }
+        [OptionArray('p', "pictures", HelpText = "Path to folder with pictures.")]
+        public string[] Pictures { get; set; }
 
         [Option('o', "output", Required = true, HelpText = "Path to output folder.")]
         public string Output { get; set; }
@@ -53,7 +51,7 @@ namespace NutPacker
                 , MaximumDisplayWidth = Console.BufferWidth
             };
 
-            help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH] [--pictures[-p] PATH] [--output[-o] PATH] [--generate-source [= false]]");
+            help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH_ONE [PATH_TWO [...]]] [--pictures[-p] PATH_ONE [PATH_TWO [...]]] [--output[-o] NAME] [--generate-source [= false]]");
             help.AddOptions(this);
 
             if (LastParserState?.Errors.Any() == true) {

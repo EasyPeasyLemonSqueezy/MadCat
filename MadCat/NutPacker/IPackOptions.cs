@@ -5,8 +5,8 @@ namespace NutPacker
     public interface IPackOptions
     {
         [Option] string Name { get; set; }
-        [Option] string Sprites { get; set; }
-        [Option] string Pictures { get; set; }
+        [OptionArray] string[] Sprites { get; set; }
+        [OptionArray] string[] Pictures { get; set; }
         [Option] string Output { get; set; }
         [Option] bool GenerateSource { get; set; }
         [Option] bool GenerateLib { get; set; }

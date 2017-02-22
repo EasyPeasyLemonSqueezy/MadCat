@@ -4,6 +4,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace NutPacker
 {
@@ -36,16 +37,27 @@ namespace NutPacker
 
             /// Get all ".jpg" and ".png" files in folder and all subfolders.
             if (opt.Sprites != null) {
-                var spritesDirectory = new DirectoryInfo(opt.Sprites);
+                foreach (var sprites in opt.Sprites) {
+                    var spritesDirectory = new DirectoryInfo(sprites);
 
-                images.AddRange(Walkthrough.GetFileNames(spritesDirectory));
+                    images.AddRange(Walkthrough.GetFileNames(spritesDirectory));
+                }
             }
             if (opt.Pictures != null) {
-                var picturesDirectory = new DirectoryInfo(opt.Pictures);
-                
-                images.AddRange(Walkthrough.GetFileNames(picturesDirectory));
+                foreach (var pics in opt.Pictures) {
+                    var picturesDirectory = new DirectoryInfo(pics);
+
+                    images.AddRange(Walkthrough.GetFileNames(picturesDirectory));
+                }
             }
 
+            /// Find same paths.
+            var groups = images.GroupBy(name => name).Where(group => group.Count() != 1);
+            if (groups.Count() != 0) {
+                throw new ApplicationException(
+                    "Found nested paths. Check input parameters."
+                    );
+            }
 
             /// Packer from sspack.
             var imagePacker = new sspack.ImagePacker();
@@ -71,14 +83,18 @@ namespace NutPacker
 
             /// Generate code.
             if (opt.Sprites != null) {
-                var spritesDirectory = new DirectoryInfo(opt.Sprites);
+                foreach (var sprites in opt.Sprites) {
+                    var spritesDirectory = new DirectoryInfo(sprites);
 
-                codeNameSpace.Types.Add(Walkthrough.GenerateAtlasCodeDom(spritesDirectory, outputMap));
+                    codeNameSpace.Types.Add(Walkthrough.GenerateAtlasCodeDom(spritesDirectory, outputMap));
+                }
             }
             if (opt.Pictures != null) {
-                var picturesDirectory = new DirectoryInfo(opt.Pictures);
+                foreach (var pics in opt.Pictures) {
+                    var picturesDirectory = new DirectoryInfo(pics);
 
-                codeNameSpace.Types.Add(Walkthrough.GeneratePicturesCodeDom(picturesDirectory, outputMap));
+                    codeNameSpace.Types.Add(Walkthrough.GeneratePicturesCodeDom(picturesDirectory, outputMap));
+                }
             }
 
             var codeDomProvider = CodeDomProvider.CreateProvider("CSharp");
