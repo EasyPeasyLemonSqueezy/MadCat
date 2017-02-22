@@ -80,7 +80,7 @@ namespace NutEngine
                         CurrentIndex = AnimationType(SpriteSheet.Length, Duration, ElapsedTime);
                     }
                     else {
-                        ElapsedTime = Duration;
+                        ElapsedTime = 0;
                         CurrentIndex = SpriteSheet.Length - 1;
                         Enabled = false;
                     }
