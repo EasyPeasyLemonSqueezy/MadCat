@@ -11,23 +11,9 @@ namespace NutPacker
     {
         /// <summary>
         /// Create atlas,
-        /// and .dll with classes which contains rectangles.
+        /// and generate .dll or(and) source code
+        /// with classes which contains rectangles.
         /// </summary>
-        /// <param name="name">
-        /// Name of result files.
-        /// </param>
-        /// <param name="sprites">
-        /// Path to the directory with sprites.
-        /// </param>
-        /// <param name="pictures">
-        /// Path to the directory with pictures.
-        /// </param>
-        /// <param name="output">
-        /// Path to the directory where atlas and .dll will be saved.
-        /// </param>
-        /// <param name="generateSourceFile">
-        /// Generate .cs file or not.
-        /// </param>
         public static void Pack(IPackOptions opt)
         {
             if (opt.Sprites == null && opt.Pictures == null) {
@@ -113,15 +99,17 @@ namespace NutPacker
                 }
             }
 
+
+            var assemblyNames = new string[] {
+                  "NutPackerLib.dll"
+                , "MonoGame.Framework.dll"
+                , "System.Runtime.dll"
+            };
+
             CompilerParameters cp;
             if (opt.GenerateLib) {
                 cp = new CompilerParameters(
-                      new string[] {
-                                        "sspack.exe"
-                                      , "NutPackerLib.dll"
-                                      , "MonoGame.Framework.dll"
-                                      , "System.Runtime.dll"
-                      }
+                      assemblyNames
                     , Path.Combine(opt.Output, String.Concat(Walkthrough.VariableName(opt.Name), ".dll"))
                     , false
                     ) {
@@ -130,14 +118,7 @@ namespace NutPacker
 
             }
             else {
-                cp = new CompilerParameters(
-                      new string[] {
-                        "sspack.exe"
-                      , "NutPackerLib.dll"
-                      , "MonoGame.Framework.dll"
-                      , "System.Runtime.dll"
-                      }
-                    ) {
+                cp = new CompilerParameters(assemblyNames) {
                     GenerateInMemory = true
                 };
             }
