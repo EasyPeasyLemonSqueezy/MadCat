@@ -25,6 +25,12 @@ namespace MadCat
 
             Texture = Content.Load<Texture2D>("Demo");
 
+            var background = new Sprite(Texture, Graveyard.Tiles.BG) {
+                  Position = new Vector2(ScreenWidth / 2, ScreenHeight / 2)
+                , Scale = new Vector2(.5f, .5f)
+            };
+            World.AddChild(background);
+
             var ground = new Node() {
                 Position = new Vector2(0, ScreenHeight)
             };
@@ -38,7 +44,6 @@ namespace MadCat
             }
 
             AdventureGirl = new AdventureGirl(Texture);
-            AdventureGirl.Position += new Vector2(500, -100);
 
 
             ground.AddChild(AdventureGirl);
@@ -51,8 +56,22 @@ namespace MadCat
 
             var keyboardState = Keyboard.GetState();
 
+            /// Jump
+            if (keyboardState.IsKeyDown(Keys.Space) && PrevKeyboardState.IsKeyUp(Keys.Space)) {
+                AdventureGirl.Jump();
+            }
+
+            /// Shoot
+            else if (keyboardState.IsKeyDown(Keys.LeftControl) && PrevKeyboardState.IsKeyUp(Keys.LeftControl)) {
+                AdventureGirl.Shoot();
+            }
+
+            else if (keyboardState.IsKeyDown(Keys.F) && PrevKeyboardState.IsKeyUp(Keys.F)) {
+                AdventureGirl.Melee();
+            }
+
             /// Right
-            if (keyboardState.IsKeyDown(Keys.Right)) {
+            else if (keyboardState.IsKeyDown(Keys.Right)) {
                 AdventureGirl.RunRight(deltaTime);
             }
 
@@ -63,7 +82,7 @@ namespace MadCat
 
             /// Stand
             else {
-                AdventureGirl.Stay(deltaTime);
+                AdventureGirl.Stay();
             }
 
             PrevKeyboardState = keyboardState;
