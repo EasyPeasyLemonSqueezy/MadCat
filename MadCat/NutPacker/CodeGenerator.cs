@@ -151,7 +151,7 @@ namespace NutPacker
         /// public static <see cref="Rectangle"/> <paramref name="picture"/> {
         ///     get {
         ///         // r - <paramref name="rectangle"/>.
-        ///         return new <see cref="Rectangle"/>(r.X, r.Y, r.Height, r.Width);
+        ///         return new <see cref="Rectangle"/>(r.X, r.Y, r.Width, r.Height);
         ///     }
         /// }
         /// </code>
@@ -168,15 +168,15 @@ namespace NutPacker
                 , Type = new CodeTypeReference(typeof(Xna.Rectangle))
             };
 
-            /// Add expression to getter: return new <see cref="Rectangle"/>(r.X, r.Y, r.Height, r.Width);
+            /// Add expression to getter: return new <see cref="Rectangle"/>(r.X, r.Y, r.Width, r.Height);
             /// r - <param name="rectangle"></param>
             pic.GetStatements.Add(
                 new CodeMethodReturnStatement(
                     new CodeObjectCreateExpression(typeof(Xna.Rectangle)
                         , new CodePrimitiveExpression(rectangle.X)
                         , new CodePrimitiveExpression(rectangle.Y)
-                        , new CodePrimitiveExpression(rectangle.Height)
                         , new CodePrimitiveExpression(rectangle.Width)
+                        , new CodePrimitiveExpression(rectangle.Height)
                 )));
             
             return pic;
