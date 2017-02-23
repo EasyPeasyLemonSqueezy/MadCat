@@ -23,7 +23,7 @@ namespace NutEngine
             Color = Color.White;
 
             if (Frame != null) {
-                var center = Frame.Value.Center;
+                var center = Frame.Value.Center - Frame.Value.Location;
                 Origin = new Vector2(center.X, center.Y);
             }
             else {

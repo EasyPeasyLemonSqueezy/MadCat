@@ -55,7 +55,7 @@ namespace NutEngine
             ElapsedTime = 0;
 
             CurrentIndex = 0;
-            Duration = 0;
+            Duration = 1;
             Repeat = true;
             Enabled = true;
             AnimationType = AnimationTypes.Linear;
@@ -93,7 +93,7 @@ namespace NutEngine
             CurrentIndex = 0;
         }
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
             if (Enabled) {
                 ElapsedTime += deltaTime;
