@@ -34,9 +34,9 @@ namespace NutEngine
             }
         }
 
-        public int  Duration { get; set; }
         public bool Repeat { get; set; }
         public bool Enabled { get; set; }
+        public float Duration { get; set; }
         public AnimationType AnimationType { get; set; }
 
         public Color Color { get; set; }
