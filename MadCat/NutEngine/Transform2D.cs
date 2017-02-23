@@ -15,7 +15,7 @@ namespace NutEngine
 
         public Transform2D()
         {
-            matrix = new Matrix();
+            matrix = Matrix.Identity;
         }
 
         public void SetTransform(Vector2 scale, float rotation, Vector2 position)
@@ -27,16 +27,6 @@ namespace NutEngine
                      Matrix.CreateScale(scale.X, scale.Y, 1.0f)
                    * Matrix.CreateRotationZ(rotation)
                    * Matrix.CreateTranslation(position.X, position.Y, 0.0f);
-        }
-
-        /// <summary>
-        /// Умножить эту матрицу преобразования на какую-то другую.
-        /// Это приведет к тому, что те же самые преобразовния уже
-        /// будут в новой системе координат (родителя).
-        /// </summary>
-        public void MultiplyBy(Transform2D transform)
-        {
-            matrix *= transform.matrix;
         }
 
         /// <summary>
