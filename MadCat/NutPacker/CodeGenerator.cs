@@ -73,12 +73,12 @@ namespace NutPacker
 
             for (int i = 0; i < rectangles.Length; i++) {
                 /// One rectangle
-                /// new Rectangle(X, Y, Height, Width);
+                /// new Rectangle(X, Y, Width, Height);
                 CodeExpression rectangle = new CodeObjectCreateExpression(typeof(Xna.Rectangle)
                     , new CodePrimitiveExpression(rectangles[i].X)
                     , new CodePrimitiveExpression(rectangles[i].Y)
-                    , new CodePrimitiveExpression(rectangles[i].Height)
                     , new CodePrimitiveExpression(rectangles[i].Width)
+                    , new CodePrimitiveExpression(rectangles[i].Height)
                     );
 
                 createRectangles[i] = rectangle;
