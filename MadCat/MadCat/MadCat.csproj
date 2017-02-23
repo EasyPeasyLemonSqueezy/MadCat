@@ -79,7 +79,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="AdventureGirl.cs" />
+    <Compile Include="Demo.cs" />
+    <Compile Include="DemoGame.cs" />
+    <Compile Include="DemoScene.cs" />
+    <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +100,10 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NutEngine\NutEngine.csproj">
+      <Project>{b2c4bafb-dfbd-4ae2-88b6-5fd943a48c10}</Project>
+      <Name>NutEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NutPackerLib\NutPackerLib.csproj">
       <Project>{20b6f5a5-0c3a-438f-ab19-e6b9a185c5a5}</Project>
       <Name>NutPackerLib</Name>
