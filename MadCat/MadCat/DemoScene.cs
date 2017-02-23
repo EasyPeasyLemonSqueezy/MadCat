@@ -72,12 +72,22 @@ namespace MadCat
 
             /// Right
             else if (keyboardState.IsKeyDown(Keys.Right)) {
-                AdventureGirl.RunRight(deltaTime);
+                if (keyboardState.IsKeyDown(Keys.LeftShift)) {
+                    AdventureGirl.SlideRight();
+                }
+                else {
+                    AdventureGirl.RunRight(deltaTime);
+                }
             }
 
             /// Left
             else if (keyboardState.IsKeyDown(Keys.Left)) {
-                AdventureGirl.RunLeft(deltaTime);
+                if (keyboardState.IsKeyDown(Keys.LeftShift)) {
+                    AdventureGirl.SlideLeft();
+                }
+                else {
+                    AdventureGirl.RunLeft(deltaTime);
+                }
             }
 
             /// Stand

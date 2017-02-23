@@ -24,6 +24,7 @@ namespace MadCat
 
         private float RunVelocity;
 
+        private bool Hover { get { return Position.Y - Offset.Y < 0; } }
         private bool JumpInProgress  { get { return SpriteSheet == AdventureGirlJump  && Enabled; } }
         private bool SlideInProgress { get { return SpriteSheet == AdventureGirlSlide && Enabled; } }
         private bool ShootInProgress { get { return SpriteSheet == AdventureGirlShoot && Enabled; } }
@@ -31,11 +32,12 @@ namespace MadCat
         private bool DeathInProgress { get { return SpriteSheet == AdventureGirlDead  && Enabled; } }
         private bool SmthInProgress  {
             get {
-                return JumpInProgress 
-                    || SlideInProgress 
-                    || ShootInProgress 
-                    || MeleeInProgress 
-                    || DeathInProgress;
+                return JumpInProgress
+                    || SlideInProgress
+                    || ShootInProgress
+                    || MeleeInProgress
+                    || DeathInProgress
+                    || Hover;
             }
         }
 
@@ -67,33 +69,38 @@ namespace MadCat
                 SpriteSheet = AdventureGirlIdle;
                 Restart();
                 Repeat = true;
+                Duration = .8f;
             }
         }
 
         public void RunRight(float deltaTime)
         {
-            Position += new Vector2(RunVelocity * deltaTime, 0);
+            if (!SlideInProgress) {
+                Position += new Vector2(RunVelocity * deltaTime, 0);
+                Effects = SpriteEffects.None;
+            }
 
             if (SpriteSheet != AdventureGirlRun && !SmthInProgress) {
                 SpriteSheet = AdventureGirlRun;
                 Restart();
                 Repeat = true;
+                Duration = .7f;
             }
-
-            Effects = SpriteEffects.None;
         }
 
         public void RunLeft(float deltaTime)
         {
-            Position += new Vector2(-RunVelocity * deltaTime, 0);
+            if (!SlideInProgress) {
+                Position += new Vector2(-RunVelocity * deltaTime, 0);
+                Effects = SpriteEffects.FlipHorizontally;
+            }
 
             if (SpriteSheet != AdventureGirlRun && !SmthInProgress) {
                 SpriteSheet = AdventureGirlRun;
                 Restart();
                 Repeat = true;
+                Duration = .7f;
             }
-
-            Effects = SpriteEffects.FlipHorizontally;
         }
 
         public void Jump()
@@ -102,6 +109,7 @@ namespace MadCat
                 Velocity += new Vector2(0, -4) * MagicNumber;
                 SpriteSheet = AdventureGirlJump;
                 Repeat = false;
+                Duration = .5f;
             }
         }
 
@@ -110,6 +118,7 @@ namespace MadCat
             if (SpriteSheet != AdventureGirlMelee && !SmthInProgress) {
                 SpriteSheet = AdventureGirlMelee;
                 Repeat = false;
+                Duration = .35f;
             }
         }
 
@@ -118,17 +127,45 @@ namespace MadCat
             if (SpriteSheet != AdventureGirlShoot && !SmthInProgress) {
                 SpriteSheet = AdventureGirlShoot;
                 Repeat = false;
+                Duration = .2f;
             }
         }
 
-        public void SlideLeft() { }
+        public void SlideLeft()
+        {
+            if (SpriteSheet != AdventureGirlShoot && !SmthInProgress) {
+                SpriteSheet = AdventureGirlSlide;
+                Repeat = false;
+                Duration = .5f;
 
-        public void SlideRight() { }
+                Effects = SpriteEffects.FlipHorizontally;
+            }
+        }
+
+        public void SlideRight()
+        {
+            if (SpriteSheet != AdventureGirlShoot && !SmthInProgress) {
+                SpriteSheet = AdventureGirlSlide;
+                Repeat = false;
+                Duration = .5f;
+
+                Effects = SpriteEffects.None;
+            }
+        }
 
         public override void Update(float deltaTime)
         {
             var velocity = Physics.Velocity(Velocity, Acceleration, deltaTime);
             var position = Physics.Position(Position, Velocity, Acceleration, deltaTime);
+
+            if (SlideInProgress) {
+                if (Effects == SpriteEffects.FlipHorizontally) {
+                    Position += new Vector2(-RunVelocity * 1.5f * deltaTime, 0); // left
+                }
+                else {
+                    Position += new Vector2(RunVelocity * 1.5f * deltaTime, 0); // right
+                }
+            }
 
             if (position.Y - Offset.Y >= 0) {
                 if (JumpInProgress) {
