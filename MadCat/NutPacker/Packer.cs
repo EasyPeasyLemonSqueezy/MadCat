@@ -65,11 +65,11 @@ namespace NutPacker
             /// Create sprite and dictionary.
             imagePacker.PackImage(
                   images                /// Paths to all sprites and tiles,
-                , false                 /// Power of two,
-                , false                 /// Require square image,
-                , 256 * 256 // 2^16     /// Max width,
-                , 256 * 256             /// Max height,
-                , 0                     /// Image padding,
+                , opt.PowerOfTwo        /// Power of two,
+                , opt.Square            /// Require square image,
+                , opt.MaxWidth          /// Max width,
+                , opt.MaxHeight         /// Max height,
+                , opt.Padding           /// Image padding,
                 , true                  /// Generate dictionary,
                 , out outputImageBitmap /// Output image,
                 , out outputMap         /// Dictionary.
