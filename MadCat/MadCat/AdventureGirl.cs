@@ -84,7 +84,7 @@ namespace MadCat
                 SpriteSheet = AdventureGirlRun;
                 Restart();
                 Repeat = true;
-                Duration = .7f;
+                Duration = .6f;
             }
         }
 
@@ -99,7 +99,7 @@ namespace MadCat
                 SpriteSheet = AdventureGirlRun;
                 Restart();
                 Repeat = true;
-                Duration = .7f;
+                Duration = .6f;
             }
         }
 

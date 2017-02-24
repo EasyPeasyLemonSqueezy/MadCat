@@ -2,9 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NutEngine;
-using NutPacker;
 using NutPacker.Content;
-using System.Collections.Generic;
 
 namespace MadCat
 {
@@ -17,6 +15,7 @@ namespace MadCat
 
         private Texture2D Texture;
         private AdventureGirl AdventureGirl;
+        private Node Ground;
 
         public DemoScene(Application app) : base(app)
         {
@@ -31,7 +30,7 @@ namespace MadCat
             };
             World.AddChild(background);
 
-            var ground = new Node() {
+            Ground = new Node() {
                 Position = new Vector2(0, ScreenHeight)
             };
 
@@ -40,14 +39,28 @@ namespace MadCat
                     Position = new Vector2(i * Graveyard.Tiles.Tile_2_.Width, 0)
                 };
 
-                ground.AddChild(sprite);
+                Ground.AddChild(sprite);
             }
+
+            Ground.AddChild(new Sprite(Texture, Graveyard.Objects.TombStone_1_) {
+                  Position = new Vector2(200, -105)
+                , Scale = new Vector2(1.5f, 1.5f)
+            });
+            Ground.AddChild(new Sprite(Texture, Graveyard.Objects.TombStone_2_) {
+                  Position = new Vector2(700, -120)
+                , Scale = new Vector2(1.5f, 1.5f)
+            });
+            Ground.AddChild(new Sprite(Texture, Graveyard.Objects.Bush_1_) {
+                  Position = new Vector2(400, -75)
+                , Scale = new Vector2(.5f, .5f)
+                , ZOrder = 10
+            });
 
             AdventureGirl = new AdventureGirl(Texture);
 
 
-            ground.AddChild(AdventureGirl);
-            World.AddChild(ground);
+            Ground.AddChild(AdventureGirl);
+            World.AddChild(Ground);
         }
 
         public override void Update(float deltaTime)
@@ -55,43 +68,60 @@ namespace MadCat
             AdventureGirl.Update(deltaTime);
 
             var keyboardState = Keyboard.GetState();
+            bool inAction = false;
 
             /// Jump
             if (keyboardState.IsKeyDown(Keys.Space) && PrevKeyboardState.IsKeyUp(Keys.Space)) {
                 AdventureGirl.Jump();
+                inAction = true;
             }
 
             /// Shoot
-            else if (keyboardState.IsKeyDown(Keys.LeftControl) && PrevKeyboardState.IsKeyUp(Keys.LeftControl)) {
+            if (keyboardState.IsKeyDown(Keys.LeftControl) && PrevKeyboardState.IsKeyUp(Keys.LeftControl)) {
                 AdventureGirl.Shoot();
+                inAction = true;
             }
 
-            else if (keyboardState.IsKeyDown(Keys.F) && PrevKeyboardState.IsKeyUp(Keys.F)) {
+            if (keyboardState.IsKeyDown(Keys.F) && PrevKeyboardState.IsKeyUp(Keys.F)) {
                 AdventureGirl.Melee();
+                inAction = true;
             }
 
             /// Right
-            else if (keyboardState.IsKeyDown(Keys.Right)) {
+            if (keyboardState.IsKeyDown(Keys.Right)) {
                 if (keyboardState.IsKeyDown(Keys.LeftShift)) {
                     AdventureGirl.SlideRight();
                 }
                 else {
                     AdventureGirl.RunRight(deltaTime);
                 }
+
+                inAction = true;
             }
 
             /// Left
-            else if (keyboardState.IsKeyDown(Keys.Left)) {
+            if (keyboardState.IsKeyDown(Keys.Left)) {
                 if (keyboardState.IsKeyDown(Keys.LeftShift)) {
                     AdventureGirl.SlideLeft();
                 }
                 else {
                     AdventureGirl.RunLeft(deltaTime);
                 }
+
+                inAction = true;
             }
 
+            if (keyboardState.IsKeyDown(Keys.Up)) {
+                Ground.Position += new Vector2(0, -200 * deltaTime);
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Down)) {
+                Ground.Position += new Vector2(0, 200 * deltaTime);
+            }
+            
+
             /// Stand
-            else {
+            if (!inAction) {
                 AdventureGirl.Stay();
             }
 
