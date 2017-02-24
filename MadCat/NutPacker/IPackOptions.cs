@@ -6,7 +6,7 @@ namespace NutPacker
     {
         [Option] string Name { get; set; }
         [OptionArray] string[] Sprites { get; set; }
-        [OptionArray] string[] Pictures { get; set; }
+        [OptionArray] string[] Tiles { get; set; }
         [Option] string Output { get; set; }
         [Option] bool GenerateSource { get; set; }
         [Option] bool GenerateLib { get; set; }

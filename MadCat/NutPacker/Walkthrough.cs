@@ -47,7 +47,7 @@ namespace NutPacker
         /// <param name="directory"> Current directory. </param>
         /// <param name="map">
         /// Dictionary, where key - fullname of picture;
-        /// value - <see cref="Rectangle"/> location in atlas.
+        /// value - <see cref="Rectangle"/> location in texture atlas.
         /// </param>
         /// <param name="extensions">
         /// Acceptable file extensions (with dot before),
@@ -56,7 +56,7 @@ namespace NutPacker
         /// <returns>
         /// SpriteSheet or SpriteGroup.
         /// </returns>
-        public static CodeTypeDeclaration GenerateAtlasCodeDom(
+        public static CodeTypeDeclaration GenerateSpriteCodeDom(
               DirectoryInfo directory
             , Dictionary<string, Rectangle> map
             , string[] extensions = null)
@@ -115,7 +115,7 @@ namespace NutPacker
                 
                 foreach (var dir in dirs) {
                     /// Generate class for subdirectory.
-                    var newClass = GenerateAtlasCodeDom(dir, map);
+                    var newClass = GenerateSpriteCodeDom(dir, map);
                     /// Add to current class.
                     currentClass.Members.Add(newClass);
                 }
@@ -125,7 +125,7 @@ namespace NutPacker
         }
 
         /// <summary>
-        /// Generate code which implemented <see cref="IPictureGroup"/>.
+        /// Generate code which implemented <see cref="ITileSet"/>.
         /// </summary>
         /// <remarks>
         /// Using DFS to get CodeDom.
@@ -140,9 +140,9 @@ namespace NutPacker
         /// by default = { ".jpg", ".png" }
         /// </param>
         /// <returns>
-        /// Code of pictureGroup class.
+        /// Code of tileset class.
         /// </returns>
-        public static CodeTypeDeclaration GeneratePicturesCodeDom(
+        public static CodeTypeDeclaration GenerateTileCodeDom(
               DirectoryInfo directory
             , Dictionary<string, Rectangle> map
             , string[] extensions = null)
@@ -166,18 +166,18 @@ namespace NutPacker
                     ));
             }
 
-            /// Generate PictureGroup.
-            CodeTypeDeclaration currentClass = CodeGenerator.GeneratePictureGroupClass(
+            /// Generate tile set.
+            CodeTypeDeclaration currentClass = CodeGenerator.GenerateTileSetClass(
                 VariableName(directory.Name));
 
-            /// Generate PictureGroups and add them to current class.
+            /// Generate tiles property and add them to current class.
             foreach (var dir in dirs) {
-                var newClass = GeneratePicturesCodeDom(dir, map);
+                var newClass = GenerateTileCodeDom(dir, map);
                 currentClass.Members.Add(newClass);
             }
-            /// Generate properties and add them to current class.
+            /// Generate tile properties and add them to current class.
             foreach (var pic in files) {
-                currentClass.Members.Add(CodeGenerator.GeneratePictureProperty(
+                currentClass.Members.Add(CodeGenerator.GenerateTileProperty(
                       VariableName(Path.GetFileNameWithoutExtension(pic.Name))
                     , map[pic.FullName])
                     );
@@ -209,6 +209,19 @@ namespace NutPacker
                             .Where(file => extensions?.Contains(file.Extension) ?? true);
         }
 
+        /// <summary>
+        /// Generate variable name.
+        /// </summary>
+        /// <remarks>
+        /// Rules:
+        /// 1. If first symbol is number - add "_" before.
+        /// 2. Find first letter and make it capital.
+        /// 3. Find all letters after spaces and make them capital too.
+        /// 4. Replace all symbols not from [a-zA-Z0-9] to "_".
+        /// </remarks>
+        /// <returns>
+        /// Correct name of variable.
+        /// </returns>
         public static string VariableName(string name)
         {
             var r = Regex.Replace(name, @"^(\d)", m => String.Concat((m.Groups[0].Success ? "_" : String.Empty), m.Groups[0].Value));
