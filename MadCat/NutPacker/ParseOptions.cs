@@ -14,8 +14,8 @@ namespace NutPacker
         [OptionArray('s', "sprites", HelpText = "Path to folder with sprites.")]
         public string[] Sprites { get; set; }
 
-        [OptionArray('p', "pictures", HelpText = "Path to folder with pictures.")]
-        public string[] Pictures { get; set; }
+        [OptionArray('t', "tileset", HelpText = "Path to folder with tilesets.")]
+        public string[] Tiles { get; set; }
 
         [Option('o', "output", Required = true, HelpText = "Path to output folder.")]
         public string Output { get; set; }

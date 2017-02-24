@@ -117,35 +117,35 @@ namespace NutPacker
         }
 
         /// <summary>
-        /// Generate code of new pictureGroup class
+        /// Generate code of new tile set class
         /// </summary>
-        /// <param name="pictureGroup"> Name of new class. </param>
+        /// <param name="tileSet"> Name of new class. </param>
         /// <returns>
         /// <code>
-        /// public class <paramref name="pictureGroup"/> : <see cref="NutPacker.IPictureGroup"/> { }
+        /// public class <paramref name="tileSet"/> : <see cref="NutPacker.ITileSet"/> { }
         /// </code>
         /// </returns>
-        public static CodeTypeDeclaration GeneratePictureGroupClass(
-              string pictureGroup)
+        public static CodeTypeDeclaration GenerateTileSetClass(
+              string tileSet)
         {
-            /// New public class with <param name="pictureGroup"></param> name.
-            var pictureGroupClass = new CodeTypeDeclaration() {
-                  Name = pictureGroup
+            /// New public class with <param name="tileSet"></param> name.
+            var tileSetClass = new CodeTypeDeclaration() {
+                  Name = tileSet
                 , IsClass = true
                 , TypeAttributes = TypeAttributes.Public
             };
 
-            /// Inherited from <see cref="IPictureGroup"/>.
-            pictureGroupClass.BaseTypes.Add(new CodeTypeReference(typeof(IPictureGroup)));
+            /// Inherited from <see cref="ITileSet"/>.
+            tileSetClass.BaseTypes.Add(new CodeTypeReference(typeof(ITileSet)));
 
-            return pictureGroupClass;
+            return tileSetClass;
         }
 
         /// <summary>
         /// Generate new property <see cref="Rectangle"/>.
         /// </summary>
         /// <param name="picture"> Name of new property. </param>
-        /// <param name="rectangle"> Location in atlas. </param>
+        /// <param name="rectangle"> Location in texture atlas. </param>
         /// <returns>
         /// <code>
         /// public static <see cref="Rectangle"/> <paramref name="picture"/> {
@@ -156,7 +156,7 @@ namespace NutPacker
         /// }
         /// </code>
         /// </returns>
-        public static CodeMemberProperty GeneratePictureProperty(
+        public static CodeMemberProperty GenerateTileProperty(
               string picture
             , Rectangle rectangle)
         {
