@@ -46,27 +46,23 @@ namespace MadCat
                 Duration = .8f
             };
             AdventureGirlJump = new Animation(Texture, new NutPacker.Content.AdventureGirl.Jump()) {
-                Repeat = false
-                ,
-                Duration = .5f
+                  Repeat = false
+                , Duration = .5f
             };
             AdventureGirlMelee = new Animation(Texture, new NutPacker.Content.AdventureGirl.Melee()) {
-                Repeat = false
-                ,
-                Duration = .35f
+                  Repeat = false
+                , Duration = .35f
             };
             AdventureGirlRun = new Animation(Texture, new NutPacker.Content.AdventureGirl.Run()) {
                 Duration = .6f
             };
             AdventureGirlShoot = new Animation(Texture, new NutPacker.Content.AdventureGirl.Shoot()) {
-                Duration = .2f
-                ,
-                Repeat = false
+                  Duration = .2f
+                , Repeat = false
             };
             AdventureGirlSlide = new Animation(Texture, new NutPacker.Content.AdventureGirl.Slide()) {
-                Duration = .5f
-                ,
-                Repeat = false
+                  Duration = .5f
+                , Repeat = false
             };
 
             CurrentAnimation = AdventureGirlIdle;
