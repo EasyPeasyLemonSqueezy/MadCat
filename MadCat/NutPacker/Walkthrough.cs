@@ -19,22 +19,14 @@ namespace NutPacker
         /// <see cref="SearchOption"/>,
         /// by default <see cref="SearchOption.AllDirectories"/>.
         /// </param>
-        /// <param name="extensions">
-        /// Acceptable file extensions. (with dot before),
-        /// by default = { ".jpg", ".png" }.
-        /// </param>
         /// <returns>
         /// Array of full names (with path) of files in folder and in all subfolders.
         /// </returns>
         public static IEnumerable<string> GetFileNames(
               DirectoryInfo directory
-            , SearchOption searchOption = SearchOption.AllDirectories
-            , string[] extensions = null)
+            , SearchOption searchOption = SearchOption.AllDirectories)
         {
-            extensions = extensions ?? new string[] { ".jpg", ".png" };
-
-            return GetFiles(directory, searchOption, extensions)
-                   .Select(file => file.FullName);
+            return directory.EnumerateFiles("*", searchOption).Select(file => file.FullName);
         }
 
         /// <summary>
@@ -49,23 +41,15 @@ namespace NutPacker
         /// Dictionary, where key - fullname of picture;
         /// value - <see cref="Rectangle"/> location in texture atlas.
         /// </param>
-        /// <param name="extensions">
-        /// Acceptable file extensions (with dot before),
-        /// by default = { ".jpg", ".png" }
-        /// </param>
         /// <returns>
         /// SpriteSheet or SpriteGroup.
         /// </returns>
         public static CodeTypeDeclaration GenerateSpriteCodeDom(
               DirectoryInfo directory
-            , Dictionary<string, Rectangle> map
-            , string[] extensions = null)
+            , Dictionary<string, Rectangle> map)
         {
-            extensions = extensions ?? new string[] { ".jpg", ".png" };
-
             var dirs = directory.EnumerateDirectories();
-            var files = GetFiles(directory, SearchOption.TopDirectoryOnly, extensions)
-                .ToArray();
+            var files = directory.EnumerateFiles("*", SearchOption.TopDirectoryOnly).ToArray();
 
             /// Groups by name without spaces.
             /// check that the names don't match.
@@ -135,22 +119,15 @@ namespace NutPacker
         /// Dictionary, where key - fullname of picture;
         /// value - <see cref="Rectangle"/> location in atlas.
         /// </param>
-        /// <param name="extensions">
-        /// Acceptable file extensions (with dot before),
-        /// by default = { ".jpg", ".png" }
-        /// </param>
         /// <returns>
         /// Code of tileset class.
         /// </returns>
         public static CodeTypeDeclaration GenerateTileCodeDom(
               DirectoryInfo directory
-            , Dictionary<string, Rectangle> map
-            , string[] extensions = null)
+            , Dictionary<string, Rectangle> map)
         {
-            extensions = extensions ?? new string[] { ".jpg", ".png" };
-
             var dirs = directory.EnumerateDirectories();
-            var files = GetFiles(directory, SearchOption.TopDirectoryOnly, extensions);
+            var files = directory.EnumerateFiles("*", SearchOption.TopDirectoryOnly);
 
             /// Groups by name without spaces.
             /// check that the names don't match.
@@ -184,29 +161,6 @@ namespace NutPacker
             }
 
             return currentClass;
-        }
-
-        /// <summary>
-        /// Get files from directory <paramref name="directory"/>.
-        /// </summary>
-        /// <param name="directory"> Directory. </param>
-        /// <param name="searchOption">
-        /// <see cref="SearchOption"/>
-        /// by default - <see cref="SearchOption.TopDirectoryOnly"/>.
-        /// </param>
-        /// <param name="extensions">
-        /// Acceptable file extensions. (with dot before)
-        /// </param>
-        /// <returns>
-        /// Files that meet the requirements.
-        /// </returns>
-        public static IEnumerable<FileInfo> GetFiles(
-              DirectoryInfo directory
-            , SearchOption searchOption = SearchOption.TopDirectoryOnly
-            , string[] extensions = null)
-        {
-            return directory.EnumerateFiles("*", searchOption)
-                            .Where(file => extensions?.Contains(file.Extension) ?? true);
         }
 
         /// <summary>
