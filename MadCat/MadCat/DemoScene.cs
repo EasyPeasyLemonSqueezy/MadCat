@@ -56,8 +56,8 @@ namespace MadCat
                 , ZOrder = 10
             });
 
-            AdventureGirl = new AdventureGirl(Texture);
 
+            AdventureGirl = new AdventureGirl(Texture);
 
             Ground.AddChild(AdventureGirl);
             World.AddChild(Ground);
@@ -119,7 +119,6 @@ namespace MadCat
                 Ground.Position += new Vector2(0, 200 * deltaTime);
             }
             
-
             /// Stand
             if (!inAction) {
                 AdventureGirl.Stay();

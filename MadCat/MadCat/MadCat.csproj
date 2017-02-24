@@ -83,6 +83,7 @@
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
+    <Compile Include="NewAdventureGirl.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
