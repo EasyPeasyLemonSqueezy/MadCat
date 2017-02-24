@@ -70,7 +70,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPictureGroup.cs" />
+    <Compile Include="ITileSet.cs" />
     <Compile Include="ISpriteGroup.cs" />
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

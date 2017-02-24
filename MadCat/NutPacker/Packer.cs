@@ -17,7 +17,7 @@ namespace NutPacker
         /// </summary>
         public static void Pack(IPackOptions opt)
         {
-            if (opt.Sprites == null && opt.Pictures == null) {
+            if (opt.Sprites == null && opt.Tiles == null) {
                 throw new ApplicationException("Nothing to pack here.");
             }
 
@@ -30,7 +30,7 @@ namespace NutPacker
 
             /// Dictionary: full filename -> rectangle in output image.
             Dictionary<string, Rectangle> outputMap;
-            /// Sprite.
+            /// Texture atlas.
             Bitmap outputImageBitmap;
             /// Paths to all images.
             var images = new List<string>();
@@ -43,8 +43,8 @@ namespace NutPacker
                     images.AddRange(Walkthrough.GetFileNames(spritesDirectory));
                 }
             }
-            if (opt.Pictures != null) {
-                foreach (var pics in opt.Pictures) {
+            if (opt.Tiles != null) {
+                foreach (var pics in opt.Tiles) {
                     var picturesDirectory = new DirectoryInfo(pics);
 
                     images.AddRange(Walkthrough.GetFileNames(picturesDirectory));
@@ -64,7 +64,7 @@ namespace NutPacker
 
             /// Create sprite and dictionary.
             imagePacker.PackImage(
-                  images                /// Paths to all sprites and pictures,
+                  images                /// Paths to all sprites and tiles,
                 , false                 /// Power of two,
                 , false                 /// Require square image,
                 , 256 * 256 // 2^16     /// Max width,
@@ -86,14 +86,14 @@ namespace NutPacker
                 foreach (var sprites in opt.Sprites) {
                     var spritesDirectory = new DirectoryInfo(sprites);
 
-                    codeNameSpace.Types.Add(Walkthrough.GenerateAtlasCodeDom(spritesDirectory, outputMap));
+                    codeNameSpace.Types.Add(Walkthrough.GenerateSpriteCodeDom(spritesDirectory, outputMap));
                 }
             }
-            if (opt.Pictures != null) {
-                foreach (var pics in opt.Pictures) {
+            if (opt.Tiles != null) {
+                foreach (var pics in opt.Tiles) {
                     var picturesDirectory = new DirectoryInfo(pics);
 
-                    codeNameSpace.Types.Add(Walkthrough.GeneratePicturesCodeDom(picturesDirectory, outputMap));
+                    codeNameSpace.Types.Add(Walkthrough.GenerateTileCodeDom(picturesDirectory, outputMap));
                 }
             }
 

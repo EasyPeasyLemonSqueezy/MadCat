@@ -116,9 +116,9 @@ namespace NutPacker.Content
             }
         }
     }
-    public class Graveyard : NutPacker.IPictureGroup
+    public class Graveyard : NutPacker.ITileSet
     {
-        public class Objects : NutPacker.IPictureGroup
+        public class Objects : NutPacker.ITileSet
         {
             public static Microsoft.Xna.Framework.Rectangle ArrowSign
             {
@@ -191,7 +191,7 @@ namespace NutPacker.Content
                 }
             }
         }
-        public class Tiles : NutPacker.IPictureGroup
+        public class Tiles : NutPacker.ITileSet
         {
             public static Microsoft.Xna.Framework.Rectangle BG
             {
