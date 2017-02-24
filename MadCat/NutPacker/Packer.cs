@@ -11,6 +11,11 @@ namespace NutPacker
     public static class Packer
     {
         /// <summary>
+        /// sspack can recognize only these extensions.
+        /// </summary>
+        public static string[] extensions = { ".png", ".jpg", ".bmp" };
+
+        /// <summary>
         /// Create atlas,
         /// and generate .dll or(and) source code
         /// with classes which contains rectangles.
@@ -40,14 +45,14 @@ namespace NutPacker
                 foreach (var sprites in opt.Sprites) {
                     var spritesDirectory = new DirectoryInfo(sprites);
 
-                    images.AddRange(Walkthrough.GetFileNames(spritesDirectory));
+                    images.AddRange(Walkthrough.GetPictures(spritesDirectory).Select(file => file.FullName));
                 }
             }
             if (opt.Tiles != null) {
                 foreach (var pics in opt.Tiles) {
                     var picturesDirectory = new DirectoryInfo(pics);
 
-                    images.AddRange(Walkthrough.GetFileNames(picturesDirectory));
+                    images.AddRange(Walkthrough.GetPictures(picturesDirectory).Select(file => file.FullName));
                 }
             }
 

@@ -22,11 +22,12 @@ namespace NutPacker
         /// <returns>
         /// Array of full names (with path) of files in folder and in all subfolders.
         /// </returns>
-        public static IEnumerable<string> GetFileNames(
+        public static IEnumerable<FileInfo> GetPictures(
               DirectoryInfo directory
             , SearchOption searchOption = SearchOption.AllDirectories)
         {
-            return directory.EnumerateFiles("*", searchOption).Select(file => file.FullName);
+            return directory.EnumerateFiles("*", searchOption)
+                            .Where(file => IsImage(file));
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace NutPacker
             , Dictionary<string, Rectangle> map)
         {
             var dirs = directory.EnumerateDirectories();
-            var files = directory.EnumerateFiles("*", SearchOption.TopDirectoryOnly).ToArray();
+            var pics = GetPictures(directory, SearchOption.TopDirectoryOnly).ToArray();
 
             /// Groups by name without spaces.
             /// check that the names don't match.
@@ -63,7 +64,7 @@ namespace NutPacker
 
             /// If in this directory not only files or not only another directories
             /// (It's not <see cref="SpriteSheet"/> and not <see cref="ISpriteGroup"/>).
-            if (dirs.Count() != 0 && files.Count() != 0) {
+            if (dirs.Count() != 0 && pics.Count() != 0) {
                 throw new ApplicationException(
                      $"Directory `{directory.Name}` "
                     + "cannot contain files and another directories at the same time.");
@@ -72,7 +73,7 @@ namespace NutPacker
 
             CodeTypeDeclaration currentClass;
 
-            if (files.Count() != 0) {
+            if (pics.Count() != 0) {
                 /// Sort files by name,
                 /// <see cref="NaturalFileInfoNameComparer"/> - uses StrCmpLogicalW from winapi
                 /// Why not just <see cref="Array.Sort(Array)"/>?
@@ -83,13 +84,13 @@ namespace NutPacker
                 /// <see cref="Array.Sort(Array, System.Collections.IComparer)"/> result:
                 /// file1.txt, file2.txt, ..., file9.txt, file10.txt, file11.txt, ...
                 /// </example>
-                Array.Sort(files, new NaturalFileInfoNameComparer());
+                Array.Sort(pics, new NaturalFileInfoNameComparer());
 
                 /// Generate sprite.
                 currentClass = CodeGenerator.GenerateSpriteSheetClass(
                       VariableName(directory.Name)
-                    , files.Select(pic => map[pic.FullName])
-                           .ToArray()
+                    , pics.Select(pic => map[pic.FullName])
+                          .ToArray()
                     );
             }
             else {
@@ -127,12 +128,12 @@ namespace NutPacker
             , Dictionary<string, Rectangle> map)
         {
             var dirs = directory.EnumerateDirectories();
-            var files = directory.EnumerateFiles("*", SearchOption.TopDirectoryOnly);
+            var pics = GetPictures(directory, SearchOption.TopDirectoryOnly);
 
             /// Groups by name without spaces.
             /// check that the names don't match.
             var groups = dirs.Select(dir => dir.Name)
-                             .Union(files.Select(file => file.Name))
+                             .Union(pics.Select(file => file.Name))
                              .GroupBy(name => VariableName(name))
                              .Where(g => g.Count() != 1);
 
@@ -153,7 +154,7 @@ namespace NutPacker
                 currentClass.Members.Add(newClass);
             }
             /// Generate tile properties and add them to current class.
-            foreach (var pic in files) {
+            foreach (var pic in pics) {
                 currentClass.Members.Add(CodeGenerator.GenerateTileProperty(
                       VariableName(Path.GetFileNameWithoutExtension(pic.Name))
                     , map[pic.FullName])
@@ -161,6 +162,19 @@ namespace NutPacker
             }
 
             return currentClass;
+        }
+
+        /// <summary>
+        /// Check file is a picture?
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns>
+        /// Return "true" if file extension contains in <see cref="Packer.extensions"/>;
+        /// Otherwise - "false"
+        /// </returns>
+        public static bool IsImage(FileInfo file)
+        {
+            return Packer.extensions.Contains(file.Extension);
         }
 
         /// <summary>
