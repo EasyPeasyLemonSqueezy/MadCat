@@ -11,6 +11,11 @@ namespace NutPacker
     public static class Packer
     {
         /// <summary>
+        /// sspack can recognize only these extensions.
+        /// </summary>
+        public static string[] extensions = { ".png", ".jpg", ".bmp" };
+
+        /// <summary>
         /// Create atlas,
         /// and generate .dll or(and) source code
         /// with classes which contains rectangles.
@@ -40,14 +45,14 @@ namespace NutPacker
                 foreach (var sprites in opt.Sprites) {
                     var spritesDirectory = new DirectoryInfo(sprites);
 
-                    images.AddRange(Walkthrough.GetFileNames(spritesDirectory));
+                    images.AddRange(Walkthrough.GetPictures(spritesDirectory).Select(file => file.FullName));
                 }
             }
             if (opt.Tiles != null) {
                 foreach (var pics in opt.Tiles) {
                     var picturesDirectory = new DirectoryInfo(pics);
 
-                    images.AddRange(Walkthrough.GetFileNames(picturesDirectory));
+                    images.AddRange(Walkthrough.GetPictures(picturesDirectory).Select(file => file.FullName));
                 }
             }
 
@@ -65,11 +70,11 @@ namespace NutPacker
             /// Create sprite and dictionary.
             imagePacker.PackImage(
                   images                /// Paths to all sprites and tiles,
-                , false                 /// Power of two,
-                , false                 /// Require square image,
-                , 256 * 256 // 2^16     /// Max width,
-                , 256 * 256             /// Max height,
-                , 0                     /// Image padding,
+                , opt.PowerOfTwo        /// Power of two,
+                , opt.Square            /// Require square image,
+                , opt.MaxWidth          /// Max width,
+                , opt.MaxHeight         /// Max height,
+                , opt.Padding           /// Image padding,
                 , true                  /// Generate dictionary,
                 , out outputImageBitmap /// Output image,
                 , out outputMap         /// Dictionary.

@@ -13,7 +13,10 @@ namespace NutPacker
                     Packer.Pack(opt);
                 }
                 catch (ApplicationException e) {
-                    Console.Error.WriteLine(String.Concat("Error: ", e.Message));
+                    Console.Error.WriteLine($"Error: {e.Message}");
+                }
+                catch (OutOfMemoryException e) {
+                    Console.Error.WriteLine($"Error: {e.Message}\nSplit your texture on a few parts.");
                 }
             }
         }
