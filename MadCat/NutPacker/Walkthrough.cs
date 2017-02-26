@@ -32,7 +32,7 @@ namespace NutPacker
 
         /// <summary>
         /// Generate code which implements <see cref="ISpriteGroup"/>
-        /// or inherited from <see cref="SpriteSheet"/>.
+        /// or inherited from <see cref="ISpriteSheet"/>.
         /// </summary>
         /// <remarks>
         /// Using DFS to get CodeDom.
@@ -63,7 +63,7 @@ namespace NutPacker
             }
 
             /// If in this directory not only files or not only another directories
-            /// (It's not <see cref="SpriteSheet"/> and not <see cref="ISpriteGroup"/>).
+            /// (It's not an <see cref="ISpriteSheet"/> and not an <see cref="ISpriteGroup"/>).
             if (dirs.Count() != 0 && pics.Count() != 0) {
                 throw new ApplicationException(
                      $"Directory `{directory.Name}` "
