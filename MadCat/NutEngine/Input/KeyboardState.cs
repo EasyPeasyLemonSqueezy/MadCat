@@ -31,7 +31,7 @@ namespace NutEngine.Input
         /// true if key was pressed on previous state, but now released;
         /// false otherwise.
         /// </returns>
-        public bool IsKeyRealesedRightNow(XnaInput.Keys key)
+        public bool IsKeyReleasedRightNow(XnaInput.Keys key)
         {
             return PrevState.IsKeyDown(key) && CurrentState.IsKeyUp(key);
         }
