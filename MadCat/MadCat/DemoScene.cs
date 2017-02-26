@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NutInput = NutEngine.Input;
 using NutEngine;
 using NutPacker.Content;
 
@@ -10,8 +11,6 @@ namespace MadCat
     {
         private float ScreenHeight;
         private float ScreenWidth;
-
-        private KeyboardState PrevKeyboardState;
 
         private Texture2D Texture;
         private AdventureGirl AdventureGirl;
@@ -67,24 +66,21 @@ namespace MadCat
         {
             AdventureGirl.Update(deltaTime);
 
-            var keyboardState = Keyboard.GetState();
-            bool inAction = false;
+            var keyboardState = NutInput.Keyboard.GetState();
 
             /// Jump
-            if (keyboardState.IsKeyDown(Keys.Space) && PrevKeyboardState.IsKeyUp(Keys.Space)) {
+            if (keyboardState.IsKeyPressedRightNow(Keys.Space)) {
                 AdventureGirl.Jump();
-                inAction = true;
             }
 
             /// Shoot
-            if (keyboardState.IsKeyDown(Keys.LeftControl) && PrevKeyboardState.IsKeyUp(Keys.LeftControl)) {
+            if (keyboardState.IsKeyPressedRightNow(Keys.LeftControl)) {
                 AdventureGirl.Shoot();
-                inAction = true;
             }
 
-            if (keyboardState.IsKeyDown(Keys.F) && PrevKeyboardState.IsKeyUp(Keys.F)) {
+            /// Melee
+            if (keyboardState.IsKeyPressedRightNow(Keys.F)) {
                 AdventureGirl.Melee();
-                inAction = true;
             }
 
             /// Right
@@ -95,8 +91,6 @@ namespace MadCat
                 else {
                     AdventureGirl.RunRight(deltaTime);
                 }
-
-                inAction = true;
             }
 
             /// Left
@@ -107,8 +101,6 @@ namespace MadCat
                 else {
                     AdventureGirl.RunLeft(deltaTime);
                 }
-
-                inAction = true;
             }
 
             if (keyboardState.IsKeyDown(Keys.Up)) {
@@ -120,11 +112,9 @@ namespace MadCat
             }
             
             /// Stand
-            if (!inAction) {
+            if (keyboardState.GetPressedKeys().Length == 0) {
                 AdventureGirl.Stay();
             }
-
-            PrevKeyboardState = keyboardState;
         }
     }
 }
