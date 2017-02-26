@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="ITileSet.cs" />
     <Compile Include="ISpriteGroup.cs" />
-    <Compile Include="SpriteSheet.cs" />
+    <Compile Include="ISpriteSheet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

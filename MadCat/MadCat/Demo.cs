@@ -13,106 +13,183 @@ namespace NutPacker.Content
     
     public class AdventureGirl : NutPacker.ISpriteGroup
     {
-        public class Dead : NutPacker.SpriteSheet
+        public class Dead : NutPacker.ISpriteSheet
         {
-            public Dead()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(5846, 0, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(5846, 604, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(3846, 2710, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(4487, 2168, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(5128, 1688, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(5733, 1208, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(4451, 2772, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(5092, 2292, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(5733, 1812, 605, 604),
+                    new Microsoft.Xna.Framework.Rectangle(5128, 1084, 605, 604)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(5846, 0, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(5846, 604, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(3846, 2710, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(4487, 2168, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(5128, 1688, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(5733, 1208, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(4451, 2772, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(5092, 2292, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(5733, 1812, 605, 604),
-                        new Microsoft.Xna.Framework.Rectangle(5128, 1084, 605, 604)};
+                get
+                {
+                    return 10;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
-        public class Idle : NutPacker.SpriteSheet
+        public class Idle : NutPacker.ISpriteSheet
         {
-            public Idle()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(0, 1143, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1282, 1143, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2000, 0, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2000, 542, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2641, 0, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1923, 1143, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2641, 542, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3282, 0, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2564, 1084, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(641, 1143, 641, 542)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(0, 1143, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1282, 1143, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2000, 0, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2000, 542, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2641, 0, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1923, 1143, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2641, 542, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3282, 0, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2564, 1084, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(641, 1143, 641, 542)};
+                get
+                {
+                    return 10;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
-        public class Jump : NutPacker.SpriteSheet
+        public class Jump : NutPacker.ISpriteSheet
         {
-            public Jump()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(3282, 542, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(0, 1685, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(0, 2227, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(641, 1685, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(0, 2769, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(641, 2227, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1282, 1685, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(641, 2769, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1282, 2227, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3205, 1084, 641, 542)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(3282, 542, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(0, 1685, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(0, 2227, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(641, 1685, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(0, 2769, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(641, 2227, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1282, 1685, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(641, 2769, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1282, 2227, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3205, 1084, 641, 542)};
+                get
+                {
+                    return 10;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
-        public class Melee : NutPacker.SpriteSheet
+        public class Melee : NutPacker.ISpriteSheet
         {
-            public Melee()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(1923, 1685, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1282, 2769, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1923, 2227, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2564, 1626, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(1923, 2769, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2564, 2168, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3205, 1626, 641, 542)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(1923, 1685, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1282, 2769, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1923, 2227, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2564, 1626, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(1923, 2769, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2564, 2168, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3205, 1626, 641, 542)};
+                get
+                {
+                    return 7;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
-        public class Run : NutPacker.SpriteSheet
+        public class Run : NutPacker.ISpriteSheet
         {
-            public Run()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(2564, 2710, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3205, 2168, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(2564, 3252, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3205, 2710, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3205, 3252, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3923, 0, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3923, 542, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(4564, 0, 641, 542)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(2564, 2710, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3205, 2168, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(2564, 3252, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3205, 2710, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3205, 3252, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3923, 0, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3923, 542, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(4564, 0, 641, 542)};
+                get
+                {
+                    return 8;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
-        public class Shoot : NutPacker.SpriteSheet
+        public class Shoot : NutPacker.ISpriteSheet
         {
-            public Shoot()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(3846, 1084, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(4564, 542, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(5205, 0, 641, 542)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(3846, 1084, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(4564, 542, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(5205, 0, 641, 542)};
+                get
+                {
+                    return 3;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
-        public class Slide : NutPacker.SpriteSheet
+        public class Slide : NutPacker.ISpriteSheet
         {
-            public Slide()
+            private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
+                    new Microsoft.Xna.Framework.Rectangle(3846, 1626, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(4487, 1084, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(5205, 542, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(3846, 2168, 641, 542),
+                    new Microsoft.Xna.Framework.Rectangle(4487, 1626, 641, 542)};
+            public int Length
             {
-                this.Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                        new Microsoft.Xna.Framework.Rectangle(3846, 1626, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(4487, 1084, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(5205, 542, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(3846, 2168, 641, 542),
-                        new Microsoft.Xna.Framework.Rectangle(4487, 1626, 641, 542)};
+                get
+                {
+                    return 5;
+                }
+            }
+            public Microsoft.Xna.Framework.Rectangle this[int index]
+            {
+                get
+                {
+                    return Frames[index];
+                }
             }
         }
     }

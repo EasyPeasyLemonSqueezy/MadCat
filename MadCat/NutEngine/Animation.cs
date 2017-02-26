@@ -9,8 +9,8 @@ namespace NutEngine
     {
         public Texture2D Atlas { get; }
 
-        private SpriteSheet spriteSheet;
-        public SpriteSheet SpriteSheet {
+        private ISpriteSheet spriteSheet;
+        public ISpriteSheet SpriteSheet {
             get {
                 return spriteSheet;
             }
@@ -47,7 +47,7 @@ namespace NutEngine
         public float LayerDepth { get; set; }
 
 
-        public Animation(Texture2D atlas, SpriteSheet spriteSheet) : base()
+        public Animation(Texture2D atlas, ISpriteSheet spriteSheet) : base()
         {
             Atlas = atlas;
             SpriteSheet = spriteSheet;

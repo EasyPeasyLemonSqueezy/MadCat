@@ -7,13 +7,13 @@ namespace MadCat
 {
     public class AdventureGirl : Animation, NutEngine.IDrawable
     {
-        private SpriteSheet AdventureGirlDead;
-        private SpriteSheet AdventureGirlIdle;
-        private SpriteSheet AdventureGirlJump;
-        private SpriteSheet AdventureGirlMelee;
-        private SpriteSheet AdventureGirlRun;
-        private SpriteSheet AdventureGirlShoot;
-        private SpriteSheet AdventureGirlSlide;
+        private ISpriteSheet AdventureGirlDead;
+        private ISpriteSheet AdventureGirlIdle;
+        private ISpriteSheet AdventureGirlJump;
+        private ISpriteSheet AdventureGirlMelee;
+        private ISpriteSheet AdventureGirlRun;
+        private ISpriteSheet AdventureGirlShoot;
+        private ISpriteSheet AdventureGirlSlide;
 
         public Vector2 Offset;
 
