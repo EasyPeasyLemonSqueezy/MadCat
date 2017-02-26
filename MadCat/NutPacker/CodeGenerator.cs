@@ -40,17 +40,29 @@ namespace NutPacker
         /// <summary>
         /// Generate code of new SpriteSheet class.
         /// </summary>
+        /// <remarks>
+        /// Ya, all this code will be generated for every class,
+        /// but it's only way to use indexer with static field.
+        /// And ya, we need static field, cause we don't wanna create instance of array
+        /// each time when we use it.
+        /// So, it's some kinda singleton.
+        /// </remarks>
         /// <param name="spriteSheetName"> Name of new class/spriteSheet. </param>
-        /// <param name="rectangles"> Array of rectangles <see cref="SpriteSheet.Frames"/>. </param>
+        /// <param name="rectangles"> Array of rectangles. </param>
         /// <returns>
         /// <code>
-        /// public class <paramref name="spriteSheetName"/> : <see cref="SpriteSheet"/>
+        /// public class <paramref name="spriteSheetName"/> : <see cref="ISpriteSheet"/>
         /// {
-        ///     public <paramref name="spriteSheetName"/>() {
-        ///         this.Frames = new Rectangle[] {
-        ///             <paramref name="rectangles"/>
+        ///     private static <see cref="Xna.Rectangle"/>[] Frames =
+        ///         new <see cref="Xna.Rectangle"/>[] { }
+        ///     
+        ///     public int Length {
+        ///         get {
+        ///             return Frames.Length; // Here will be just number.
         ///         }
         ///     }
+        ///     
+        ///     public int this[int index] { get { return Frames[index] } }
         /// }
         /// </code>
         /// </returns>
@@ -65,8 +77,8 @@ namespace NutPacker
                 , TypeAttributes = TypeAttributes.Public
             };
 
-            /// Inherited from <see cref="SpriteSheet"/>.
-            spriteSheetClass.BaseTypes.Add(new CodeTypeReference(typeof(SpriteSheet)));
+            /// Inherited from <see cref="ISpriteSheet"/>.
+            spriteSheetClass.BaseTypes.Add(new CodeTypeReference(typeof(ISpriteSheet)));
 
             /// Array of expressions which create rectangles.
             CodeExpression[] createRectangles = new CodeExpression[rectangles.Length];
@@ -90,28 +102,71 @@ namespace NutPacker
                   new CodeTypeReference(typeof(Xna.Rectangle))
                 , createRectangles);
 
-            /// Create field - "Frames".
-            /// this.Frames;
-            CodeFieldReferenceExpression frames = new CodeFieldReferenceExpression(
-                  new CodeThisReferenceExpression()
-                , "Frames");
 
-            /// Frames = array of rectangles:
-            /// this.Frames = new Rectangles[rectangles.Length] {
-            ///     <param name="rectangles"></param>
-            /// };
-            CodeAssignStatement assign = new CodeAssignStatement(frames, createArray);
-
-            /// Create constructor.
-            CodeConstructor constructor = new CodeConstructor() {
-                  Name = spriteSheetName
-                , Attributes = MemberAttributes.Public
+            /// private static field with array of <see cref="Xna.Rectangle"/> which called Frames.
+            CodeMemberField frames = new CodeMemberField() {
+                  Attributes = MemberAttributes.Private | MemberAttributes.Static | MemberAttributes.Final
+                , Type = new CodeTypeReference(typeof(Xna.Rectangle[]))
+                , Name = "Frames"
+                , InitExpression = createArray
             };
 
-            /// Add assignment to constructor.
-            constructor.Statements.Add(assign);
-            /// Add constuctor to class.
-            spriteSheetClass.Members.Add(constructor);
+            /// Length property,
+            /// only one getter which return number of rectangles in Frames field.
+            CodeMemberProperty length = new CodeMemberProperty() {
+                  Attributes = MemberAttributes.Public | MemberAttributes.Final
+                , Type = new CodeTypeReference(typeof(int))
+                , Name = "Length"
+                , HasGet = true
+            };
+
+            /// Expression which return number of rectangles.
+            CodeMethodReturnStatement retn =
+                new CodeMethodReturnStatement(new CodePrimitiveExpression(rectangles.Length));
+            /// Add return expression to length getter.
+            length.GetStatements.Add(retn);
+
+            /// Indexer.
+            /// I don't know why, but it's only way to create indexer.
+            /// Ya, we MUST create PROPERTY which called "Item", not "item" or "indexer" or somthing else,
+            /// just fucking "Item".
+            /// And after thar, we MUST add declaration of variable to PROPERTY parameters.
+            /// Microsoft what the fuck?
+            /// Documentation says we should use <see cref="CodeIndexerExpression"/>,
+            /// but it's not work.
+            /// Anyway, I found ONE post from 2003 with correct example
+            /// source: https://forums.asp.net/post/354445.aspx
+            /// thanks man, this is gonna suck when your post will be deleted.
+            CodeMemberProperty indexer = new CodeMemberProperty() {
+                  Attributes = MemberAttributes.Public | MemberAttributes.Final
+                , Type = new CodeTypeReference(typeof(Xna.Rectangle))
+                , Name = "Item"
+                , HasGet = true
+            };
+
+            /// Declaration of variable.
+            /// int index
+            CodeParameterDeclarationExpression index =
+                new CodeParameterDeclarationExpression(
+                      new CodeTypeReference(typeof(int))
+                    , "index"
+                    );
+
+            /// Magic continues.
+            indexer.Parameters.Add(index);
+
+            /// Create getter.
+            /// get { return Frames[index]; }
+            indexer.GetStatements.Add(new CodeMethodReturnStatement(
+                new CodeArrayIndexerExpression(
+                      new CodeVariableReferenceExpression("Frames")
+                    , new CodeVariableReferenceExpression("index"))
+                ));
+            
+            /// Add Frames field, Length property, and indexer to the class.
+            spriteSheetClass.Members.Add(frames);
+            spriteSheetClass.Members.Add(length);
+            spriteSheetClass.Members.Add(indexer);
 
             return spriteSheetClass;
         }
