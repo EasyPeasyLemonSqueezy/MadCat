@@ -28,7 +28,7 @@ namespace NutEngine
         /// чтобы можно было прицепить один узел к другому,
         /// и тогда положение ребенка будет определяется
         /// положением его родителя.
-        protected Transform2D transform;
+        protected Matrix2D transform;
 
         public Node Parent { get { return parent; } }
         public List<Node> Children { get; }
@@ -40,7 +40,7 @@ namespace NutEngine
 
         public Node()
         {
-            transform = new Transform2D();
+            transform = Matrix2D.Identity;
             Children = new List<Node>();
             Position = Vector2.Zero;
             Scale = Vector2.One;
@@ -54,7 +54,7 @@ namespace NutEngine
         /// затем сортируем детей по ZOrder и рисуем в таком порядке:
         /// Дети с ZOrder меньше 0 -> сам узел -> дети с ZOrder больше либо равно 0
         /// </summary>
-        public virtual void Visit(SpriteBatch spriteBatch, Transform2D currentTransform)
+        public virtual void Visit(SpriteBatch spriteBatch, Matrix2D currentTransform)
         {
             if (Hidden) {
                 return;
@@ -63,7 +63,7 @@ namespace NutEngine
             /// Пересчитать матрицу.
             /// TODO: Делать это только тогда, когда необходимо,
             /// то есть изменились Scale, Rotation и Position.
-            transform.SetTransform(Scale, Rotation, Position);
+            transform = Matrix2D.CreateTransformation(Position, Scale, Rotation);
 
             /// Перейти в новую систему координат
             currentTransform = transform * currentTransform;

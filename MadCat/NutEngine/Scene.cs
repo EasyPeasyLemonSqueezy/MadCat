@@ -43,7 +43,7 @@ namespace NutEngine
 
             Batcher.Begin();
 
-            Transform2D transform = new Transform2D();
+            var transform = Matrix2D.Identity;
             World.Visit(Batcher, transform);
 
             Batcher.End();
