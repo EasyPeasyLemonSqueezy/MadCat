@@ -5,9 +5,24 @@ namespace NutEngine
 {
     public class Sprite : Node, IDrawable
     {
-        public Texture2D Atlas { get; }
+        public Texture2D Atlas { get; private set; }
 
-        public Rectangle? Frame { get; set; }
+        private Rectangle? frame;
+        public Rectangle? Frame {
+            get {
+                return frame;
+            }
+            set {
+                frame = value;
+
+                if (value != null) {
+                    Origin = new Vector2(Frame.Value.Width / 2f, Frame.Value.Height / 2f);
+                }
+                else {
+                    Origin = new Vector2(Atlas.Width / 2.0f, Atlas.Height / 2.0f);
+                }
+            }
+        }
         public Color Color { get; set; }
 
         /// Center of the rotation, by default - center of the frame/atlas.
@@ -22,16 +37,17 @@ namespace NutEngine
 
             Color = Color.White;
 
-            if (Frame != null) {
-                var center = Frame.Value.Center - Frame.Value.Location;
-                Origin = new Vector2(center.X, center.Y);
-            }
-            else {
-                Origin = new Vector2(Atlas.Width / 2.0f, Atlas.Height / 2.0f);
-            }
-
             Effects = SpriteEffects.None;
             LayerDepth = 0;
+        }
+
+        public void Change(Sprite sprite)
+        {
+            Atlas = sprite.Atlas;
+            Frame = sprite.Frame;
+            Color = sprite.Color;
+            Effects = sprite.Effects;
+            LayerDepth = sprite.LayerDepth;
         }
 
         public void Draw(SpriteBatch spriteBatch, Transform2D currentTransform)
