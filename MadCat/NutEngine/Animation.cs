@@ -7,7 +7,7 @@ namespace NutEngine
 {
     public class Animation : Node, IDrawable
     {
-        public Texture2D Atlas { get; }
+        public Texture2D Atlas { get; private set; }
 
         private ISpriteSheet spriteSheet;
         public ISpriteSheet SpriteSheet {
@@ -91,6 +91,19 @@ namespace NutEngine
             Enabled = true;
             ElapsedTime = 0;
             CurrentIndex = 0;
+        }
+
+        public void Change(Animation animation)
+        {
+            Atlas = animation.Atlas;
+            SpriteSheet = animation.SpriteSheet;
+            Duration = animation.Duration;
+            Repeat = animation.Repeat;
+            Enabled = animation.Enabled;
+            AnimationType = animation.AnimationType;
+            Color = animation.Color;
+            Effects = animation.Effects;
+            LayerDepth = animation.LayerDepth;
         }
 
         public virtual void Update(float deltaTime)
