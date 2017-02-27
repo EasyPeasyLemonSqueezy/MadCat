@@ -124,12 +124,11 @@ namespace NutEngine
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Transform2D currentTransform)
+        public void Draw(SpriteBatch spriteBatch, Matrix2D currentTransform)
         {
-            Vector2 position, scale;
-            float rotation;
-
-            currentTransform.Decompose(out scale, out rotation, out position);
+            var position = currentTransform.Translation;
+            var rotation = currentTransform.Rotation;
+            var scale = currentTransform.Scale;
 
             spriteBatch.Draw(
                   Atlas

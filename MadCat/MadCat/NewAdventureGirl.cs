@@ -190,7 +190,7 @@ namespace MadCat
             CurrentAnimation.Update(deltaTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Transform2D currentTransform)
+        public void Draw(SpriteBatch spriteBatch, Matrix2D currentTransform)
         {
             CurrentAnimation.Draw(spriteBatch, currentTransform);
         }
