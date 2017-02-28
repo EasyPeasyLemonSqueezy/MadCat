@@ -39,7 +39,7 @@ namespace NutEngine
         public Camera(float width, float height) : base()
         {
             Rect = new Vector2(width, height);
-            Origin = new Vector2(width / 2.0f, height / 2.0f);
+            Origin = new Vector2(0.5f, 0.5f);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace NutEngine
             Content = app.Content;
             rootNode = new Node();
             World = new Node();
-            Camera = new Camera(0.0f, 0.0f); /// TODO: Игре нужно знать о высоте и ширине окна
+            Camera = new Camera(App.ScreenWidth, App.ScreenHeight);
             rootNode.AddChild(World);
             rootNode.AddChild(Camera);
         }
