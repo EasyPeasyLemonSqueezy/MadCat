@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
 namespace NutEngine
 {
     public class Camera : Node
     {
-        public Camera() : base()
+        /// TODO: Либо найти способ без доп. поля перегрузить Position,
+        /// либо сделать полями Position, Scale и Rotation
+        private Vector2 position;
+        public override Vector2 Position
         {
-
+            get { return position; }
+            set { position = -value; }
         }
     }
 }

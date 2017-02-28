@@ -32,7 +32,7 @@ namespace NutEngine
 
         public Node Parent { get { return parent; } }
         public List<Node> Children { get; }
-        public Vector2 Position { get; set; } /// Позиция
+        public virtual Vector2 Position { get; set; } /// Позиция
         public Vector2 Scale { get; set; } /// Масштаб
         public float Rotation { get; set; } /// Поворот
         public int ZOrder { get; set; } /// Z индекс
