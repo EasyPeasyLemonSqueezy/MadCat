@@ -26,6 +26,8 @@ namespace NutEngine
             rootNode = new Node();
             World = new Node();
             Camera = new Camera();
+            rootNode.AddChild(World);
+            rootNode.AddChild(Camera);
         }
 
         /// <summary>
@@ -43,11 +45,10 @@ namespace NutEngine
         {
             App.GraphicsDevice.Clear(Color.Black); /// Залить все черным
 
-            /// Рисовать относительно камеры. Здесь неявное преобразование в Matrix из Monogame
-            Batcher.Begin(transformMatrix: Camera.Transform);
+            Batcher.Begin();
 
-            var transform = Matrix2D.Identity;
-            World.Visit(Batcher, transform);
+            var transform = Camera.Transform;
+            rootNode.Visit(Batcher, transform);
 
             Batcher.End();
         }
