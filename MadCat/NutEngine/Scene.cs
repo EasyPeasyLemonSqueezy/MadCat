@@ -10,9 +10,9 @@ namespace NutEngine
         protected ContentManager Content { get; }
         protected SpriteBatch Batcher { get; }
 
-        /// Корень графа сцены, который является родителем
-        /// для всех объектов в мире игры.
+        private Node rootNode;
         protected Node World { get; set; }
+        protected Camera Camera { get; set; }
 
         /// <summary>
         /// Сохраняем в сцене ссылки на нашу игру, то, чем рисуем
@@ -23,7 +23,9 @@ namespace NutEngine
             App = app;
             Batcher = app.Batcher;
             Content = app.Content;
+            rootNode = new Node();
             World = new Node();
+            Camera = new Camera();
         }
 
         /// <summary>
@@ -41,7 +43,8 @@ namespace NutEngine
         {
             App.GraphicsDevice.Clear(Color.Black); /// Залить все черным
 
-            Batcher.Begin();
+            /// Рисовать относительно камеры. Здесь неявное преобразование в Matrix из Monogame
+            Batcher.Begin(transformMatrix: Camera.Transform);
 
             var transform = Matrix2D.Identity;
             World.Visit(Batcher, transform);

@@ -28,7 +28,7 @@ namespace NutEngine
         /// чтобы можно было прицепить один узел к другому,
         /// и тогда положение ребенка будет определяется
         /// положением его родителя.
-        protected Matrix2D transform;
+        public Matrix2D Transform { get; set; }
 
         public Node Parent { get { return parent; } }
         public List<Node> Children { get; }
@@ -40,7 +40,7 @@ namespace NutEngine
 
         public Node()
         {
-            transform = Matrix2D.Identity;
+            Transform = Matrix2D.Identity;
             Children = new List<Node>();
             Position = Vector2.Zero;
             Scale = Vector2.One;
@@ -63,10 +63,10 @@ namespace NutEngine
             /// Пересчитать матрицу.
             /// TODO: Делать это только тогда, когда необходимо,
             /// то есть изменились Scale, Rotation и Position.
-            transform = Matrix2D.CreateTransformation(Position, Scale, Rotation);
+            Transform = Matrix2D.CreateTransformation(Position, Scale, Rotation);
 
             /// Перейти в новую систему координат
-            currentTransform = transform * currentTransform;
+            currentTransform = Transform * currentTransform;
 
             /// Упорядочить детей по Z индексу
             var orderedChildren = Children.OrderBy(node => node.ZOrder).GetEnumerator();
