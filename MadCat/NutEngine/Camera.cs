@@ -12,5 +12,14 @@ namespace NutEngine
             get { return position; }
             set { position = -value; }
         }
+
+        public float Zoom
+        {
+            get { return Scale.X; }
+            set { Scale = new Vector2(value, value); }
+        }
+
+        /// TODO: Сделать камере Origin,
+        /// центр, относительно которого происходят преобразования
     }
 }
