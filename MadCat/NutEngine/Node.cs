@@ -28,7 +28,7 @@ namespace NutEngine
         /// чтобы можно было прицепить один узел к другому,
         /// и тогда положение ребенка будет определяется
         /// положением его родителя.
-        public Matrix2D Transform { get; set; }
+        public virtual Matrix2D Transform { get; private set; }
 
         public Node Parent { get { return parent; } }
         public List<Node> Children { get; }
