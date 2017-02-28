@@ -240,5 +240,18 @@ namespace NutEngine
                 matrix[row, column] = value;
             }
         }
+
+        public static implicit operator Matrix(Matrix2D matrix2d)
+        {
+            Matrix matrix = Matrix.Identity;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    matrix[i, j] = matrix2d[i, j];
+                }
+            }
+            return matrix;
+        }
     }
 }
