@@ -10,6 +10,11 @@ namespace NutPacker
 
             if (CommandLine.Parser.Default.ParseArgumentsStrict(args, opt)) {
                 try {
+                    /// Generate source code by default.
+                    if (!(opt.GenerateLib || opt.GenerateSource)) {
+                        opt.GenerateSource = true;
+                    }
+
                     Packer.Pack(opt);
                 }
                 catch (ApplicationException e) {
