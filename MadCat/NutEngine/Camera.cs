@@ -2,34 +2,29 @@
 
 namespace NutEngine
 {
-    public class Camera : Node
+    public class Camera
     {
-        public override Matrix2D Transform
+        /// TODO: Считать матрицу без 5 умножений
+        /// и делать это по-разному в унаследованных камерах
+        public Matrix2D Transform
         {
             get
             {
                 return Matrix2D.CreateTranslation(-Position) *
                        Matrix2D.CreateTranslation(-Origin) *
                        Matrix2D.CreateRotation(Rotation) *
-                       Matrix2D.CreateScale(Scale) *
+                       Matrix2D.CreateScale(new Vector2(Zoom, Zoom)) *
                        Matrix2D.CreateTranslation(Origin);
             }
         }
 
-        public float Zoom
-        {
-            get { return Scale.X; }
-            set { Scale = new Vector2(value, value); }
-        }
+        public Vector2 Position { get; set; }
+        public float Rotation { get; set; }
+        public float Zoom { get; set; }
 
         public Vector2 Rect { get; set; }
 
-        /// <summary>
-        /// Центр, относительно которого происходят преобразования.
-        /// Принимает Vector2 со значениями от 0 до 1 и переводит
-        /// их в значения внутри кадра камеры.
-        /// </summary>
-        public Vector2 origin;
+        private Vector2 origin;
         public Vector2 Origin
         {
             get { return origin; }

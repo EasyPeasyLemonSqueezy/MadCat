@@ -10,7 +10,6 @@ namespace NutEngine
         protected ContentManager Content { get; }
         protected SpriteBatch Batcher { get; }
 
-        private Node rootNode;
         protected Node World { get; set; }
         protected Camera Camera { get; set; }
 
@@ -23,11 +22,8 @@ namespace NutEngine
             App = app;
             Batcher = app.Batcher;
             Content = app.Content;
-            rootNode = new Node();
             World = new Node();
             Camera = new Camera(App.ScreenWidth, App.ScreenHeight);
-            rootNode.AddChild(World);
-            rootNode.AddChild(Camera);
         }
 
         /// <summary>
@@ -48,7 +44,7 @@ namespace NutEngine
             Batcher.Begin();
 
             var transform = Camera.Transform;
-            rootNode.Visit(Batcher, transform);
+            World.Visit(Batcher, transform);
 
             Batcher.End();
         }
