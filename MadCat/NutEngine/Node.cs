@@ -31,17 +31,19 @@ namespace NutEngine
         public virtual Matrix2D Transform { get; private set; }
 
         public Node Parent { get { return parent; } }
-        public List<Node> Children { get; }
+        private SortedSet<Node> Children { get; }
         public virtual Vector2 Position { get; set; } /// Позиция
         public Vector2 Scale { get; set; } /// Масштаб
         public float Rotation { get; set; } /// Поворот
         public int ZOrder { get; set; } /// Z индекс
         public bool Hidden { get; set; } /// Скрыт ли узел
 
+        protected static IComparer<Node> Comparer = new NodeComparer();
+
         public Node()
         {
             Transform = Matrix2D.Identity;
-            Children = new List<Node>();
+            Children = new SortedSet<Node>(Comparer);
             Position = Vector2.Zero;
             Scale = Vector2.One;
             Rotation = 0.0f;
@@ -68,14 +70,13 @@ namespace NutEngine
             /// Перейти в новую систему координат
             currentTransform = Transform * currentTransform;
 
-            /// Упорядочить детей по Z индексу
-            var orderedChildren = Children.OrderBy(node => node.ZOrder).GetEnumerator();
-            bool next = orderedChildren.MoveNext();
+            var children = Children.GetEnumerator();
+            bool next = children.MoveNext();
 
             /// Узлы с ZOrder меньше нуля
-            while (next && orderedChildren.Current.ZOrder < 0) {
-                orderedChildren.Current.Visit(spriteBatch, currentTransform);
-                next = orderedChildren.MoveNext();
+            while (next && children.Current.ZOrder < 0) {
+                children.Current.Visit(spriteBatch, currentTransform);
+                next = children.MoveNext();
             }
 
             /// Отрисовать сам узел при необходимости
@@ -86,8 +87,8 @@ namespace NutEngine
 
             /// Узлы с ZOrder больше либо равно нулю
             while (next) {
-                orderedChildren.Current.Visit(spriteBatch, currentTransform);
-                next = orderedChildren.MoveNext();
+                children.Current.Visit(spriteBatch, currentTransform);
+                next = children.MoveNext();
             }
         }
 
