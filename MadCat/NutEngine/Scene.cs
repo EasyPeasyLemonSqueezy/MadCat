@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using NutEngine.Camera;
 
 namespace NutEngine
 {
@@ -11,7 +12,7 @@ namespace NutEngine
         protected SpriteBatch Batcher { get; }
 
         protected Node World { get; set; }
-        protected Camera Camera { get; set; }
+        protected Camera2D Camera { get; set; }
 
         /// <summary>
         /// Сохраняем в сцене ссылки на нашу игру, то, чем рисуем
@@ -23,7 +24,7 @@ namespace NutEngine
             Batcher = app.Batcher;
             Content = app.Content;
             World = new Node();
-            Camera = new Camera(App.ScreenWidth, App.ScreenHeight);
+            Camera = new OrthographicSRTCamera(new Vector2(App.ScreenWidth, App.ScreenHeight));
         }
 
         /// <summary>
