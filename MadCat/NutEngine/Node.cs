@@ -42,8 +42,13 @@ namespace NutEngine
 
         public Node()
         {
-            Transform = Matrix2D.Identity;
             Children = new SortedSet<Node>(Comparer);
+            Initialize();
+        }
+
+        protected void Initialize()
+        {
+            Transform = Matrix2D.Identity;
             Position = Vector2.Zero;
             Scale = Vector2.One;
             Rotation = 0.0f;

@@ -5,35 +5,35 @@ namespace NutEngine
 {
     public class Sprite : Node, IDrawable
     {
-        public Texture2D Atlas { get; private set; }
+        public TextureRegion TextureRegion { get; protected set; }
 
-        private Rectangle? frame;
-        public Rectangle? Frame {
-            get {
-                return frame;
-            }
-            set {
-                frame = value;
-
-                if (value != null) {
-                    Origin = new Vector2(Frame.Value.Width / 2f, Frame.Value.Height / 2f);
-                }
-                else {
-                    Origin = new Vector2(Atlas.Width / 2.0f, Atlas.Height / 2.0f);
-                }
-            }
-        }
-        public Color Color { get; set; }
-
-        /// Center of the rotation, by default - center of the frame/atlas.
+        /// Center of the transformations, by default - center of the frame/texture.
         public Vector2 Origin { get; set; }
+
+        public Color Color { get; set; }
         public SpriteEffects Effects { get; set; }
         public float LayerDepth { get; set; }
 
-        public Sprite(Texture2D atlas, Rectangle? frame = null) : base()
+        public Sprite(Texture2D texture) : base()
         {
-            Atlas = atlas;
-            Frame = frame;
+            TextureRegion = new TextureRegion(texture);
+            Initialize();
+        }
+
+        public Sprite(Texture2D texture, Rectangle frame) : base()
+        {
+            TextureRegion = new TextureRegion(texture, frame);
+            Initialize();
+        }
+
+        protected new void Initialize()
+        {
+            base.Initialize();
+
+            Origin = new Vector2(
+                  TextureRegion.Frame.Width  / 2f
+                , TextureRegion.Frame.Height / 2f
+                );
 
             Color = Color.White;
 
@@ -43,8 +43,13 @@ namespace NutEngine
 
         public void Change(Sprite sprite)
         {
-            Atlas = sprite.Atlas;
-            Frame = sprite.Frame;
+            TextureRegion = sprite.TextureRegion;
+            
+            Origin = new Vector2(
+                  TextureRegion.Frame.Width  / 2f
+                , TextureRegion.Frame.Height / 2f
+                );
+
             Color = sprite.Color;
             Effects = sprite.Effects;
             LayerDepth = sprite.LayerDepth;
@@ -54,12 +59,12 @@ namespace NutEngine
         {
             var position = currentTransform.Translation;
             var rotation = currentTransform.Rotation;
-            var scale = currentTransform.Scale;
+            var scale    = currentTransform.Scale;
 
             spriteBatch.Draw(
-                  Atlas
+                  TextureRegion.Texture
                 , position
-                , Frame
+                , TextureRegion.Frame
                 , Color
                 , rotation
                 , Origin
