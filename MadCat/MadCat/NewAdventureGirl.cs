@@ -150,6 +150,7 @@ namespace MadCat
                 Effects = SpriteEffects.None;
 
                 ChangeAnimation(AdventureGirlSlide);
+                
             }
         }
 
@@ -188,6 +189,7 @@ namespace MadCat
 
             CurrentAnimation.Effects = Effects;
             CurrentAnimation.Update(deltaTime);
+            
         }
 
         public void Draw(SpriteBatch spriteBatch, Matrix2D currentTransform)

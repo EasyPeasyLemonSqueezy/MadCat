@@ -12,9 +12,12 @@ namespace MadCat
         private float ScreenHeight;
         private float ScreenWidth;
 
+        private Texture2D TexturePlatform;
         private Texture2D Texture;
-        private AdventureGirl AdventureGirl;
         private Node Ground;
+        private LastAdventureGirl AdventureGirl1;
+        private LastAdventureGirl AdventureGirl2;
+        private LastAdventureGirl AdventureGirl3;
 
         public DemoScene(Application app) : base(app)
         {
@@ -22,6 +25,8 @@ namespace MadCat
             ScreenWidth = app.GraphicsDevice.PresentationParameters.BackBufferWidth;
 
             Texture = Content.Load<Texture2D>("Demo");
+            TexturePlatform = Content.Load<Texture2D>("WPlatform");
+
 
             var background = new Sprite(Texture, Graveyard.Tiles.BG) {
                   Position = new Vector2(ScreenWidth / 2, ScreenHeight / 2)
@@ -54,67 +59,30 @@ namespace MadCat
                 , Scale = new Vector2(.5f, .5f)
                 , ZOrder = 10
             });
+            Ground.AddChild(new Sprite(TexturePlatform, Graveyard.Objects.Bush_1_)  // просто прямоугольник белый для тестов
+            {
+                Position = new Vector2(800, -256)       //188 x 94            // 100 x 152
+                ,
+                Scale = new Vector2(1f, 1f)
+                ,
+                ZOrder = 10
+            });
 
+            AdventureGirl1 = new LastAdventureGirl(Texture, Keys.LeftControl, Keys.Right, Keys.Left, Keys.Up, Keys.LeftShift, Keys.Down);
+            AdventureGirl2 = new LastAdventureGirl(Texture, Keys.Q, Keys.D, Keys.A, Keys.W, Keys.F, Keys.S);
+            AdventureGirl3 = new LastAdventureGirl(Texture, Keys.J, Keys.L, Keys.K, Keys.O, Keys.P, Keys.M);
 
-            AdventureGirl = new AdventureGirl(Texture);
-
-            Ground.AddChild(AdventureGirl);
+            Ground.AddChild(AdventureGirl1);
+            Ground.AddChild(AdventureGirl2);
+            Ground.AddChild(AdventureGirl3);
             World.AddChild(Ground);
         }
 
         public override void Update(float deltaTime)
         {
-            AdventureGirl.Update(deltaTime);
-
-            var keyboardState = NutInput.Keyboard.GetState();
-
-            /// Jump
-            if (keyboardState.IsKeyPressedRightNow(Keys.Space)) {
-                AdventureGirl.Jump();
-            }
-
-            /// Shoot
-            if (keyboardState.IsKeyPressedRightNow(Keys.LeftControl)) {
-                AdventureGirl.Shoot();
-            }
-
-            /// Melee
-            if (keyboardState.IsKeyPressedRightNow(Keys.F)) {
-                AdventureGirl.Melee();
-            }
-
-            /// Right
-            if (keyboardState.IsKeyDown(Keys.Right)) {
-                if (keyboardState.IsKeyDown(Keys.LeftShift)) {
-                    AdventureGirl.SlideRight();
-                }
-                else {
-                    AdventureGirl.RunRight(deltaTime);
-                }
-            }
-
-            /// Left
-            if (keyboardState.IsKeyDown(Keys.Left)) {
-                if (keyboardState.IsKeyDown(Keys.LeftShift)) {
-                    AdventureGirl.SlideLeft();
-                }
-                else {
-                    AdventureGirl.RunLeft(deltaTime);
-                }
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Up)) {
-                Ground.Position += new Vector2(0, -200 * deltaTime);
-            }
-
-            if (keyboardState.IsKeyDown(Keys.Down)) {
-                Ground.Position += new Vector2(0, 200 * deltaTime);
-            }
-            
-            /// Stand
-            if (keyboardState.GetPressedKeys().Length == 0) {
-                AdventureGirl.Stay();
-            }
+            AdventureGirl2.Update(deltaTime);
+            AdventureGirl3.Update(deltaTime);
+            AdventureGirl1.Update(deltaTime);       
         }
     }
 }
