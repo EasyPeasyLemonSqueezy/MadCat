@@ -10,10 +10,10 @@ namespace MadCat
 
         public DemoGame()
         {
-            graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-            graphics.ApplyChanges();
+            Graphics = new GraphicsDeviceManager(this);
+            Graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            Graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            Graphics.ApplyChanges();
 
             Content.RootDirectory = "Content"; /// Folder with content.
         }
@@ -23,7 +23,7 @@ namespace MadCat
             base.Initialize();
             var startScene = new DemoScene(this);
 
-            runWithScene(startScene);
+            RunWithScene(startScene);
         }
     }
 }

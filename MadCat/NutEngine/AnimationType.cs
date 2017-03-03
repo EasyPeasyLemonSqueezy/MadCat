@@ -6,7 +6,7 @@
     /// <param name="frames"> Total number of frames in animation. </param>
     /// <param name="duration"> Duration of animation. </param>
     /// <param name="time"> Elapsed time. </param>
-    /// <returns></returns>
+    /// <returns> Number of current frame. </returns>
     public delegate int AnimationType(int frames, float duration, float time);
 
     /// <summary>
