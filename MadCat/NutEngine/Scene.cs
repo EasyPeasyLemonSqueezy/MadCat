@@ -14,10 +14,6 @@ namespace NutEngine
         protected Node World { get; set; }
         protected Camera2D Camera { get; set; }
 
-        /// <summary>
-        /// Сохраняем в сцене ссылки на нашу игру, то, чем рисуем
-        /// и на менеджер контента, которым загружаем все ресурсы.
-        /// </summary>
         public Scene(Application app)
         {
             App = app;
@@ -28,19 +24,20 @@ namespace NutEngine
         }
 
         /// <summary>
-        /// Метод, в котором обновляем состояние сцены.
-        /// Его необходимо перегрузить в каждой конкретной сцене.
+        /// Update current game state.
+        /// You should realize it in every your scene.
         /// </summary>
         public abstract void Update(float deltaTime);
 
         /// <summary>
-        /// Отрисовывает сцену.
-        /// Вызывает метод Visit у каждого узла,
-        /// начиная с корня (dfs).
+        /// Draw the scene.
+        /// Execute <see cref="Node.Visit(SpriteBatch, Matrix2D)"/>
+        /// on each node, start from root node - <see cref="World"/>.
         /// </summary>
         public void Draw()
         {
-            App.GraphicsDevice.Clear(Color.Black); /// Залить все черным
+            /// Fill background with black color.
+            App.GraphicsDevice.Clear(Color.Black);
 
             Batcher.Begin();
 

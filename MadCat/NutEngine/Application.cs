@@ -5,66 +5,58 @@ using System.Collections.Generic;
 namespace NutEngine
 {
     /// <summary>
-    /// Класс приложения, от которого наследуется наша игра.
-    /// Этот класс в свою очередь наследуется от класса monogame Game.
-    /// Application занимается всеми внутренними процессами движка:
-    /// управляет текущей сценой, меняет ее и тд.
+    /// Application class.
     /// </summary>
+    /// <remarks>
+    /// Application is a wrapper for <see cref="Game"/>.
+    /// It uses for change scenes, contain <see cref="Batcher"/>
+    /// and other things.
+    /// You should inherit your game class from it.
+    /// </remarks>
     public class Application : Game
     {
-        protected GraphicsDeviceManager graphics; /// Управляет окном игры
-        protected SpriteBatch spriteBatch; /// То, чем мы рисуем
-        public Stack<Scene> scenes; /// Сцены
+        protected GraphicsDeviceManager Graphics; /// Game window control.
+        protected SpriteBatch SpriteBatch;
+        public Stack<Scene> Scenes;
 
-        public SpriteBatch Batcher { get { return spriteBatch; } }
+        public SpriteBatch Batcher { get { return SpriteBatch; } }
 
         public float ScreenWidth { get { return GraphicsDevice.PresentationParameters.BackBufferWidth; } }
         public float ScreenHeight { get { return GraphicsDevice.PresentationParameters.BackBufferHeight; } }
 
         /// <summary>
-        /// В конструкторе Application создается окно игры и инициализируются
-        /// прочие важные вещи. До того, как он завершит свою работу, не получится
-        /// загрузить картинки, звуки и тд. Поэтому в monogame есть отдельный метод
-        /// Initialize, предназначенный для подобных вещей.
+        /// You should override this method in your game class
+        /// and for example start your first scene.
         /// </summary>
-        /// <remarks>
-        /// Initialize необходимо перегрузить в классе игры и сделать все, что
-        /// нужно при запуске игры.
-        /// </remarks>
         protected override void Initialize()
         {
             base.Initialize();
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            scenes = new Stack<Scene>();
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Scenes = new Stack<Scene>();
         }
 
         /// <summary>
-        /// Метод, в котором обновляется состояние игры, то есть вызывается
-        /// обновление состояния текущей сцены.
+        /// Update current game scene
         /// </summary>
-        /// <param name="gameTime">
-        /// Информация о том, сколько времени прошло с прошлого кадра.
-        /// Мы оттуда просто берем время в секундах и передаем дальше в игру.
-        /// </param>
+        /// <param name="gameTime"> Elapsed time. </param>
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            scenes.Peek().Update(deltaTime);
+            Scenes.Peek().Update(deltaTime);
             base.Update(gameTime);
         }
 
         /// <summary>
-        /// Вызывает отрисовку текущей сцены.
+        /// Draw the current scene.
         /// </summary>
         protected override void Draw(GameTime gameTime)
         {
-            scenes.Peek().Draw();
+            Scenes.Peek().Draw();
             base.Draw(gameTime);
         }
 
         /// <summary>
-        /// Вызовется при выходе игры, чтобы удостовериться, что
-        /// весь контент был освобожден.
+        /// Release all loaded content.
         /// </summary>
         protected override void UnloadContent()
         {
@@ -72,16 +64,16 @@ namespace NutEngine
         }
 
         /// <summary>
-        /// Запустить первую сцену при запуске игры или сменить текущую.
+        /// Start a new scene, or change current.
         /// </summary>
-        public void runWithScene(Scene scene)
+        public void RunWithScene(Scene scene)
         {
-            if (scenes.Count == 0) {
-                scenes.Push(scene);
+            if (Scenes.Count == 0) {
+                Scenes.Push(scene);
             }
             else {
-                scenes.Pop();
-                scenes.Push(scene);
+                Scenes.Pop();
+                Scenes.Push(scene);
             }
         }
     }
