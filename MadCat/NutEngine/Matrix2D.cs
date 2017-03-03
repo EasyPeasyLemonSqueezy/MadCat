@@ -87,7 +87,7 @@ namespace NutEngine
         }
 
         /// <summary>
-        /// Create Transformation matrix.
+        /// Create TRS Transformation matrix.
         /// </summary>
         /// <param name="translation"> Translation vector. </param>
         /// <param name="scale"> Scale vector. </param>
@@ -95,7 +95,7 @@ namespace NutEngine
         /// <returns>
         /// Transformation matrix.
         /// </returns>
-        public static Matrix2D CreateTransformation(Vector2 translation, Vector2 scale, float rotation)
+        public static Matrix2D CreateTRS(Vector2 translation, Vector2 scale, float rotation)
         {
             var cos = (float)Math.Cos(rotation);
             var sin = (float)Math.Sin(rotation);
@@ -104,6 +104,35 @@ namespace NutEngine
                   { scale.X * cos, -scale.X * sin, translation.X }
                 , { scale.Y * sin,  scale.Y * cos, translation.Y }
                 , {       0,              0,             1       }
+            };
+
+            return new Matrix2D(ref matrix);
+        }
+
+        /// <summary>
+        /// Create SRT Transformation matrix.
+        /// </summary>
+        /// <param name="translation"> Translation vector. </param>
+        /// <param name="scale"> Scale vector. </param>
+        /// <param name="rotation"> Angle in radians. </param>
+        /// <returns>
+        /// Transformation matrix.
+        /// </returns>
+        public static Matrix2D CreateSRT(Vector2 translation, Vector2 scale, float rotation)
+        {
+            var cos = (float)Math.Cos(rotation);
+            var sin = (float)Math.Sin(rotation);
+
+            var SxCos = scale.X * cos;
+            var SxSin = scale.X * sin;
+
+            var SyCos = scale.Y * cos;
+            var SySin = scale.Y * sin;
+
+            var matrix = new float[3, 3] {
+                  { SxCos, -SxSin, SxCos * translation.X - SxSin * translation.Y }
+                , { SySin,  SyCos, SySin * translation.X + SyCos * translation.Y }
+                , {   0,      0,                         1                       }
             };
 
             return new Matrix2D(ref matrix);

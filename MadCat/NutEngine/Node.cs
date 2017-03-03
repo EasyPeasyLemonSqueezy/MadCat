@@ -65,7 +65,7 @@ namespace NutEngine
             /// Пересчитать матрицу.
             /// TODO: Делать это только тогда, когда необходимо,
             /// то есть изменились Scale, Rotation и Position.
-            Transform = Matrix2D.CreateTransformation(Position, Scale, Rotation);
+            Transform = Matrix2D.CreateTRS(Position, Scale, Rotation);
 
             /// Перейти в новую систему координат
             currentTransform = Transform * currentTransform;

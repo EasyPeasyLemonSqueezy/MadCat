@@ -7,7 +7,7 @@ namespace NutEngine.Camera
         public override Matrix2D Transform {
             get {
                 return Matrix2D.CreateTranslation(-Origin)
-                     * Matrix2D.CreateTransformation(-Position, new Vector2(Zoom, Zoom), Rotation)
+                     * Matrix2D.CreateTRS(-Position, new Vector2(Zoom, Zoom), Rotation)
                      * Matrix2D.CreateTranslation(Origin);
             }
         }
