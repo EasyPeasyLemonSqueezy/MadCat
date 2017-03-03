@@ -17,6 +17,8 @@ namespace NutEngine.Camera
         {
             Frame = frame;
             Origin = frame / 2;
+
+            Zoom = 1f;
         }
     }
 }
