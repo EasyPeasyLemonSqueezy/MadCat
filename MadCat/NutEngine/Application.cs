@@ -18,6 +18,9 @@ namespace NutEngine
 
         public SpriteBatch Batcher { get { return spriteBatch; } }
 
+        public float ScreenWidth { get { return GraphicsDevice.PresentationParameters.BackBufferWidth; } }
+        public float ScreenHeight { get { return GraphicsDevice.PresentationParameters.BackBufferHeight; } }
+
         /// <summary>
         /// В конструкторе Application создается окно игры и инициализируются
         /// прочие важные вещи. До того, как он завершит свою работу, не получится

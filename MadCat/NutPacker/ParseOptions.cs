@@ -20,7 +20,7 @@ namespace NutPacker
         [Option('o', "output", Required = true, HelpText = "Path to output folder.")]
         public string Output { get; set; }
 
-        [Option("generate-source", DefaultValue = false, HelpText = "Generate .cs file with source code.")]
+        [Option("generate-source", HelpText = "Generate .cs file with source code.")]
         public bool GenerateSource { get; set; }
 
         [Option("generate-dll", DefaultValue = false, HelpText = "Generate .dll lib.")]
@@ -51,7 +51,7 @@ namespace NutPacker
                 , MaximumDisplayWidth = Console.BufferWidth
             };
 
-            help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH_ONE [PATH_TWO [...]]] [--pictures[-p] PATH_ONE [PATH_TWO [...]]] [--output[-o] NAME] [--generate-source [= false]]");
+            help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH_ONE [PATH_TWO [...]]] [--pictures[-p] PATH_ONE [PATH_TWO [...]]] [--output[-o] NAME] [--generate-source]");
             help.AddOptions(this);
 
             if (LastParserState?.Errors.Any() == true) {

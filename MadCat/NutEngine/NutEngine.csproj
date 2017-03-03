@@ -82,14 +82,19 @@
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationType.cs" />
     <Compile Include="Application.cs" />
+    <Compile Include="Camera\OrthographicSRTCamera.cs" />
+    <Compile Include="Camera\Camera2D.cs" />
+    <Compile Include="Camera\OrthographicTRSCamera.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardState.cs" />
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="NodeComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="TextureRegion.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

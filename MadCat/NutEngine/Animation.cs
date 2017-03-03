@@ -5,10 +5,8 @@ using NutPacker;
 
 namespace NutEngine
 {
-    public class Animation : Node, IDrawable
+    public class Animation : Sprite
     {
-        public Texture2D Atlas { get; private set; }
-
         private ISpriteSheet spriteSheet;
         public ISpriteSheet SpriteSheet {
             get {
@@ -26,7 +24,17 @@ namespace NutEngine
 
         private float ElapsedTime;
 
-        private int CurrentIndex;
+        private int currentIndex;
+        private int CurrentIndex {
+            get {
+                return currentIndex;
+            }
+            set {
+                currentIndex = value;
+                TextureRegion.Frame = SpriteSheet[value];
+            }
+        }
+
         public Rectangle CurrentFrame {
             get {
                 return SpriteSheet[CurrentIndex];
@@ -38,18 +46,17 @@ namespace NutEngine
         public float Duration { get; set; }
         public AnimationType AnimationType { get; set; }
 
-        public Color Color { get; set; }
 
-        /// Center of the rotation, by default - center of the first frame.
-        public Vector2 Origin { get; set; }
-        public SpriteEffects Effects { get; set; }
-        public float LayerDepth { get; set; }
-
-
-        public Animation(Texture2D atlas, ISpriteSheet spriteSheet) : base()
+        public Animation(Texture2D texture, ISpriteSheet spriteSheet)
+            : base(texture, spriteSheet[0])
         {
-            Atlas = atlas;
             SpriteSheet = spriteSheet;
+            Initialize();
+        }
+
+        protected new void Initialize()
+        {
+            base.Initialize();
 
             ElapsedTime = 0;
 
@@ -58,11 +65,6 @@ namespace NutEngine
             Repeat = true;
             Enabled = true;
             AnimationType = AnimationTypes.Linear;
-
-            Color = Color.White;
-
-            Effects = SpriteEffects.None;
-            LayerDepth = 0;
         }
 
         public void Start()
@@ -91,15 +93,15 @@ namespace NutEngine
 
         public void Change(Animation animation)
         {
-            Atlas = animation.Atlas;
-            SpriteSheet = animation.SpriteSheet;
-            Duration = animation.Duration;
-            Repeat = animation.Repeat;
-            Enabled = animation.Enabled;
+            TextureRegion = animation.TextureRegion;
+            SpriteSheet   = animation.SpriteSheet;
+            Duration      = animation.Duration;
+            Repeat        = animation.Repeat;
+            Enabled       = animation.Enabled;
             AnimationType = animation.AnimationType;
-            Color = animation.Color;
-            Effects = animation.Effects;
-            LayerDepth = animation.LayerDepth;
+            Color         = animation.Color;
+            Effects       = animation.Effects;
+            LayerDepth    = animation.LayerDepth;
         }
 
         public virtual void Update(float deltaTime)
@@ -122,24 +124,6 @@ namespace NutEngine
                     CurrentIndex = AnimationType(SpriteSheet.Length, Duration, ElapsedTime);
                 }
             }
-        }
-
-        public void Draw(SpriteBatch spriteBatch, Matrix2D currentTransform)
-        {
-            var position = currentTransform.Translation;
-            var rotation = currentTransform.Rotation;
-            var scale = currentTransform.Scale;
-
-            spriteBatch.Draw(
-                  Atlas
-                , position
-                , CurrentFrame
-                , Color
-                , rotation
-                , Origin
-                , scale
-                , Effects
-                , LayerDepth);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using NutEngine.Camera;
 
 namespace NutEngine
 {
@@ -10,9 +11,8 @@ namespace NutEngine
         protected ContentManager Content { get; }
         protected SpriteBatch Batcher { get; }
 
-        /// Корень графа сцены, который является родителем
-        /// для всех объектов в мире игры.
         protected Node World { get; set; }
+        protected Camera2D Camera { get; set; }
 
         /// <summary>
         /// Сохраняем в сцене ссылки на нашу игру, то, чем рисуем
@@ -24,6 +24,7 @@ namespace NutEngine
             Batcher = app.Batcher;
             Content = app.Content;
             World = new Node();
+            Camera = new OrthographicSRTCamera(new Vector2(App.ScreenWidth, App.ScreenHeight));
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace NutEngine
 
             Batcher.Begin();
 
-            var transform = Matrix2D.Identity;
+            var transform = Camera.Transform;
             World.Visit(Batcher, transform);
 
             Batcher.End();
