@@ -4,8 +4,6 @@ namespace NutEngine.Camera
 {
     public abstract class Camera2D
     {
-        /// TODO: Считать матрицу без 5 умножений
-        /// и делать это по-разному в унаследованных камерах
         public abstract Matrix2D Transform { get; }
 
         public Vector2 Position { get; set; }
