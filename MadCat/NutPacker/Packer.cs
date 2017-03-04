@@ -11,23 +11,14 @@ namespace NutPacker
     public static class Packer
     {
         /// <summary>
-        /// sspack can recognize only these extensions.
-        /// </summary>
-        public static string[] extensions = { ".png", ".jpg", ".bmp" };
-
-        /// <summary>
         /// Create atlas,
         /// and generate .dll or(and) source code
         /// with classes which contains rectangles.
         /// </summary>
         public static void Pack(IPackOptions opt)
         {
-            if (opt.Sprites == null && opt.Tiles == null) {
+            if (opt.Sprites.Length == 0 && opt.Tiles.Length == 0) {
                 throw new ApplicationException("Nothing to pack here.");
-            }
-
-            if (!opt.GenerateSource && !opt.GenerateLib) {
-                throw new ApplicationException("Generate source code or dll library.");
             }
 
             /// Delete previous atlas.
@@ -37,23 +28,14 @@ namespace NutPacker
             Dictionary<string, Rectangle> outputMap;
             /// Texture atlas.
             Bitmap outputImageBitmap;
+            /// Paths to all dirs.
+            var allDirs = opt.Sprites.Concat(opt.Tiles);
             /// Paths to all images.
             var images = new List<string>();
 
-            /// Get all ".jpg" and ".png" files in folder and all subfolders.
-            if (opt.Sprites != null) {
-                foreach (var sprites in opt.Sprites) {
-                    var spritesDirectory = new DirectoryInfo(sprites);
-
-                    images.AddRange(Walkthrough.GetPictures(spritesDirectory).Select(file => file.FullName));
-                }
-            }
-            if (opt.Tiles != null) {
-                foreach (var pics in opt.Tiles) {
-                    var picturesDirectory = new DirectoryInfo(pics);
-
-                    images.AddRange(Walkthrough.GetPictures(picturesDirectory).Select(file => file.FullName));
-                }
+            foreach (var dir in allDirs) {
+                var dirInfo = new DirectoryInfo(dir);
+                images.AddRange(Walkthrough.GetPictures(dirInfo).Select(file => file.FullName));
             }
 
             /// Find same paths.
@@ -69,15 +51,15 @@ namespace NutPacker
 
             /// Create sprite and dictionary.
             imagePacker.PackImage(
-                  images                /// Paths to all sprites and tiles,
-                , opt.PowerOfTwo        /// Power of two,
-                , opt.Square            /// Require square image,
-                , opt.MaxWidth          /// Max width,
-                , opt.MaxHeight         /// Max height,
-                , opt.Padding           /// Image padding,
-                , true                  /// Generate dictionary,
-                , out outputImageBitmap /// Output image,
-                , out outputMap         /// Dictionary.
+                  images
+                , opt.PowerOfTwo
+                , opt.Square
+                , opt.MaxWidth
+                , opt.MaxHeight
+                , opt.Padding
+                , true  /// Generate dictionary,
+                , out outputImageBitmap
+                , out outputMap 
                 );
 
 
@@ -87,14 +69,14 @@ namespace NutPacker
             codeUnit.Namespaces.Add(codeNameSpace);
 
             /// Generate code.
-            if (opt.Sprites != null) {
+            if (opt.Sprites.Length != 0) {
                 foreach (var sprites in opt.Sprites) {
                     var spritesDirectory = new DirectoryInfo(sprites);
 
                     codeNameSpace.Types.Add(Walkthrough.GenerateSpriteCodeDom(spritesDirectory, outputMap));
                 }
             }
-            if (opt.Tiles != null) {
+            if (opt.Tiles.Length != 0) {
                 foreach (var pics in opt.Tiles) {
                     var picturesDirectory = new DirectoryInfo(pics);
 

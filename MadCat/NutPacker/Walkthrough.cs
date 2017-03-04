@@ -11,6 +11,11 @@ namespace NutPacker
     internal class Walkthrough
     {
         /// <summary>
+        /// sspack can recognize only these extensions.
+        /// </summary>
+        public static string[] Extensions = { ".png", ".jpg", ".bmp" };
+
+        /// <summary>
         /// Get filenames from directory <paramref name="directory"/>
         /// and from all subdirectories.
         /// </summary>
@@ -27,7 +32,7 @@ namespace NutPacker
             , SearchOption searchOption = SearchOption.AllDirectories)
         {
             return directory.EnumerateFiles("*", searchOption)
-                            .Where(file => IsImage(file));
+                            .Where(file => Extensions.Contains(file.Extension));
         }
 
         /// <summary>
@@ -162,19 +167,6 @@ namespace NutPacker
             }
 
             return currentClass;
-        }
-
-        /// <summary>
-        /// Check file is a picture?
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns>
-        /// Return "true" if file extension contains in <see cref="Packer.extensions"/>;
-        /// Otherwise - "false"
-        /// </returns>
-        public static bool IsImage(FileInfo file)
-        {
-            return Packer.extensions.Contains(file.Extension);
         }
 
         /// <summary>
