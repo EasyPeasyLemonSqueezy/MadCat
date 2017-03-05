@@ -77,6 +77,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlphanumComparator">
+      <HintPath>ThirdParty\AlphanumComparator.dll</HintPath>
+    </Reference>
     <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
       <Private>True</Private>
@@ -96,7 +99,6 @@
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="IPackOptions.cs" />
-    <Compile Include="NaturalFileInfoNameComparer.cs" />
     <Compile Include="Packer.cs" />
     <Compile Include="ParseOptions.cs" />
     <Compile Include="Program.cs" />

@@ -80,7 +80,7 @@ namespace NutPacker
 
             if (pics.Count() != 0) {
                 /// Sort files by name,
-                /// <see cref="NaturalFileInfoNameComparer"/> - uses StrCmpLogicalW from winapi
+                /// <see cref="AlphanumComparator"/>
                 /// Why not just <see cref="Array.Sort(Array)"/>?
                 /// look:
                 /// <example>
@@ -89,7 +89,7 @@ namespace NutPacker
                 /// <see cref="Array.Sort(Array, System.Collections.IComparer)"/> result:
                 /// file1.txt, file2.txt, ..., file9.txt, file10.txt, file11.txt, ...
                 /// </example>
-                Array.Sort(pics, new NaturalFileInfoNameComparer());
+                Array.Sort(pics, new AlphanumComparator.AlphanumComparator());
 
                 /// Generate sprite.
                 currentClass = CodeGenerator.GenerateSpriteSheetClass(
