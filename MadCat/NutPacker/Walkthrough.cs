@@ -5,16 +5,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using sspack;
 
 namespace NutPacker
 {
     internal class Walkthrough
     {
-        /// <summary>
-        /// sspack can recognize only these extensions.
-        /// </summary>
-        public static string[] Extensions = { ".png", ".jpg", ".bmp" };
-
         /// <summary>
         /// Get filenames from directory <paramref name="directory"/>
         /// and from all subdirectories.
@@ -25,19 +21,19 @@ namespace NutPacker
         /// by default <see cref="SearchOption.AllDirectories"/>.
         /// </param>
         /// <returns>
-        /// Array of full names (with path) of files in folder and in all subfolders.
+        /// Array of files in folder and in all subfolders(by default).
         /// </returns>
         public static IEnumerable<FileInfo> GetPictures(
               DirectoryInfo directory
             , SearchOption searchOption = SearchOption.AllDirectories)
         {
             return directory.EnumerateFiles("*", searchOption)
-                            .Where(file => Extensions.Contains(file.Extension));
+                            .Where(file => MiscHelper.IsImageFile(file.Name));
         }
 
         /// <summary>
-        /// Generate code which implements <see cref="ISpriteGroup"/>
-        /// or inherited from <see cref="ISpriteSheet"/>.
+        /// Generate class which implements <see cref="ISpriteGroup"/>
+        /// or <see cref="ISpriteSheet"/>.
         /// </summary>
         /// <remarks>
         /// Using DFS to get CodeDom.
