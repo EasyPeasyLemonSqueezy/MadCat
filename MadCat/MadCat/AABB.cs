@@ -15,16 +15,15 @@ namespace MadCat
         public float Width { get; set; }
         public float Height { get; set; }
 
-        public float MinX { get { return X; } }
-        public float MaxX { get { return X + Width; } }
-        public float MinY { get { return Y; } }
-        public float MaxY { get { return Y + Height; } }
+        public float MinX => X;
+        public float MaxX => X + Width;
+        public float MinY => Y;
+        public float MaxY => Y + Height;
 
         public bool Intersects(AABB other)
         {
             if (MaxX >= other.MinX && MinX <= other.MaxX &&
-                MaxY >= other.MinY && MinY <= other.MaxY)
-            {
+                MaxY >= other.MinY && MinY <= other.MaxY) {
                 return true;
             }
 
@@ -43,17 +42,15 @@ namespace MadCat
             float bottom = other.MinY - MaxY;
             float top = other.MaxY - MinY;
 
-            Vector2 translation = new Vector2();
+            var translation = new Vector2() {
+                X = Math.Abs(left)   < Math.Abs(right) ? left   : right,
+                Y = Math.Abs(bottom) < Math.Abs(top)   ? bottom : top
+            };
 
-            translation.X = Math.Abs(left) < Math.Abs(right) ? left : right;
-            translation.Y = Math.Abs(bottom) < Math.Abs(top) ? bottom : top;
-
-            if (Math.Abs(translation.X) < Math.Abs(translation.Y))
-            {
+            if (Math.Abs(translation.X) < Math.Abs(translation.Y)) {
                 translation.Y = 0.0f;
             }
-            else
-            {
+            else {
                 translation.X = 0.0f;
             }
 

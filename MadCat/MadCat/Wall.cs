@@ -14,12 +14,11 @@ namespace MadCat
         {
             Position = position;
 
-            Bounds = new AABB()
-            {
-                X = position.X - Graveyard.Tiles.Tile_2_.Width / 2.0f,
-                Y = position.Y - Graveyard.Tiles.Tile_2_.Height / 2.0f,
-                Width = Graveyard.Tiles.Tile_2_.Width,
-                Height = Graveyard.Tiles.Tile_2_.Height
+            Bounds = new AABB() {
+                  X = position.X - Graveyard.Tiles.Tile_2_.Width  / 2.0f
+                , Y = position.Y - Graveyard.Tiles.Tile_2_.Height / 2.0f
+                , Width  = Graveyard.Tiles.Tile_2_.Width
+                , Height = Graveyard.Tiles.Tile_2_.Height
             };
         }
     }

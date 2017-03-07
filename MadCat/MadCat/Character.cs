@@ -106,12 +106,11 @@ namespace MadCat
             velocity = new Vector2();
             gravitation = new Vector2(0, 2000);
 
-            bounds = new AABB()
-            {
-                X = Position.X,
-                Y = Position.Y,
-                Width = 81.0f,
-                Height = 135.0f
+            bounds = new AABB() {
+                  X = Position.X
+                , Y = Position.Y
+                , Width = 81.0f
+                , Height = 135.0f
             };
         }
 
@@ -163,34 +162,32 @@ namespace MadCat
             base.Update(deltaTime);
 
             /// Stand
-            if (velocity == Vector2.Zero)
-            {
-                if (state != State.STAND &&
-                    state != State.MELEE &&
-                    state != State.SHOOT)
-                {
-                    state = State.STAND;
-                    Change(AdventureGirlIdle);
-                }
+            if (velocity == Vector2.Zero
+                && state != State.STAND
+                && state != State.MELEE
+                && state != State.SHOOT
+                ) {
+                state = State.STAND;
+                Change(AdventureGirlIdle);
             }
+
             /// Jump
-            else if (velocity.Y != 0.0f)
-            {
-                if (state != State.JUMP)
-                {
-                    state = State.JUMP;
-                    Change(AdventureGirlJump);
-                }
+            else if (
+                velocity.Y != 0.0f
+                && state != State.JUMP
+                ) {
+                state = State.JUMP;
+                Change(AdventureGirlJump);
             }
+
             /// Run
-            else if (velocity.X != 0.0f)
-            {
-                if (state != State.RUN &&
-                    state != State.SLIDE)
-                {
-                    state = State.RUN;
-                    Change(AdventureGirlRun);
-                }
+            else if (
+                velocity.X != 0.0f
+                && state != State.RUN
+                && state != State.SLIDE
+                ) {
+                state = State.RUN;
+                Change(AdventureGirlRun);
             }
 
             velocity = Physics.ApplyAccel(velocity, gravitation, deltaTime);
@@ -200,11 +197,13 @@ namespace MadCat
             bounds.Y = Position.Y - bounds.Height / 2.0f;
 
             /// If animation stopped and we should return to standing state
-            if (!Enabled) {
-                if (state == State.MELEE || state == State.SHOOT || state == State.SLIDE) {
-                    state = State.STAND;
-                    Change(AdventureGirlIdle);
-                }
+            if (!Enabled &&
+                  (state == State.MELEE
+                || state == State.SHOOT
+                || state == State.SLIDE)
+                ) {
+                state = State.STAND;
+                Change(AdventureGirlIdle);
             }
 
             /// Set flipped or not
@@ -215,23 +214,20 @@ namespace MadCat
 
         public void Collide(Wall wall)
         {
-            if (bounds.Intersects(wall.Bounds))
-            {
+            if (bounds.Intersects(wall.Bounds)) {
                 var response = bounds.Response(wall.Bounds);
 
                 /// If we don't do this, we will stuck in the wall
-                if (response.Y != 0.0f)
-                {
+                if (response.Y != 0.0f) {
                     velocity.Y = 0.0f;
                 }
 
-                if (response.X != 0.0f)
-                {
+                if (response.X != 0.0f) {
                     velocity.X = 0.0f;
                 }
 
                 Position += bounds.Response(wall.Bounds);
-                bounds.X = Position.X - bounds.Width / 2.0f;
+                bounds.X = Position.X - bounds.Width  / 2.0f;
                 bounds.Y = Position.Y - bounds.Height / 2.0f;
             }
         }

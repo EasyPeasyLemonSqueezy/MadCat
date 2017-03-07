@@ -11,10 +11,11 @@ namespace MadCat
 
         public DemoGame()
         {
-            Graphics = new GraphicsDeviceManager(this);
-            Graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-            Graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-            Graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            Graphics = new GraphicsDeviceManager(this) {
+                PreferredBackBufferWidth = SCREEN_WIDTH,
+                PreferredBackBufferHeight = SCREEN_HEIGHT,
+                GraphicsProfile = GraphicsProfile.HiDef
+            };
 
             Content.RootDirectory = "Content"; /// Folder with content.
         }

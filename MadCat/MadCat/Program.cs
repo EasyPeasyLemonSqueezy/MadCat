@@ -14,8 +14,9 @@ namespace MadCat
         [STAThread]
         static void Main()
         {
-            using (var game = new DemoGame())
+            using (var game = new DemoGame()) {
                 game.Run();
+            }
         }
     }
 #endif

@@ -30,39 +30,25 @@ namespace MadCat
 
             characters[0] = new Character(Texture);
 
-            characters[1] = new Character(Texture)
-            {
-                Control = new Character.Controls()
-                {
-                    RunRightKey = Keys.D
-                    ,
-                    RunLeftKey = Keys.A
-                    ,
-                    JumpKey = Keys.W
-                    ,
-                    ShootKey = Keys.Q
-                    ,
-                    MeleeKey = Keys.F
-                    ,
-                    SlideKey = Keys.S
+            characters[1] = new Character(Texture) {
+                Control = new Character.Controls() {
+                      RunRightKey = Keys.D
+                    , RunLeftKey = Keys.A
+                    , JumpKey = Keys.W
+                    , ShootKey = Keys.Q
+                    , MeleeKey = Keys.F
+                    , SlideKey = Keys.S
                 }
             };
 
-            characters[2] = new Character(Texture)
-            {
-                Control = new Character.Controls()
-                {
-                    RunRightKey = Keys.L
-                    ,
-                    RunLeftKey = Keys.K
-                    ,
-                    JumpKey = Keys.O
-                    ,
-                    ShootKey = Keys.J
-                    ,
-                    MeleeKey = Keys.P
-                    ,
-                    SlideKey = Keys.M
+            characters[2] = new Character(Texture) {
+                Control = new Character.Controls() {
+                      RunRightKey = Keys.L
+                    , RunLeftKey = Keys.K
+                    , JumpKey = Keys.O
+                    , ShootKey = Keys.J
+                    , MeleeKey = Keys.P
+                    , SlideKey = Keys.M
                 }
             };
 
@@ -71,35 +57,30 @@ namespace MadCat
             World.AddChild(characters[2]);
 
             /// Some stupid wall test
-            int[,] wallMap = 
-            { 
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-                { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 1, 0, 1, 0, 0 },
-                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            int[,] wallMap = { 
+                  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                , { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                , { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+                , { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 }
+                , { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 }
+                , { 0, 0, 0, 1, 1, 1, 0, 1, 0, 0 }
+                , { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
             };
 
             walls = new List<Wall>();
 
-            for (int i = 0; i < 7; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    if (wallMap[i, j] == 1)
-                    {
-                        var position = new Vector2()
-                        {
-                            X = j * Graveyard.Tiles.Tile_2_.Width - Graveyard.Tiles.Tile_2_.Width / 2.0f,
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 10; j++) {
+                    if (wallMap[i, j] == 1) {
+                        var position = new Vector2() {
+                            X = j * Graveyard.Tiles.Tile_2_.Width- Graveyard.Tiles.Tile_2_.Width / 2.0f,
                             Y = i * Graveyard.Tiles.Tile_2_.Height - Graveyard.Tiles.Tile_2_.Height * 2.0f
                         };
 
                         var wall = new Wall(Texture, position);
 
                         World.AddChild(wall);
-                        walls.Add(wall); 
+                        walls.Add(wall);
                     }
                 }
             }
@@ -112,22 +93,18 @@ namespace MadCat
             /// We need three loops for correct order of operations
 
             /// Input
-            foreach (var character in characters)
-            {
+            foreach (var character in characters) {
                 character.Input(keyboardState);
             }
 
             /// Update
-            foreach (var character in characters)
-            {
+            foreach (var character in characters) {
                 character.Update(deltaTime);
             }
 
             /// Collisions
-            foreach (var character in characters)
-            {
-                foreach (var wall in walls)
-                {
+            foreach (var character in characters) {
+                foreach (var wall in walls) {
                     character.Collide(wall);
                 }
             }
