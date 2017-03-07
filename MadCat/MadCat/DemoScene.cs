@@ -51,11 +51,30 @@ namespace MadCat
                 , ZOrder = 10
             });
 
+            /// Create Characters.
             Character1 = new Character(Texture);
-            Character2 = new Character(Texture);
-            Character2.SetButtons(Keys.D, Keys.A, Keys.W, Keys.Q, Keys.F, Keys.S);
-            Character3 = new Character(Texture);
-            Character3.SetButtons(Keys.L, Keys.K, Keys.O, Keys.J, Keys.P, Keys.M);
+
+            Character2 = new Character(Texture) {
+                Control = new Character.Controls() {
+                      RunRightKey = Keys.D
+                    , RunLeftKey  = Keys.A
+                    , JumpKey     = Keys.W
+                    , ShootKey    = Keys.Q
+                    , MeleeKey    = Keys.F
+                    , SlideKey    = Keys.S
+                }
+            };
+
+            Character3 = new Character(Texture) {
+                Control = new Character.Controls() {
+                      RunRightKey = Keys.L
+                    , RunLeftKey  = Keys.K
+                    , JumpKey     = Keys.O
+                    , ShootKey    = Keys.J
+                    , MeleeKey    = Keys.P
+                    , SlideKey    = Keys.M
+                }
+            };
 
             Ground.AddChild(Character1);
             Ground.AddChild(Character2);
