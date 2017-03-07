@@ -77,6 +77,25 @@ namespace NutEngine.Input
         }
 
         /// <summary>
+        /// Gets whether given keys are currently being pressed.
+        /// </summary>
+        /// <param name="keys"> The keys to query. </param>
+        /// <returns>
+        /// true if all keys are pressed at current state;
+        /// false otherwise.
+        /// </returns>
+        public bool IsKeyDown(params XnaInput.Keys[] keys)
+        {
+            foreach (var key in keys) {
+                if (CurrentState.IsKeyUp(key)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Wrapper for <see cref="XnaInput.KeyboardState.IsKeyUp(XnaInput.Keys)"/>.
         /// Gets whether given key is currently being not pressed.
         /// </summary>
@@ -88,6 +107,25 @@ namespace NutEngine.Input
         public bool IsKeyUp(XnaInput.Keys key)
         {
             return CurrentState.IsKeyUp(key);
+        }
+
+        /// <summary>
+        /// Gets whether given keys are currently being not pressed.
+        /// </summary>
+        /// <param name="keys"> The keys to query. </param>
+        /// <returns>
+        /// true if all keys not pressed at current state;
+        /// false otherwise.
+        /// </returns>
+        public bool IsKeyUp(params XnaInput.Keys[] keys)
+        {
+            foreach (var key in keys) {
+                if (CurrentState.IsKeyDown(key)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
