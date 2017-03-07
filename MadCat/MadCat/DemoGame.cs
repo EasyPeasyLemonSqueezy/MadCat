@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using NutEngine;
 
 namespace MadCat
@@ -13,7 +14,7 @@ namespace MadCat
             Graphics = new GraphicsDeviceManager(this);
             Graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             Graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-            Graphics.ApplyChanges();
+            Graphics.GraphicsProfile = GraphicsProfile.HiDef;
 
             Content.RootDirectory = "Content"; /// Folder with content.
         }
