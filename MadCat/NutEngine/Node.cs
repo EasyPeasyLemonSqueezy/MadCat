@@ -74,8 +74,7 @@ namespace NutEngine
             }
 
             /// Draw current node if necessary.
-            if (this is IDrawable) {
-                var drawable = (IDrawable)this;
+            if (this is IDrawable drawable) {
                 drawable.Draw(spriteBatch, currentTransform);
             }
 

@@ -44,11 +44,7 @@ namespace NutEngine.Input
         /// <returns>
         /// Current state of the key.
         /// </returns>
-        public XnaInput.KeyState this[XnaInput.Keys key] {
-            get {
-                return CurrentState[key];
-            }
-        }
+        public XnaInput.KeyState this[XnaInput.Keys key] => CurrentState[key];
 
         /// <summary>
         /// Wrapper for <see cref="XnaInput.KeyboardState.GetPressedKeys"/>.
@@ -129,7 +125,7 @@ namespace NutEngine.Input
         }
 
         /// <summary>
-        /// Wrapper for <see cref="XnaInput.KeyboardState.Equals(object)"/>.
+        /// Wrapper for <see cref="XnaInput.KeyboardState.Equals(System.Object)"/>.
         /// Compare only current state.
         /// </summary>
         public override bool Equals(object obj)

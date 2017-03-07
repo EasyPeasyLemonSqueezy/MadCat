@@ -19,10 +19,9 @@ namespace NutEngine
         protected SpriteBatch SpriteBatch;
         public Stack<Scene> Scenes;
 
-        public SpriteBatch Batcher { get { return SpriteBatch; } }
-
-        public float ScreenWidth { get { return GraphicsDevice.PresentationParameters.BackBufferWidth; } }
-        public float ScreenHeight { get { return GraphicsDevice.PresentationParameters.BackBufferHeight; } }
+        public SpriteBatch Batcher => SpriteBatch;
+        public float ScreenWidth => GraphicsDevice.PresentationParameters.BackBufferWidth;
+        public float ScreenHeight => GraphicsDevice.PresentationParameters.BackBufferHeight;
 
         /// <summary>
         /// You should override this method in your game class

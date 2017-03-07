@@ -2,7 +2,6 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -24,10 +23,6 @@ namespace NutPacker
             /// Delete previous atlas.
             File.Delete(Path.Combine(opt.Output, String.Concat(opt.Name, ".png")));
 
-            /// Dictionary: full filename -> rectangle in output image.
-            Dictionary<string, Rectangle> outputMap;
-            /// Texture atlas.
-            Bitmap outputImageBitmap;
             /// Paths to all dirs.
             var allDirs = opt.Sprites.Concat(opt.Tiles);
             /// Paths to all images.
@@ -50,6 +45,8 @@ namespace NutPacker
             var imagePacker = new sspack.ImagePacker();
 
             /// Create sprite and dictionary.
+            /// map - Dictionary: full filename -> rectangle in output image.
+            /// imageBitmap - Texture atlas.
             imagePacker.PackImage(
                   images
                 , opt.PowerOfTwo
@@ -58,8 +55,8 @@ namespace NutPacker
                 , opt.MaxHeight
                 , opt.Padding
                 , true  /// Generate dictionary,
-                , out outputImageBitmap
-                , out outputMap 
+                , out var imageBitmap
+                , out var map 
                 );
 
 
@@ -73,14 +70,14 @@ namespace NutPacker
                 foreach (var sprites in opt.Sprites) {
                     var spritesDirectory = new DirectoryInfo(sprites);
 
-                    codeNameSpace.Types.Add(Walkthrough.GenerateSpriteCodeDom(spritesDirectory, outputMap));
+                    codeNameSpace.Types.Add(Walkthrough.GenerateSpriteCodeDom(spritesDirectory, map));
                 }
             }
             if (opt.Tiles.Length != 0) {
                 foreach (var pics in opt.Tiles) {
                     var picturesDirectory = new DirectoryInfo(pics);
 
-                    codeNameSpace.Types.Add(Walkthrough.GenerateTileCodeDom(picturesDirectory, outputMap));
+                    codeNameSpace.Types.Add(Walkthrough.GenerateTileCodeDom(picturesDirectory, map));
                 }
             }
 
@@ -138,7 +135,7 @@ namespace NutPacker
             if (compile.Errors.Count == 0) {
                 using (var streamWriter =
                     new StreamWriter(Path.Combine(opt.Output, String.Concat(Walkthrough.VariableName(opt.Name), ".png")))) {
-                    outputImageBitmap.Save(
+                    imageBitmap.Save(
                           streamWriter.BaseStream
                         , System.Drawing.Imaging.ImageFormat.Png
                         );

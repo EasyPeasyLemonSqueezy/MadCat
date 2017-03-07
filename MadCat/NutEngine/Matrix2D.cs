@@ -45,29 +45,17 @@ namespace NutEngine
         /// <summary>
         /// Get translation vector.
         /// </summary>
-        public Vector2 Translation {
-            get {
-                return new Vector2(matrix[0, 2], matrix[1, 2]);
-            }
-        }
+        public Vector2 Translation => new Vector2(matrix[0, 2], matrix[1, 2]);
 
         /// <summary>
         /// Get angle in radians.
         /// </summary>
-        public float Rotation {
-            get {
-                return (float)Math.Atan2(matrix[1, 0], matrix[1, 1]);
-            }
-        }
+        public float Rotation => (float)Math.Atan2(matrix[1, 0], matrix[1, 1]);
 
         /// <summary>
         /// Get angle in degrees.
         /// </summary>
-        public float RotationDeg {
-            get {
-                return (float)(Rotation / (Math.PI / 180));
-            }
-        }
+        public float RotationDeg => (float)(Rotation / (Math.PI / 180));
 
         /// <summary>
         /// Get scale vector.
@@ -262,12 +250,8 @@ namespace NutEngine
         }
 
         public float this[int row, int column] {
-            get {
-                return matrix[row, column];
-            }
-            private set {
-                matrix[row, column] = value;
-            }
+            get => matrix[row, column];
+            private set => matrix[row, column] = value;
         }
     }
 }

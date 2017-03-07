@@ -9,9 +9,7 @@ namespace NutEngine
     {
         private ISpriteSheet spriteSheet;
         public ISpriteSheet SpriteSheet {
-            get {
-                return spriteSheet;
-            }
+            get => spriteSheet;
             set {
                 spriteSheet = value;
                 ElapsedTime = 0;
@@ -26,20 +24,14 @@ namespace NutEngine
 
         private int currentIndex;
         private int CurrentIndex {
-            get {
-                return currentIndex;
-            }
+            get => currentIndex;
             set {
                 currentIndex = value;
                 TextureRegion.Frame = SpriteSheet[value];
             }
         }
 
-        public Rectangle CurrentFrame {
-            get {
-                return SpriteSheet[CurrentIndex];
-            }
-        }
+        public Rectangle CurrentFrame => SpriteSheet[CurrentIndex];
 
         public bool Repeat { get; set; }
         public bool Enabled { get; set; }

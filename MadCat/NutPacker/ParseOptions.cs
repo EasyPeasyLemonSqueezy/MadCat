@@ -57,8 +57,8 @@ namespace NutPacker
             if (LastParserState?.Errors.Any() == true) {
                 var errors = help.RenderParsingErrorsText(this, 2); // Indent with two spaces.
 
-                if (!string.IsNullOrEmpty(errors)) {
-                    help.AddPreOptionsLine(string.Concat(Environment.NewLine, "Error:"));
+                if (!String.IsNullOrEmpty(errors)) {
+                    help.AddPreOptionsLine(String.Concat(Environment.NewLine, "Error:"));
                     help.AddPreOptionsLine(errors);
                 }
             }
