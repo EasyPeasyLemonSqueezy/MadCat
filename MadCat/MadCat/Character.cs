@@ -8,7 +8,7 @@ using System;
 
 namespace MadCat
 {
-    public class Character : Animation, IGameObject
+    public class Character : Animation
     {
         private enum State
         {
@@ -42,7 +42,6 @@ namespace MadCat
 
         public Controls Control;
 
-
         private Animation AdventureGirlIdle;
         private Animation AdventureGirlJump;
         private Animation AdventureGirlMelee;
@@ -50,12 +49,13 @@ namespace MadCat
         private Animation AdventureGirlShoot;
         private Animation AdventureGirlSlide;
 
-        private Vector2 offset;
         private Vector2 velocity;
         private Vector2 gravitation;
 
         private float runVelocity  =  400.0f;
         private float jumpVelocity = -800.0f;
+
+        private AABB bounds;
 
         public Character(Texture2D texture)
             : base(texture, new NutPacker.Content.AdventureGirl.Idle())
@@ -101,26 +101,39 @@ namespace MadCat
             Effects = SpriteEffects.None;
 
             Scale = new Vector2(.3f, .3f);
-            offset = new Vector2(0, -135); // Just another magic number
 
-            Position = offset;
+            Position = new Vector2(0.0f, -500.0f);
             velocity = new Vector2();
             gravitation = new Vector2(0, 2000);
+
+            bounds = new AABB()
+            {
+                X = Position.X,
+                Y = Position.Y,
+                Width = 81.0f,
+                Height = 135.0f
+            };
         }
 
         public void Input(NutInput.KeyboardState keyboardState)
         {
-            if (state == State.STAND || state == State.RUN) {
+            if (state == State.STAND || state == State.RUN || state == State.JUMP)
+            {
                 /// Right
                 if (keyboardState.IsKeyDown(Control.RunRightKey)) {
                     Run(Direction.RIGHT);
                 }
-
                 /// Left
-                if (keyboardState.IsKeyDown(Control.RunLeftKey)) {
+                else if (keyboardState.IsKeyDown(Control.RunLeftKey)) {
                     Run(Direction.LEFT);
                 }
+                /// Stop
+                else {
+                    velocity.X = 0.0f;
+                }
+            }
 
+            if (state == State.STAND || state == State.RUN) {
                 /// Jump
                 if (keyboardState.IsKeyPressedRightNow(Control.JumpKey)) {
                     Jump();
@@ -142,26 +155,6 @@ namespace MadCat
                 if (keyboardState.IsKeyPressedRightNow(Control.SlideKey)) {
                     Slide();
                 }
-
-                /// Stand
-                if (keyboardState.IsKeyReleasedRightNow(Control.RunRightKey) ||
-                    keyboardState.IsKeyReleasedRightNow(Control.RunLeftKey)) {
-                    Stand();
-                }
-            }
-
-            if (state == State.JUMP) {
-                /// Right
-                if (keyboardState.IsKeyDown(Control.RunRightKey)) {
-                    velocity.X = runVelocity;
-                    direction = Direction.RIGHT;
-                }
-
-                /// Left
-                if (keyboardState.IsKeyDown(Control.RunLeftKey)) {
-                    velocity.X = -runVelocity;
-                    direction = Direction.LEFT;
-                }
             }
         }
 
@@ -169,22 +162,45 @@ namespace MadCat
         {
             base.Update(deltaTime);
 
+            if (velocity == Vector2.Zero)
+            {
+                if (state != State.STAND &&
+                    state != State.MELEE &&
+                    state != State.SHOOT)
+                {
+                    state = State.STAND;
+                    Change(AdventureGirlIdle);
+                }
+            }
+            else if (velocity.Y != 0.0f)
+            {
+                if (state != State.JUMP)
+                {
+                    state = State.JUMP;
+                    Change(AdventureGirlJump);
+                }
+            }
+            else if (velocity.X != 0.0f)
+            {
+                if (state != State.RUN &&
+                    state != State.SLIDE)
+                {
+                    state = State.RUN;
+                    Change(AdventureGirlRun);
+                }
+            }
+
             velocity = Physics.ApplyAccel(velocity, gravitation, deltaTime);
             Position = Physics.ApplyVelocity(Position, velocity, deltaTime);
+
+            bounds.X = Position.X - bounds.Width / 2.0f;
+            bounds.Y = Position.Y - bounds.Height / 2.0f;
 
             /// If animation stopped and we should return to standing state
             if (!Enabled) {
                 if (state == State.MELEE || state == State.SHOOT || state == State.SLIDE) {
-                    Stand();
-                }
-            }
-
-            if (Position.Y - offset.Y >= 0) {
-                velocity.Y = 0.0f;
-                Position = new Vector2(Position.X + offset.X, offset.Y);
-
-                if (state == State.JUMP) {
-                    Stand();
+                    state = State.STAND;
+                    Change(AdventureGirlIdle);
                 }
             }
 
@@ -193,37 +209,42 @@ namespace MadCat
                     : SpriteEffects.FlipHorizontally;
         }
 
-        public void Collide(IGameObject other)
+        public void Collide(Wall wall)
         {
-            throw new NotImplementedException();
+            if (bounds.Intersects(wall.Bounds))
+            {
+                var response = bounds.Response(wall.Bounds);
+
+                if (response.Y != 0.0f)
+                {
+                    velocity.Y = 0.0f;
+                }
+
+                if (response.X != 0.0f)
+                {
+                    velocity.X = 0.0f;
+                }
+
+                Position += bounds.Response(wall.Bounds);
+                bounds.X = Position.X - bounds.Width / 2.0f;
+                bounds.Y = Position.Y - bounds.Height / 2.0f;
+            }
         }
 
         private void Stand()
         {
-            if (state != State.STAND) {
-                Change(AdventureGirlIdle);
-                state = State.STAND;
-                velocity.X = 0.0f;
-            }
+            velocity.X = 0.0f;
         }
 
         private void Run(Direction direction)
         {
-            if (state != State.RUN) {
-                Change(AdventureGirlRun);
-                state = State.RUN;
-                this.direction = direction;
-                velocity.X = (int)direction * runVelocity;
-            }
+            this.direction = direction;
+            velocity.X = (int)direction * runVelocity;
         }
 
         private void Jump()
         {
-            if (state != State.JUMP) {
-                Change(AdventureGirlJump);
-                state = State.JUMP;
-                velocity.Y = jumpVelocity;
-            }
+            velocity.Y = jumpVelocity;
         }
 
         private void Melee()

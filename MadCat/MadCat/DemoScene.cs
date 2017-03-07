@@ -4,95 +4,133 @@ using Microsoft.Xna.Framework.Input;
 using NutInput = NutEngine.Input;
 using NutEngine;
 using NutPacker.Content;
+using System.Collections.Generic;
 
 namespace MadCat
 {
     public class DemoScene : Scene
     {
         private Texture2D Texture;
-        private Node Ground;
-        private Character Character1;
-        private Character Character2;
-        private Character Character3;
+
+        private Character[] characters;
+        private List<Wall> walls;
 
         public DemoScene(Application app) : base(app)
         {
             Texture = Content.Load<Texture2D>("Demo");
 
-            var background = new Sprite(Texture, Graveyard.Tiles.BG) {
+            var backWorld = new Sprite(Texture, Graveyard.Tiles.BG) {
                   Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2)
                 , Scale = new Vector2(.5f, .5f)
             };
-            World.AddChild(background);
-
-            Ground = new Node() {
-                Position = new Vector2(0, App.ScreenHeight)
-            };
-
-            for (int i = 0; i < 10; i++) {
-                var sprite = new Sprite(Texture, Graveyard.Tiles.Tile_2_) {
-                    Position = new Vector2(i * Graveyard.Tiles.Tile_2_.Width, 0)
-                };
-
-                Ground.AddChild(sprite);
-            }
-
-            Ground.AddChild(new Sprite(Texture, Graveyard.Objects.TombStone_1_) {
-                  Position = new Vector2(200, -105)
-                , Scale = new Vector2(1.5f, 1.5f)
-            });
-            Ground.AddChild(new Sprite(Texture, Graveyard.Objects.TombStone_2_) {
-                  Position = new Vector2(700, -120)
-                , Scale = new Vector2(1.5f, 1.5f)
-            });
-            Ground.AddChild(new Sprite(Texture, Graveyard.Objects.Bush_1_) {
-                  Position = new Vector2(400, -75)
-                , Scale = new Vector2(.5f, .5f)
-                , ZOrder = 10
-            });
+            World.AddChild(backWorld);
 
             /// Create Characters.
-            Character1 = new Character(Texture);
+            characters = new Character[3];
 
-            Character2 = new Character(Texture) {
-                Control = new Character.Controls() {
-                      RunRightKey = Keys.D
-                    , RunLeftKey  = Keys.A
-                    , JumpKey     = Keys.W
-                    , ShootKey    = Keys.Q
-                    , MeleeKey    = Keys.F
-                    , SlideKey    = Keys.S
+            characters[0] = new Character(Texture);
+
+            characters[1] = new Character(Texture)
+            {
+                Control = new Character.Controls()
+                {
+                    RunRightKey = Keys.D
+                    ,
+                    RunLeftKey = Keys.A
+                    ,
+                    JumpKey = Keys.W
+                    ,
+                    ShootKey = Keys.Q
+                    ,
+                    MeleeKey = Keys.F
+                    ,
+                    SlideKey = Keys.S
                 }
             };
 
-            Character3 = new Character(Texture) {
-                Control = new Character.Controls() {
-                      RunRightKey = Keys.L
-                    , RunLeftKey  = Keys.K
-                    , JumpKey     = Keys.O
-                    , ShootKey    = Keys.J
-                    , MeleeKey    = Keys.P
-                    , SlideKey    = Keys.M
+            characters[2] = new Character(Texture)
+            {
+                Control = new Character.Controls()
+                {
+                    RunRightKey = Keys.L
+                    ,
+                    RunLeftKey = Keys.K
+                    ,
+                    JumpKey = Keys.O
+                    ,
+                    ShootKey = Keys.J
+                    ,
+                    MeleeKey = Keys.P
+                    ,
+                    SlideKey = Keys.M
                 }
             };
 
-            Ground.AddChild(Character1);
-            Ground.AddChild(Character2);
-            Ground.AddChild(Character3);
-            World.AddChild(Ground);
+            World.AddChild(characters[0]);
+            World.AddChild(characters[1]);
+            World.AddChild(characters[2]);
+
+            /// Some stupid wall test
+            int[,] wallMap = 
+            { 
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+                { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+                { 0, 0, 0, 1, 1, 1, 0, 1, 0, 0 },
+                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+            };
+
+            walls = new List<Wall>();
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (wallMap[i, j] == 1)
+                    {
+                        var position = new Vector2()
+                        {
+                            X = j * Graveyard.Tiles.Tile_2_.Width - Graveyard.Tiles.Tile_2_.Width / 2.0f,
+                            Y = i * Graveyard.Tiles.Tile_2_.Height - Graveyard.Tiles.Tile_2_.Height * 2.0f
+                        };
+
+                        var wall = new Wall(Texture, position);
+
+                        World.AddChild(wall);
+                        walls.Add(wall); 
+                    }
+                }
+            }
         }
 
         public override void Update(float deltaTime)
         {
             var keyboardState = NutInput.Keyboard.GetState();
 
-            Character1.Input(keyboardState);
-            Character2.Input(keyboardState);
-            Character3.Input(keyboardState);
+            /// We need three loops for correct order of operations
 
-            Character1.Update(deltaTime);
-            Character2.Update(deltaTime);
-            Character3.Update(deltaTime);
+            /// Input
+            foreach (var character in characters)
+            {
+                character.Input(keyboardState);
+            }
+
+            /// Update
+            foreach (var character in characters)
+            {
+                character.Update(deltaTime);
+            }
+
+            /// Collisions
+            foreach (var character in characters)
+            {
+                foreach (var wall in walls)
+                {
+                    character.Collide(wall);
+                }
+            }
         }
     }
 }
