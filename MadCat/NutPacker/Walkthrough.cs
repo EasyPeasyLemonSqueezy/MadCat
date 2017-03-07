@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using sspack;
 
 namespace NutPacker
 {
@@ -20,19 +21,19 @@ namespace NutPacker
         /// by default <see cref="SearchOption.AllDirectories"/>.
         /// </param>
         /// <returns>
-        /// Array of full names (with path) of files in folder and in all subfolders.
+        /// Array of files in folder and in all subfolders(by default).
         /// </returns>
         public static IEnumerable<FileInfo> GetPictures(
               DirectoryInfo directory
             , SearchOption searchOption = SearchOption.AllDirectories)
         {
             return directory.EnumerateFiles("*", searchOption)
-                            .Where(file => IsImage(file));
+                            .Where(file => MiscHelper.IsImageFile(file.Name));
         }
 
         /// <summary>
-        /// Generate code which implements <see cref="ISpriteGroup"/>
-        /// or inherited from <see cref="ISpriteSheet"/>.
+        /// Generate class which implements <see cref="ISpriteGroup"/>
+        /// or <see cref="ISpriteSheet"/>.
         /// </summary>
         /// <remarks>
         /// Using DFS to get CodeDom.
@@ -75,7 +76,7 @@ namespace NutPacker
 
             if (pics.Count() != 0) {
                 /// Sort files by name,
-                /// <see cref="NaturalFileInfoNameComparer"/> - uses StrCmpLogicalW from winapi
+                /// <see cref="AlphanumComparator"/>
                 /// Why not just <see cref="Array.Sort(Array)"/>?
                 /// look:
                 /// <example>
@@ -84,7 +85,7 @@ namespace NutPacker
                 /// <see cref="Array.Sort(Array, System.Collections.IComparer)"/> result:
                 /// file1.txt, file2.txt, ..., file9.txt, file10.txt, file11.txt, ...
                 /// </example>
-                Array.Sort(pics, new NaturalFileInfoNameComparer());
+                Array.Sort(pics, new AlphanumComparator.AlphanumComparator());
 
                 /// Generate sprite.
                 currentClass = CodeGenerator.GenerateSpriteSheetClass(
@@ -162,19 +163,6 @@ namespace NutPacker
             }
 
             return currentClass;
-        }
-
-        /// <summary>
-        /// Check file is a picture?
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns>
-        /// Return "true" if file extension contains in <see cref="Packer.extensions"/>;
-        /// Otherwise - "false"
-        /// </returns>
-        public static bool IsImage(FileInfo file)
-        {
-            return Packer.extensions.Contains(file.Extension);
         }
 
         /// <summary>

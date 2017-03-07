@@ -12,10 +12,10 @@ namespace NutPacker
         public string Name { get; set; }
 
         [OptionArray('s', "sprites", HelpText = "Path to folder with sprites.")]
-        public string[] Sprites { get; set; }
+        public string[] Sprites { get; set; } = new string[0];
 
         [OptionArray('t', "tileset", HelpText = "Path to folder with tilesets.")]
-        public string[] Tiles { get; set; }
+        public string[] Tiles { get; set; } = new string[0];
 
         [Option('o', "output", Required = true, HelpText = "Path to output folder.")]
         public string Output { get; set; }
@@ -57,8 +57,8 @@ namespace NutPacker
             if (LastParserState?.Errors.Any() == true) {
                 var errors = help.RenderParsingErrorsText(this, 2); // Indent with two spaces.
 
-                if (!string.IsNullOrEmpty(errors)) {
-                    help.AddPreOptionsLine(string.Concat(Environment.NewLine, "Error:"));
+                if (!String.IsNullOrEmpty(errors)) {
+                    help.AddPreOptionsLine(String.Concat(Environment.NewLine, "Error:"));
                     help.AddPreOptionsLine(errors);
                 }
             }

@@ -44,11 +44,7 @@ namespace NutEngine.Input
         /// <returns>
         /// Current state of the key.
         /// </returns>
-        public XnaInput.KeyState this[XnaInput.Keys key] {
-            get {
-                return CurrentState[key];
-            }
-        }
+        public XnaInput.KeyState this[XnaInput.Keys key] => CurrentState[key];
 
         /// <summary>
         /// Wrapper for <see cref="XnaInput.KeyboardState.GetPressedKeys"/>.
@@ -77,6 +73,25 @@ namespace NutEngine.Input
         }
 
         /// <summary>
+        /// Gets whether given keys are currently being pressed.
+        /// </summary>
+        /// <param name="keys"> The keys to query. </param>
+        /// <returns>
+        /// true if all keys are pressed at current state;
+        /// false otherwise.
+        /// </returns>
+        public bool IsKeyDown(params XnaInput.Keys[] keys)
+        {
+            foreach (var key in keys) {
+                if (CurrentState.IsKeyUp(key)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Wrapper for <see cref="XnaInput.KeyboardState.IsKeyUp(XnaInput.Keys)"/>.
         /// Gets whether given key is currently being not pressed.
         /// </summary>
@@ -91,7 +106,26 @@ namespace NutEngine.Input
         }
 
         /// <summary>
-        /// Wrapper for <see cref="XnaInput.KeyboardState.Equals(object)"/>.
+        /// Gets whether given keys are currently being not pressed.
+        /// </summary>
+        /// <param name="keys"> The keys to query. </param>
+        /// <returns>
+        /// true if all keys not pressed at current state;
+        /// false otherwise.
+        /// </returns>
+        public bool IsKeyUp(params XnaInput.Keys[] keys)
+        {
+            foreach (var key in keys) {
+                if (CurrentState.IsKeyDown(key)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Wrapper for <see cref="XnaInput.KeyboardState.Equals(System.Object)"/>.
         /// Compare only current state.
         /// </summary>
         public override bool Equals(object obj)
