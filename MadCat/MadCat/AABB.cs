@@ -6,6 +6,7 @@ namespace MadCat
     /// <summary>
     /// AABB (Axis Aligned Bounding Box).
     /// Rectangle without rotation for collision detection.
+    /// Should we move it to engine?
     /// </summary>
     public class AABB
     {

@@ -19,11 +19,11 @@ namespace MadCat
         {
             Texture = Content.Load<Texture2D>("Demo");
 
-            var backWorld = new Sprite(Texture, Graveyard.Tiles.BG) {
+            var background = new Sprite(Texture, Graveyard.Tiles.BG) {
                   Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2)
                 , Scale = new Vector2(.5f, .5f)
             };
-            World.AddChild(backWorld);
+            World.AddChild(background);
 
             /// Create Characters.
             characters = new Character[3];

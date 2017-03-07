@@ -4,7 +4,6 @@ using NutEngine;
 
 using Microsoft.Xna.Framework.Input;
 using NutInput = NutEngine.Input;
-using System;
 
 namespace MadCat
 {
@@ -98,6 +97,7 @@ namespace MadCat
                 , SlideKey    = Keys.LeftControl
             };
 
+            /// Flip
             Effects = SpriteEffects.None;
 
             Scale = new Vector2(.3f, .3f);
@@ -129,7 +129,7 @@ namespace MadCat
                 }
                 /// Stop
                 else {
-                    velocity.X = 0.0f;
+                    Stand();
                 }
             }
 
@@ -162,6 +162,7 @@ namespace MadCat
         {
             base.Update(deltaTime);
 
+            /// Stand
             if (velocity == Vector2.Zero)
             {
                 if (state != State.STAND &&
@@ -172,6 +173,7 @@ namespace MadCat
                     Change(AdventureGirlIdle);
                 }
             }
+            /// Jump
             else if (velocity.Y != 0.0f)
             {
                 if (state != State.JUMP)
@@ -180,6 +182,7 @@ namespace MadCat
                     Change(AdventureGirlJump);
                 }
             }
+            /// Run
             else if (velocity.X != 0.0f)
             {
                 if (state != State.RUN &&
@@ -204,6 +207,7 @@ namespace MadCat
                 }
             }
 
+            /// Set flipped or not
             Effects = direction == Direction.RIGHT
                     ? SpriteEffects.None
                     : SpriteEffects.FlipHorizontally;
@@ -215,6 +219,7 @@ namespace MadCat
             {
                 var response = bounds.Response(wall.Bounds);
 
+                /// If we don't do this, we will stuck in the wall
                 if (response.Y != 0.0f)
                 {
                     velocity.Y = 0.0f;
