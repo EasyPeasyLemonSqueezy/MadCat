@@ -79,12 +79,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AdventureGirl.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
-    <Compile Include="LastAdventureGirl.cs" />
-    <Compile Include="NewAdventureGirl.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

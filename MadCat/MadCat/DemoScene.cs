@@ -9,33 +9,24 @@ namespace MadCat
 {
     public class DemoScene : Scene
     {
-        private float ScreenHeight;
-        private float ScreenWidth;
-
-        private Texture2D TexturePlatform;
         private Texture2D Texture;
         private Node Ground;
-        private LastAdventureGirl AdventureGirl1;
-        private LastAdventureGirl AdventureGirl2;
-        private LastAdventureGirl AdventureGirl3;
+        private Character Character1;
+        private Character Character2;
+        private Character Character3;
 
         public DemoScene(Application app) : base(app)
         {
-            ScreenHeight = app.GraphicsDevice.PresentationParameters.BackBufferHeight;
-            ScreenWidth = app.GraphicsDevice.PresentationParameters.BackBufferWidth;
-
             Texture = Content.Load<Texture2D>("Demo");
-            TexturePlatform = Content.Load<Texture2D>("WPlatform");
-
 
             var background = new Sprite(Texture, Graveyard.Tiles.BG) {
-                  Position = new Vector2(ScreenWidth / 2, ScreenHeight / 2)
+                  Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2)
                 , Scale = new Vector2(.5f, .5f)
             };
             World.AddChild(background);
 
             Ground = new Node() {
-                Position = new Vector2(0, ScreenHeight)
+                Position = new Vector2(0, App.ScreenHeight)
             };
 
             for (int i = 0; i < 10; i++) {
@@ -59,30 +50,30 @@ namespace MadCat
                 , Scale = new Vector2(.5f, .5f)
                 , ZOrder = 10
             });
-            Ground.AddChild(new Sprite(TexturePlatform, Graveyard.Objects.Bush_1_)  // просто прямоугольник белый для тестов
-            {
-                Position = new Vector2(800, -256)       //188 x 94            // 100 x 152
-                ,
-                Scale = new Vector2(1f, 1f)
-                ,
-                ZOrder = 10
-            });
 
-            AdventureGirl1 = new LastAdventureGirl(Texture, Keys.LeftControl, Keys.Right, Keys.Left, Keys.Up, Keys.LeftShift, Keys.Down);
-            AdventureGirl2 = new LastAdventureGirl(Texture, Keys.Q, Keys.D, Keys.A, Keys.W, Keys.F, Keys.S);
-            AdventureGirl3 = new LastAdventureGirl(Texture, Keys.J, Keys.L, Keys.K, Keys.O, Keys.P, Keys.M);
+            Character1 = new Character(Texture);
+            Character2 = new Character(Texture);
+            Character2.SetButtons(Keys.D, Keys.A, Keys.W, Keys.Q, Keys.F, Keys.S);
+            Character3 = new Character(Texture);
+            Character3.SetButtons(Keys.L, Keys.K, Keys.O, Keys.J, Keys.P, Keys.M);
 
-            Ground.AddChild(AdventureGirl1);
-            Ground.AddChild(AdventureGirl2);
-            Ground.AddChild(AdventureGirl3);
+            Ground.AddChild(Character1);
+            Ground.AddChild(Character2);
+            Ground.AddChild(Character3);
             World.AddChild(Ground);
         }
 
         public override void Update(float deltaTime)
         {
-            AdventureGirl2.Update(deltaTime);
-            AdventureGirl3.Update(deltaTime);
-            AdventureGirl1.Update(deltaTime);       
+            var keyboardState = NutInput.Keyboard.GetState();
+
+            Character1.Input(keyboardState);
+            Character2.Input(keyboardState);
+            Character3.Input(keyboardState);
+
+            Character1.Update(deltaTime);
+            Character2.Update(deltaTime);
+            Character3.Update(deltaTime);
         }
     }
 }
