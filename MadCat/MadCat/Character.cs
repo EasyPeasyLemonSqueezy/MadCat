@@ -183,6 +183,7 @@ namespace MadCat
             /// Run
             else if (
                 velocity.X != 0.0f
+                && velocity.Y == 0.0f
                 && state != State.RUN
                 && state != State.SLIDE
                 ) {
