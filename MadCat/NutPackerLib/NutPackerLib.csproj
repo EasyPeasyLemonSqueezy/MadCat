@@ -73,6 +73,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OriginalNameAttribute.cs" />
     <Compile Include="ITileSet.cs" />
     <Compile Include="ISpriteGroup.cs" />
     <Compile Include="ISpriteSheet.cs" />

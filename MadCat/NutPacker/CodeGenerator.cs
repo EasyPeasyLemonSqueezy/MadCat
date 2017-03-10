@@ -18,6 +18,7 @@ namespace NutPacker
         /// <param name="spriteGroup"> Name of new class/spriteGroup. </param>
         /// <returns>
         /// <code>
+        /// [<see cref="NutPackerLib.OriginalNameAttribute"/>("original name of folder")]
         /// public class <paramref name="spriteGroup"/> : <see cref="ISpriteGroup"/> { }
         /// </code>
         /// </returns>
@@ -26,13 +27,23 @@ namespace NutPacker
         {
             /// New public class with <param name="spriteGroup"></param> name.
             var spriteGroupClass = new CodeTypeDeclaration() {
-                  Name = spriteGroup
+                  Name = Walkthrough.VariableName(spriteGroup)
                 , IsClass = true
                 , TypeAttributes = TypeAttributes.Public
             };
 
             /// Inherited from <see cref="ISpriteGroup"/>.
             spriteGroupClass.BaseTypes.Add(new CodeTypeReference(typeof(ISpriteGroup)));
+
+            /// Create attribute.
+            /// [<see cref="NutPackerLib.OriginalNameAttribute"/>("original name of folder")]
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration(
+                  typeof(NutPackerLib.OriginalNameAttribute).FullName
+                , new CodeAttributeArgument(new CodePrimitiveExpression(spriteGroup))
+                );
+
+            /// Add attribute.
+            spriteGroupClass.CustomAttributes.Add(attribute);
 
             return spriteGroupClass;
         }
@@ -72,13 +83,23 @@ namespace NutPacker
         {
             /// New public class with <param name="spriteSheetName"></param> name.
             CodeTypeDeclaration spriteSheetClass = new CodeTypeDeclaration() {
-                  Name = spriteSheetName
+                  Name = Walkthrough.VariableName(spriteSheetName)
                 , IsClass = true
                 , TypeAttributes = TypeAttributes.Public
             };
 
             /// Inherited from <see cref="ISpriteSheet"/>.
             spriteSheetClass.BaseTypes.Add(new CodeTypeReference(typeof(ISpriteSheet)));
+
+            /// Create attribute.
+            /// [<see cref="NutPackerLib.OriginalNameAttribute"/>("original name of folder")]
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration(
+                  typeof(NutPackerLib.OriginalNameAttribute).FullName
+                , new CodeAttributeArgument(new CodePrimitiveExpression(spriteSheetName))
+                );
+
+            /// Add attribute.
+            spriteSheetClass.CustomAttributes.Add(attribute);
 
             /// Array of expressions which create rectangles.
             CodeExpression[] createRectangles = new CodeExpression[rectangles.Length];
@@ -185,13 +206,23 @@ namespace NutPacker
         {
             /// New public class with <param name="tileSet"></param> name.
             var tileSetClass = new CodeTypeDeclaration() {
-                  Name = tileSet
+                  Name = Walkthrough.VariableName(tileSet)
                 , IsClass = true
                 , TypeAttributes = TypeAttributes.Public
             };
 
             /// Inherited from <see cref="ITileSet"/>.
             tileSetClass.BaseTypes.Add(new CodeTypeReference(typeof(ITileSet)));
+
+            /// Create attribute.
+            /// [<see cref="NutPackerLib.OriginalNameAttribute"/>(original name of folder)]
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration(
+                  typeof(NutPackerLib.OriginalNameAttribute).FullName
+                , new CodeAttributeArgument(new CodePrimitiveExpression(tileSet))
+                );
+
+            /// Add attribute.
+            tileSetClass.CustomAttributes.Add(attribute);
 
             return tileSetClass;
         }
@@ -203,6 +234,7 @@ namespace NutPacker
         /// <param name="rectangle"> Location in texture atlas. </param>
         /// <returns>
         /// <code>
+        /// [<see cref="NutPackerLib.OriginalNameAttribute"/>(name of picture)]
         /// public static <see cref="Rectangle"/> <paramref name="picture"/> {
         ///     get {
         ///         // r - <paramref name="rectangle"/>.
@@ -218,7 +250,7 @@ namespace NutPacker
             /// New public static class, with getter and type <see cref="Rectangle"/>.
             CodeMemberProperty pic = new CodeMemberProperty() {
                   Attributes = MemberAttributes.Public | MemberAttributes.Static
-                , Name = Path.GetFileNameWithoutExtension(picture)
+                , Name = Walkthrough.VariableName(Path.GetFileNameWithoutExtension(picture))
                 , HasGet = true
                 , Type = new CodeTypeReference(typeof(Xna.Rectangle))
             };
@@ -233,6 +265,16 @@ namespace NutPacker
                         , new CodePrimitiveExpression(rectangle.Width)
                         , new CodePrimitiveExpression(rectangle.Height)
                 )));
+
+            /// Create attribute.
+            /// [<see cref="NutPackerLib.OriginalNameAttribute"/>("name of picture")]
+            CodeAttributeDeclaration attribute = new CodeAttributeDeclaration(
+                  typeof(NutPackerLib.OriginalNameAttribute).FullName
+                , new CodeAttributeArgument(new CodePrimitiveExpression(picture))
+                );
+
+            /// Add attribute.
+            pic.CustomAttributes.Add(attribute);
             
             return pic;
         }
