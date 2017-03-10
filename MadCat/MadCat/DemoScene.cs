@@ -53,8 +53,8 @@ namespace MadCat
             };
 
             World.AddChild(characters[0]);
-            World.AddChild(characters[1]);
-            World.AddChild(characters[2]);
+            //World.AddChild(characters[1]);
+            //World.AddChild(characters[2]);
 
             /// Some stupid wall test
             int[,] wallMap = { 
@@ -89,6 +89,25 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             var keyboardState = NutInput.Keyboard.GetState();
+            
+            if (keyboardState.IsKeyDown(Keys.LeftControl)) {
+                Camera.Rotation += deltaTime;
+            }
+            if (keyboardState.IsKeyDown(Keys.LeftAlt)) {
+                Camera.Rotation -= deltaTime;
+            }
+            if (keyboardState.IsKeyDown(Keys.W)) {
+                Camera.Position -= new Vector2(0, 100 * deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.S)) {
+                Camera.Position += new Vector2(0, 100 * deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.Q)) {
+                Camera.Zoom *= 80 * deltaTime;
+            }
+            if (keyboardState.IsKeyDown(Keys.E)) {
+                Camera.Zoom /= 80 * deltaTime;
+            }
 
             /// We need three loops for correct order of operations
 

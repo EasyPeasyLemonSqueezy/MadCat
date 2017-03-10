@@ -20,7 +20,7 @@ namespace NutEngine
             Batcher = app.Batcher;
             Content = app.Content;
             World = new Node();
-            Camera = new OrthographicSRTCamera(new Vector2(App.ScreenWidth, App.ScreenHeight));
+            Camera = new OrthographicTRSCamera(new Vector2(App.ScreenWidth, App.ScreenHeight));
         }
 
         /// <summary>
