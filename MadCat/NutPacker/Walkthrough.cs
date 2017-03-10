@@ -28,7 +28,7 @@ namespace NutPacker
             , SearchOption searchOption = SearchOption.AllDirectories)
         {
             return directory.EnumerateFiles("*", searchOption)
-                            .Where(file => MiscHelper.IsImageFile(file.Name));
+                            .Where(file => MiscHelper.IsImageFile(file.FullName));
         }
 
         /// <summary>
