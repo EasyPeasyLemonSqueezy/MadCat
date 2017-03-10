@@ -89,15 +89,14 @@ namespace NutPacker
 
                 /// Generate sprite.
                 currentClass = CodeGenerator.GenerateSpriteSheetClass(
-                      VariableName(directory.Name)
+                      directory.Name
                     , pics.Select(pic => map[pic.FullName])
                           .ToArray()
                     );
             }
             else {
                 /// Generate group of sprites.
-                currentClass = CodeGenerator.GenerateSpriteGroupClass(
-                    VariableName(directory.Name));
+                currentClass = CodeGenerator.GenerateSpriteGroupClass(directory.Name);
                 
                 foreach (var dir in dirs) {
                     /// Generate class for subdirectory.
@@ -146,8 +145,7 @@ namespace NutPacker
             }
 
             /// Generate tile set.
-            CodeTypeDeclaration currentClass = CodeGenerator.GenerateTileSetClass(
-                VariableName(directory.Name));
+            CodeTypeDeclaration currentClass = CodeGenerator.GenerateTileSetClass(directory.Name);
 
             /// Generate tiles property and add them to current class.
             foreach (var dir in dirs) {
@@ -157,7 +155,7 @@ namespace NutPacker
             /// Generate tile properties and add them to current class.
             foreach (var pic in pics) {
                 currentClass.Members.Add(CodeGenerator.GenerateTileProperty(
-                      VariableName(Path.GetFileNameWithoutExtension(pic.Name))
+                      pic.Name
                     , map[pic.FullName])
                     );
             }
