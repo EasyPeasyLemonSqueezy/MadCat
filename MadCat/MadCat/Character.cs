@@ -91,10 +91,10 @@ namespace MadCat
             Control = new Controls() {
                   RunRightKey = Keys.Right
                 , RunLeftKey  = Keys.Left
-                , JumpKey     = Keys.Up
-                , ShootKey    = Keys.Z
-                , MeleeKey    = Keys.X
-                , SlideKey    = Keys.LeftControl
+                , JumpKey     = Keys.Space
+                , ShootKey    = Keys.F
+                , MeleeKey    = Keys.G
+                , SlideKey    = Keys.LeftShift
             };
 
             /// Flip
