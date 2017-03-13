@@ -79,6 +79,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AABB.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationType.cs" />
     <Compile Include="Application.cs" />
