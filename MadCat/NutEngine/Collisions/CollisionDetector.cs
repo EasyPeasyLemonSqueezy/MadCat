@@ -44,7 +44,7 @@ namespace NutEngine
         /// Types can be the same.
         /// </summary>
         /// <param name="rule">Delegate or lambda that takes two GameObjects and do some things with them</param>
-        public void AddTypeRule<T1, T2>(Rule rule)
+        public void AddTypeRule<T1, T2>(Rule rule) where T1: GameObject where T2 : GameObject
         {
             typeRules.Add(new Tuple<Type, Type>(typeof(T1), typeof(T2)), rule);
         }
