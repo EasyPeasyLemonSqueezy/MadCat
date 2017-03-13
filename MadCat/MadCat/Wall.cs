@@ -2,24 +2,31 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using NutPacker.Content;
+using System;
 
 namespace MadCat
 {
-    public class Wall : Sprite
+    public class Wall : GameObject
     {
-        public AABB Bounds { get; }
+        private Sprite sprite;
 
-        public Wall(Texture2D texture, Vector2 position)
-            : base(texture, Graveyard.Tiles.Tile_2_)
+        public Wall(Texture2D texture, Node node, Vector2 position)
         {
-            Position = position;
+            sprite = new Sprite(texture);
+            sprite.Position = position;
 
-            Bounds = new AABB() {
+            node.AddChild(sprite);
+
+            Collider = new AABB() {
                   X = position.X - Graveyard.Tiles.Tile_2_.Width  / 2.0f
                 , Y = position.Y - Graveyard.Tiles.Tile_2_.Height / 2.0f
                 , Width  = Graveyard.Tiles.Tile_2_.Width
                 , Height = Graveyard.Tiles.Tile_2_.Height
             };
+        }
+
+        public override void Update(float deltaTime)
+        {
         }
     }
 }

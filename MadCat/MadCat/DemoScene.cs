@@ -13,7 +13,9 @@ namespace MadCat
         private Texture2D Texture;
 
         private Character[] characters;
-        private List<Wall> walls;
+        private List<GameObject> entities;
+
+        private CollisionDetector detector;
 
         public DemoScene(Application app) : base(app)
         {
@@ -25,12 +27,15 @@ namespace MadCat
             };
             World.AddChild(background);
 
+            entities = new List<GameObject>();
+            detector = new CollisionDetector();
+
             /// Create Characters.
             characters = new Character[3];
 
-            characters[0] = new Character(Texture);
+            characters[0] = new Character(Texture, World);
 
-            characters[1] = new Character(Texture) {
+            characters[1] = new Character(Texture, World) {
                 Control = new Character.Controls() {
                       RunRightKey = Keys.D
                     , RunLeftKey = Keys.A
@@ -41,7 +46,7 @@ namespace MadCat
                 }
             };
 
-            characters[2] = new Character(Texture) {
+            characters[2] = new Character(Texture, World) {
                 Control = new Character.Controls() {
                       RunRightKey = Keys.L
                     , RunLeftKey = Keys.K
@@ -52,9 +57,9 @@ namespace MadCat
                 }
             };
 
-            World.AddChild(characters[0]);
-            //World.AddChild(characters[1]);
-            //World.AddChild(characters[2]);
+            entities.Add(characters[0]);
+            entities.Add(characters[1]);
+            entities.Add(characters[2]);
 
             /// Some stupid wall test
             int[,] wallMap = { 
@@ -67,8 +72,6 @@ namespace MadCat
                 , { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
             };
 
-            walls = new List<Wall>();
-
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 10; j++) {
                     if (wallMap[i, j] == 1) {
@@ -77,10 +80,8 @@ namespace MadCat
                             Y = i * Graveyard.Tiles.Tile_2_.Height - Graveyard.Tiles.Tile_2_.Height * 2.0f
                         };
 
-                        var wall = new Wall(Texture, position);
-
-                        World.AddChild(wall);
-                        walls.Add(wall);
+                        var wall = new Wall(Texture, World, position);
+                        entities.Add(wall);
                     }
                 }
             }
@@ -90,42 +91,35 @@ namespace MadCat
         {
             var keyboardState = NutInput.Keyboard.GetState();
             
-            if (keyboardState.IsKeyDown(Keys.LeftControl)) {
-                Camera.Rotation += deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.LeftAlt)) {
-                Camera.Rotation -= deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.W)) {
-                Camera.Position -= new Vector2(0, 100 * deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.S)) {
-                Camera.Position += new Vector2(0, 100 * deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.Q)) {
-                Camera.Zoom *= 80 * deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.E)) {
-                Camera.Zoom /= 80 * deltaTime;
-            }
-
-            /// We need three loops for correct order of operations
-
             /// Input
             foreach (var character in characters) {
                 character.Input(keyboardState);
             }
 
             /// Update
-            foreach (var character in characters) {
-                character.Update(deltaTime);
+            foreach (var entity in entities) {
+                entity.Update(deltaTime);
             }
 
-            /// Collisions
-            foreach (var character in characters) {
-                foreach (var wall in walls) {
-                    character.Collide(wall);
-                }
+            detector.CheckCollisions(entities); /// Collisions
+
+            if (keyboardState.IsKeyDown(Keys.NumPad9)) {
+                Camera.Rotation += deltaTime;
+            }
+            if (keyboardState.IsKeyDown(Keys.NumPad7)) {
+                Camera.Rotation -= deltaTime;
+            }
+            if (keyboardState.IsKeyDown(Keys.NumPad8)) {
+                Camera.Position -= new Vector2(0, 100 * deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.NumPad2)) {
+                Camera.Position += new Vector2(0, 100 * deltaTime);
+            }
+            if (keyboardState.IsKeyDown(Keys.NumPad3)) {
+                Camera.Zoom *= 80 * deltaTime;
+            }
+            if (keyboardState.IsKeyDown(Keys.NumPad1)) {
+                Camera.Zoom /= 80 * deltaTime;
             }
         }
     }

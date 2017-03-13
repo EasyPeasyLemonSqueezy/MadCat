@@ -6,9 +6,9 @@
 
         public abstract void Update(float deltaTime);
 
-        public bool Collide(GameObject other)
+        public void Collide(GameObject other)
         {
-            return Collide((dynamic) other);
+            Collide((dynamic) other);
         }
     }
 }
