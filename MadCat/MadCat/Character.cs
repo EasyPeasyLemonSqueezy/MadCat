@@ -235,6 +235,11 @@ namespace MadCat
             Collider.Y = position.Y - Collider.Height / 2.0f;
         }
 
+        public void Collision()
+        {
+            System.Console.WriteLine("FUCKFUCKFUCK");
+        }
+
         private void Stand()
         {
             velocity.X = 0.0f;

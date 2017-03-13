@@ -28,7 +28,6 @@ namespace MadCat
             World.AddChild(background);
 
             entities = new List<GameObject>();
-            detector = new CollisionDetector();
 
             /// Create Characters.
             characters = new Character[3];
@@ -85,6 +84,9 @@ namespace MadCat
                     }
                 }
             }
+
+            detector = new CollisionDetector();
+            detector.AddTypeRule<Character, Wall>(characters[0].Collision);
         }
 
         public override void Update(float deltaTime)
@@ -99,6 +101,14 @@ namespace MadCat
             /// Update
             foreach (var entity in entities) {
                 entity.Update(deltaTime);
+            }
+
+            foreach (var character in characters) {
+                foreach (var entity in entities) {
+                    if (entity is Wall) {
+                        character.Collide(entity as Wall);
+                    }
+                }
             }
 
             detector.CheckCollisions(entities); /// Collisions
