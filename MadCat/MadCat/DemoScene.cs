@@ -85,6 +85,7 @@ namespace MadCat
                 }
             }
 
+            /// Create collision rules
             detector = new CollisionDetector();
 
             detector.AddTypeRule<Character, Wall>(
@@ -98,7 +99,6 @@ namespace MadCat
                 (first, second) => {
                     var c = first as Character;
                     c.SetColor(Color.Red);
-                    System.Console.WriteLine("FUCK");
                 });
         }
 
@@ -118,6 +118,7 @@ namespace MadCat
 
             detector.CheckCollisions(entities); /// Collisions
 
+            /// Camera test
             if (keyboardState.IsKeyDown(Keys.NumPad9)) {
                 Camera.Rotation += deltaTime;
             }

@@ -7,7 +7,7 @@ namespace NutEngine
     /// AABB (Axis Aligned Bounding Box).
     /// Rectangle without rotation for collision detection.
     /// </summary>
-    public class AABB
+    public class AABB : Collider
     {
         public float X { get; set; }
         public float Y { get; set; }
