@@ -89,7 +89,12 @@ namespace MadCat
                 Repeat = false
             };
 
-            currentAnimation = AdventureGirlIdle;
+            /// Fuck this
+            currentAnimation 
+                = new Animation(texture, new NutPacker.Content.AdventureGirl.Idle()) {
+                Duration = .8f
+            };
+
             currentAnimation.Effects = SpriteEffects.None; /// Flip
             currentAnimation.Scale = new Vector2(.3f, .3f);
 
@@ -98,10 +103,10 @@ namespace MadCat
             Control = new Controls() {
                   RunRightKey = Keys.Right
                 , RunLeftKey  = Keys.Left
-                , JumpKey     = Keys.Space
-                , ShootKey    = Keys.F
-                , MeleeKey    = Keys.G
-                , SlideKey    = Keys.LeftShift
+                , JumpKey     = Keys.Up
+                , ShootKey    = Keys.Z
+                , MeleeKey    = Keys.X
+                , SlideKey    = Keys.Down
             };
 
             position = new Vector2(0.0f, -500.0f);
@@ -219,20 +224,22 @@ namespace MadCat
 
         public void Collide(Wall wall)
         {
-            var response = Collider.Response(wall.Collider);
+            if (Collider.Intersects(wall.Collider)) {
+                var response = Collider.Response(wall.Collider);
 
-            /// If we don't do this, we will stuck in the wall
-            if (response.Y != 0.0f) {
-                velocity.Y = 0.0f;
+                /// If we don't do this, we will stuck in the wall
+                if (response.Y != 0.0f) {
+                    velocity.Y = 0.0f;
+                }
+
+                if (response.X != 0.0f) {
+                    velocity.X = 0.0f;
+                }
+
+                position += response;
+                Collider.X = position.X - Collider.Width / 2.0f;
+                Collider.Y = position.Y - Collider.Height / 2.0f;
             }
-
-            if (response.X != 0.0f) {
-                velocity.X = 0.0f;
-            }
-
-            position += response;
-            Collider.X = position.X - Collider.Width  / 2.0f;
-            Collider.Y = position.Y - Collider.Height / 2.0f;
         }
 
         public void Collision()

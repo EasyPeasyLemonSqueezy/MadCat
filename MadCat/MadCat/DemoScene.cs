@@ -86,7 +86,8 @@ namespace MadCat
             }
 
             detector = new CollisionDetector();
-            detector.AddTypeRule<Character, Wall>(characters[0].Collision);
+
+            detector.AddTypeRule<Character, Character>(characters[0].Collision);
         }
 
         public override void Update(float deltaTime)

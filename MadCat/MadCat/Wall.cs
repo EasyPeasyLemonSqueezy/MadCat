@@ -12,7 +12,7 @@ namespace MadCat
 
         public Wall(Texture2D texture, Node node, Vector2 position)
         {
-            sprite = new Sprite(texture);
+            sprite = new Sprite(texture, Graveyard.Tiles.Tile_2_);
             sprite.Position = position;
 
             node.AddChild(sprite);

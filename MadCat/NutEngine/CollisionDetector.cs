@@ -18,12 +18,14 @@ namespace NutEngine
         {
             foreach (var first in entities) {
                 foreach (var second in entities) {
-                    var types = new Tuple<Type, Type>(first.GetType(), second.GetType());
+                    if (first != second) {
+                        var types = new Tuple<Type, Type>(first.GetType(), second.GetType());
 
-                    if (typeRules.ContainsKey(types)) {
-                        if (first.Collider.Intersects(second.Collider)) {
-                            typeRules[types]();
-                        }
+                        if (typeRules.ContainsKey(types)) {
+                            if (first.Collider.Intersects(second.Collider)) {
+                                typeRules[types]();
+                            }
+                        } 
                     }
                 }
             }
