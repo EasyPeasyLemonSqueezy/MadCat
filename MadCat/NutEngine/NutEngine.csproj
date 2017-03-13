@@ -79,14 +79,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AABB.cs" />
+    <Compile Include="Collisions\AABB.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationType.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Camera\OrthographicSRTCamera.cs" />
     <Compile Include="Camera\Camera2D.cs" />
     <Compile Include="Camera\OrthographicTRSCamera.cs" />
-    <Compile Include="CollisionDetector.cs" />
+    <Compile Include="Collisions\Collider.cs" />
+    <Compile Include="Collisions\CollisionDetector.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Input\Keyboard.cs" />
