@@ -9,6 +9,11 @@ namespace NutEngine
 
         private Dictionary<Tuple<Type, Type>, Callback> typeRules;
 
+        public CollisionDetector()
+        {
+            typeRules = new Dictionary<Tuple<Type, Type>, Callback>();
+        }
+
         public void CheckCollisions(IEnumerable<GameObject> entities)
         {
             foreach (var first in entities) {
