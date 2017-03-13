@@ -5,7 +5,7 @@ namespace NutEngine
 {
     public class CollisionDetector
     {
-        public delegate void Callback();
+        public delegate void Callback(GameObject first, GameObject second);
 
         private Dictionary<Tuple<Type, Type>, Callback> typeRules;
 
@@ -20,12 +20,11 @@ namespace NutEngine
                 foreach (var second in entities) {
                     if (first != second) {
                         var types = new Tuple<Type, Type>(first.GetType(), second.GetType());
-
                         if (typeRules.ContainsKey(types)) {
                             if (first.Collider.Intersects(second.Collider)) {
-                                typeRules[types]();
+                                typeRules[types](first, second);
                             }
-                        } 
+                        }
                     }
                 }
             }

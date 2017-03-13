@@ -166,6 +166,7 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
+            currentAnimation.Color = Color.White;
             currentAnimation.Update(deltaTime);
 
             /// Stand
@@ -222,31 +223,33 @@ namespace MadCat
                                      : SpriteEffects.FlipHorizontally;
         }
 
-        public void Collide(Wall wall)
+        public void CollideWall(Wall wall)
         {
-            if (Collider.Intersects(wall.Collider)) {
-                var response = Collider.Response(wall.Collider);
+            var response = Collider.Response(wall.Collider);
 
-                /// If we don't do this, we will stuck in the wall
-                if (response.Y != 0.0f) {
-                    velocity.Y = 0.0f;
-                }
-
-                if (response.X != 0.0f) {
-                    velocity.X = 0.0f;
-                }
-
-                position += response;
-                Collider.X = position.X - Collider.Width / 2.0f;
-                Collider.Y = position.Y - Collider.Height / 2.0f;
+            /// If we don't do this, we will stuck in the wall
+            if (response.Y != 0.0f) {
+                velocity.Y = 0.0f;
             }
+
+            if (response.X != 0.0f) {
+                velocity.X = 0.0f;
+            }
+
+            position += response;
+            Collider.X = position.X - Collider.Width / 2.0f;
+            Collider.Y = position.Y - Collider.Height / 2.0f;
         }
 
-        public void Collision()
+        /// <summary>
+        /// Just testing collision rules
+        /// </summary>
+        public void SetColor(Color color)
         {
-            System.Console.WriteLine("FUCKFUCKFUCK");
+            currentAnimation.Color = color;
         }
 
+        
         private void Stand()
         {
             velocity.X = 0.0f;

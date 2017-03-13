@@ -87,7 +87,19 @@ namespace MadCat
 
             detector = new CollisionDetector();
 
-            detector.AddTypeRule<Character, Character>(characters[0].Collision);
+            detector.AddTypeRule<Character, Wall>(
+                (first, second) => {
+                    var character = first as Character;
+                    var wall = second as Wall;
+                    character.CollideWall(wall);
+                });
+
+            detector.AddTypeRule<Character, Character>(
+                (first, second) => {
+                    var c = first as Character;
+                    c.SetColor(Color.Red);
+                    System.Console.WriteLine("FUCK");
+                });
         }
 
         public override void Update(float deltaTime)
@@ -102,14 +114,6 @@ namespace MadCat
             /// Update
             foreach (var entity in entities) {
                 entity.Update(deltaTime);
-            }
-
-            foreach (var character in characters) {
-                foreach (var entity in entities) {
-                    if (entity is Wall) {
-                        character.Collide(entity as Wall);
-                    }
-                }
             }
 
             detector.CheckCollisions(entities); /// Collisions
