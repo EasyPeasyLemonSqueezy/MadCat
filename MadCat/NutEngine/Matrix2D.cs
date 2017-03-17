@@ -227,9 +227,11 @@ namespace NutEngine
         /// }
         /// </code>
         /// </remarks>
-        /// <param name="m2"></param>
-        /// <param name="m1"></param>
-        /// <returns></returns>
+        /// <param name="m2"> Left matrix. </param>
+        /// <param name="m1"> Right matrix. </param>
+        /// <returns>
+        /// New matrix - result of right-handed multiplication.
+        /// </returns>
         public static Matrix2D operator *(Matrix2D m2, Matrix2D m1)
         {
             var result = new Matrix2D();
