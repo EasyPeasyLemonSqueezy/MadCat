@@ -8,7 +8,11 @@ namespace NutEngine
         public TextureRegion TextureRegion { get; protected set; }
 
         /// Center of the transformations, by default - center of the frame/texture.
-        public Vector2 Origin { get; set; }
+        public Vector2 Origin {
+            get => new Vector2(OriginAbs.X / TextureRegion.Frame.Width, OriginAbs.Y / TextureRegion.Frame.Height);
+            set => OriginAbs = new Vector2(TextureRegion.Frame.Width * value.X, TextureRegion.Frame.Height * value.Y);
+        }
+        public Vector2 OriginAbs { get; set; }
 
         public Color Color { get; set; }
         public SpriteEffects Effects { get; set; }
@@ -28,12 +32,7 @@ namespace NutEngine
 
         protected new void Initialize()
         {
-            base.Initialize();
-
-            Origin = new Vector2(
-                  TextureRegion.Frame.Width  / 2f
-                , TextureRegion.Frame.Height / 2f
-                );
+            Origin = new Vector2(.5f, .5f);
 
             Color = Color.White;
 
@@ -45,10 +44,7 @@ namespace NutEngine
         {
             TextureRegion = sprite.TextureRegion;
             
-            Origin = new Vector2(
-                  TextureRegion.Frame.Width  / 2f
-                , TextureRegion.Frame.Height / 2f
-                );
+            Origin = new Vector2(.5f, .5f);
 
             Color = sprite.Color;
             Effects = sprite.Effects;
@@ -67,7 +63,7 @@ namespace NutEngine
                 , TextureRegion.Frame
                 , Color
                 , rotation
-                , Origin
+                , OriginAbs
                 , scale
                 , Effects
                 , LayerDepth);

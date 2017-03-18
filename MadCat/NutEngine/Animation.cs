@@ -16,7 +16,7 @@ namespace NutEngine
                 CurrentIndex = 0;
 
                 var currentFrame = value[CurrentIndex];
-                Origin = new Vector2(currentFrame.Width / 2f, currentFrame.Height / 2f);
+                Origin = new Vector2(.5f, .5f);
             }
         }
 
@@ -48,8 +48,6 @@ namespace NutEngine
 
         protected new void Initialize()
         {
-            base.Initialize();
-
             ElapsedTime = 0;
 
             CurrentIndex = 0;
