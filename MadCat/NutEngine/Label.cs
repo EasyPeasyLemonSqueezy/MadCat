@@ -8,8 +8,13 @@ namespace NutEngine
         public SpriteFont Font { get; private set; }
         public string Text { get; set; }
 
+        public Vector2 Origin {
+            get => new Vector2(OriginAbs.X / Font.MeasureString(Text).X, OriginAbs.Y / Font.MeasureString(Text).Y);
+            set => OriginAbs = new Vector2(Font.MeasureString(Text).X * value.X, Font.MeasureString(Text).Y * value.Y);
+        }
+        public Vector2 OriginAbs { get; set; }
+
         public Color Color { get; set; }
-        public Vector2 Origin { get; set; }
         public SpriteEffects Effects { get; set; }
         public float LayerDepth { get; set; }
 
@@ -23,7 +28,7 @@ namespace NutEngine
 
         protected new void Initialize()
         {
-            Origin = Font.MeasureString(Text) / 2;
+            OriginAbs = Font.MeasureString(Text) / 2;
             Color = Color.White;
             Effects = SpriteEffects.None;
             LayerDepth = 0;
@@ -41,7 +46,7 @@ namespace NutEngine
                 , position
                 , Color
                 , rotation
-                , Origin
+                , OriginAbs
                 , scale
                 , Effects
                 , LayerDepth);
