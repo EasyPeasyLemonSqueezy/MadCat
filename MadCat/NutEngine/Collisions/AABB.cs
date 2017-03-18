@@ -22,12 +22,12 @@ namespace NutEngine
         public bool Intersects(AABB other)
         {
             if (MaxX >= other.MinX && MinX <= other.MaxX &&
-                MaxY >= other.MinY && MinY <= other.MaxY)
-            {
+                MaxY >= other.MinY && MinY <= other.MaxY) {
                 return true;
             }
-
-            return false;
+            else {
+                return false;
+            }
         }
 
         /// <summary>
@@ -42,18 +42,15 @@ namespace NutEngine
             float bottom = other.MinY - MaxY;
             float top = other.MaxY - MinY;
 
-            var translation = new Vector2()
-            {
+            var translation = new Vector2() {
                 X = Math.Abs(left) < Math.Abs(right) ? left : right,
                 Y = Math.Abs(bottom) < Math.Abs(top) ? bottom : top
             };
 
-            if (Math.Abs(translation.X) < Math.Abs(translation.Y))
-            {
+            if (Math.Abs(translation.X) < Math.Abs(translation.Y)) {
                 translation.Y = 0.0f;
             }
-            else
-            {
+            else {
                 translation.X = 0.0f;
             }
 
