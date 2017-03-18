@@ -92,6 +92,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardState.cs" />
+    <Compile Include="Label.cs" />
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeComparer.cs" />
