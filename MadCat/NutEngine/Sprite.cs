@@ -28,8 +28,6 @@ namespace NutEngine
 
         protected new void Initialize()
         {
-            base.Initialize();
-
             Origin = new Vector2(
                   TextureRegion.Frame.Width  / 2f
                 , TextureRegion.Frame.Height / 2f

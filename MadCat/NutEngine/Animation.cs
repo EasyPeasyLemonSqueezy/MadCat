@@ -48,8 +48,6 @@ namespace NutEngine
 
         protected new void Initialize()
         {
-            base.Initialize();
-
             ElapsedTime = 0;
 
             CurrentIndex = 0;
