@@ -9,7 +9,7 @@ namespace NutEngine
 
         /// Center of the transformations, by default - center of the frame/texture.
         public Vector2 Origin {
-            get => new Vector2(TextureRegion.Frame.Width * OriginAbs.X, TextureRegion.Frame.Height * OriginAbs.Y);
+            get => new Vector2(OriginAbs.X / TextureRegion.Frame.Width, OriginAbs.Y / TextureRegion.Frame.Height);
             set => OriginAbs = new Vector2(TextureRegion.Frame.Width * value.X, TextureRegion.Frame.Height * value.Y);
         }
         public Vector2 OriginAbs { get; set; }
