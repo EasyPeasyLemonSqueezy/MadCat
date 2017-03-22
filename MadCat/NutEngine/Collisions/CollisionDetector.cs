@@ -9,13 +9,11 @@ namespace NutEngine
     /// </summary>
     public class CollisionDetector
     {
-        public delegate void Rule(GameObject first, GameObject second);
-
-        private Dictionary<Tuple<Type, Type>, Rule> typeRules;
+        private Dictionary<Tuple<Type, Type>, Action<GameObject, GameObject>> typeRules;
 
         public CollisionDetector()
         {
-            typeRules = new Dictionary<Tuple<Type, Type>, Rule>();
+            typeRules = new Dictionary<Tuple<Type, Type>, Action<GameObject, GameObject>>();
         }
 
         /// <summary>
@@ -28,7 +26,7 @@ namespace NutEngine
             foreach (var first in entities) {
                 foreach (var second in entities) {
                     if (first != second) {
-                        var types = new Tuple<Type, Type>(first.GetType(), second.GetType());
+                        var types = Tuple.Create(first.GetType(), second.GetType());
                         if (typeRules.ContainsKey(types)) {
                             if (first.Collider.Intersects(second.Collider)) {
                                 typeRules[types](first, second);
@@ -44,9 +42,10 @@ namespace NutEngine
         /// Types can be the same.
         /// </summary>
         /// <param name="rule">Delegate or lambda that takes two GameObjects and do some things with them</param>
-        public void AddTypeRule<T1, T2>(Rule rule) where T1: GameObject where T2 : GameObject
+        public void AddTypeRule<T1, T2>(Action<GameObject, GameObject> rule)
+            where T1: GameObject where T2 : GameObject
         {
-            typeRules.Add(new Tuple<Type, Type>(typeof(T1), typeof(T2)), rule);
+            typeRules.Add(Tuple.Create(typeof(T1), typeof(T2)), rule);
         }
     }
 }
