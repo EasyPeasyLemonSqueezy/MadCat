@@ -88,6 +88,7 @@
     <Compile Include="Camera\OrthographicTRSCamera.cs" />
     <Compile Include="Collisions\Collider.cs" />
     <Compile Include="Collisions\CollisionDetector.cs" />
+    <Compile Include="GameObjectManager.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Input\Keyboard.cs" />
