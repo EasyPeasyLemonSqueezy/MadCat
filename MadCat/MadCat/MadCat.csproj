@@ -85,9 +85,15 @@
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\JumpState.cs" />
+    <Compile Include="States\MeleeState.cs" />
+    <Compile Include="States\RunState.cs" />
+    <Compile Include="States\ShootState.cs" />
+    <Compile Include="States\SlideState.cs" />
     <Compile Include="States\StandState.cs" />
     <Compile Include="Wall.cs" />
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace MadCat
             this.position = position;
             velocity = new Vector2(500, 0) * direction;
             gravitation = new Vector2(0, 2000);
-            sprite = new Sprite(Assets.Texture);
+            sprite = new Sprite(Assets.TextureBullet);
             sprite.Position = position;
             sprite.Scale = new Vector2(0.05f, 0.05f);
 

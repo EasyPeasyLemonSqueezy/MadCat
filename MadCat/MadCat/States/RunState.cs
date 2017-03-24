@@ -1,21 +1,22 @@
 ﻿using System;
-using NutEngine.Input;
+using Microsoft.Xna.Framework;
 using NutEngine;
+using NutEngine.Input;
 
 namespace MadCat
 {
-    public class StandState : IState
+    public class RunState : IState
     {
         private Character character;
 
-        public StandState(Character character)
+        public RunState(Character character)
         {
             this.character = character;
         }
 
         public void Enter()
         {
-            character.CurrentAnimation.Change(Assets.AdventureGirlIdle);
+            character.CurrentAnimation.Change(Assets.AdventureGirlRun);
         }
 
         public IState UpdateInput(KeyboardState keyboardState)
@@ -42,18 +43,21 @@ namespace MadCat
                 return new ShootState(character);
             }
 
+            if (keyboardState.IsKeyPressedRightNow(character.Control.SlideKey)) {
+                return new SlideState(character);
+            }
+
             return null;
         }
 
         public IState Update(float deltaTime)
         {
-            if (character.Velocity.Y != 0) {
-                return new JumpState(character);
+            if (character.Velocity == Vector2.Zero) {
+                return new StandState(character);
             }
 
-            if (character.Velocity.X != 0 &&
-                character.Velocity.Y == 0) {
-                return new RunState(character);
+            if (character.Velocity.Y != 0) {
+                return new JumpState(character);
             }
 
             return null;
