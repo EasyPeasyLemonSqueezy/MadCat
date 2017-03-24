@@ -9,7 +9,7 @@ namespace NutEngine
     {
         public int Compare(Node x, Node y)
         {
-            if (x == y) {
+            if (ReferenceEquals(x, y)) {
                 return 0;
             }
 
