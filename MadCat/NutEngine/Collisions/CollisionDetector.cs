@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NutEngine
 {
@@ -23,14 +24,21 @@ namespace NutEngine
         /// <param name="entities">Collection with GameObjects that can collide</param>
         public void CheckCollisions(IEnumerable<GameObject> entities)
         {
-            foreach (var first in entities) {
-                foreach (var second in entities) {
-                    if (first != second) {
-                        var types = Tuple.Create(first.GetType(), second.GetType());
-                        if (typeRules.ContainsKey(types)) {
-                            if (first.Collider.Intersects(second.Collider)) {
-                                typeRules[types](first, second);
-                            }
+            foreach (var rule in typeRules) {
+                var types = rule.Key;
+                var action = rule.Value;
+
+                var firsts = entities.Where(e => e.GetType() == types.Item1);
+                var seconds = entities.Where(e => e.GetType() == types.Item2);
+
+                foreach (var first in firsts) {
+                    foreach (var second in seconds) {
+                        if (first == second) {
+                            continue;
+                        }
+
+                        if (first.Collider.Intersects(second.Collider)) {
+                            action(first, second);
                         }
                     }
                 }

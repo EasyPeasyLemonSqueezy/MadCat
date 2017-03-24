@@ -14,7 +14,14 @@ namespace NutEngine
 
             Detector.CheckCollisions(Entities);
 
-            Entities.RemoveAll(entity => entity.Invalid);
+            Entities.RemoveAll(
+            entity => {
+                if (entity.Invalid) {
+                    entity.Cleanup();
+                    return true;
+                }
+                return false;
+            });
         }
 
         public void Add(GameObject entity)
