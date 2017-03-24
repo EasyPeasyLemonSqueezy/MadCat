@@ -4,6 +4,7 @@ using NutEngine;
 
 using Microsoft.Xna.Framework.Input;
 using NutInput = NutEngine.Input;
+using System.Collections.Generic;
 using System;
 
 namespace MadCat
@@ -42,7 +43,7 @@ namespace MadCat
 
         public Controls Control;
 
-        private Animation currentAnimation;
+        public Animation currentAnimation;
 
         private Animation AdventureGirlIdle;
         private Animation AdventureGirlJump;
@@ -51,15 +52,23 @@ namespace MadCat
         private Animation AdventureGirlShoot;
         private Animation AdventureGirlSlide;
 
-        private Vector2 position;
+        private Texture2D TextureBullet;
+        private Node node;
+        private GameObjectManager manager;
+
+        public Vector2 position;
         private Vector2 velocity;
         private Vector2 gravitation;
 
         private float runVelocity  =  400.0f;
         private float jumpVelocity = -800.0f;
 
-        public Character(Texture2D texture, Node node)
+        public Character(Texture2D texture, Texture2D textureBullet, Node node, GameObjectManager manager)
         {
+            TextureBullet = textureBullet;
+            this.manager = manager;
+            this.node = node;
+
             AdventureGirlIdle
                 = new Animation(texture, new NutPacker.Content.AdventureGirl.Idle()) {
                 Duration = .8f
@@ -117,7 +126,7 @@ namespace MadCat
                   X = position.X
                 , Y = position.Y
                 , Width = 81.0f
-                , Height = 135.0f
+                , Height = 130.0f
             };
         }
 
@@ -281,6 +290,9 @@ namespace MadCat
                 currentAnimation.Change(AdventureGirlShoot);
                 state = State.SHOOT;
                 velocity.X = 0.0f;
+
+                Bullet bullet = new Bullet(TextureBullet, position, (float)direction, node);
+                manager.Add(bullet);
             }
         }
 
@@ -290,8 +302,6 @@ namespace MadCat
                 currentAnimation.Change(AdventureGirlSlide);
                 state = State.SLIDE;
             }
-        }
-
-        
+        } 
     }
 }
