@@ -100,6 +100,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="IState.cs" />
+    <Compile Include="StateMachine.cs" />
     <Compile Include="TextureRegion.cs" />
   </ItemGroup>
   <ItemGroup>
