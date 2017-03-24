@@ -14,7 +14,6 @@
             var newState = currentState.UpdateInput(keyboardState);
 
             if (newState != null) {
-                currentState.Exit();
                 currentState = newState;
                 currentState.Enter();
             }
@@ -25,7 +24,6 @@
             var newState = currentState.Update(deltaTime);
 
             if (newState != null) {
-                currentState.Exit();
                 currentState = newState;
                 currentState.Enter();
             }
