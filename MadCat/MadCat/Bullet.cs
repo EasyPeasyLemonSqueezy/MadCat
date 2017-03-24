@@ -1,8 +1,5 @@
 ﻿using NutEngine;
-
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace MadCat
 {
@@ -13,12 +10,12 @@ namespace MadCat
         private Vector2 position;
         public Sprite sprite;
 
-        public Bullet(Texture2D texture, Vector2 position, float direction, Node node)
+        public Bullet(Vector2 position, float direction, Node node)
         {
             this.position = position;
             velocity = new Vector2(500, 0) * direction;
             gravitation = new Vector2(0, 2000);
-            sprite = new Sprite(texture);
+            sprite = new Sprite(Assets.Texture);
             sprite.Position = position;
             sprite.Scale = new Vector2(0.05f, 0.05f);
 

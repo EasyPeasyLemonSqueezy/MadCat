@@ -4,8 +4,6 @@ using NutEngine;
 
 using Microsoft.Xna.Framework.Input;
 using NutInput = NutEngine.Input;
-using System.Collections.Generic;
-using System;
 
 namespace MadCat
 {
@@ -22,6 +20,8 @@ namespace MadCat
         }
 
         private State state = State.STAND;
+
+        private StateMachine stateMachine;
 
         private enum Direction
         {
@@ -43,16 +43,9 @@ namespace MadCat
 
         public Controls Control;
 
-        public Animation currentAnimation;
+        public Animation CurrentAnimation { get; }
+        private Label name;
 
-        private Animation AdventureGirlIdle;
-        private Animation AdventureGirlJump;
-        private Animation AdventureGirlMelee;
-        private Animation AdventureGirlRun;
-        private Animation AdventureGirlShoot;
-        private Animation AdventureGirlSlide;
-
-        private Texture2D TextureBullet;
         private Node node;
         private GameObjectManager manager;
 
@@ -63,51 +56,31 @@ namespace MadCat
         private float runVelocity  =  400.0f;
         private float jumpVelocity = -800.0f;
 
-        public Character(Texture2D texture, Texture2D textureBullet, Node node, GameObjectManager manager)
+        public Character(Node node, GameObjectManager manager)
         {
-            TextureBullet = textureBullet;
+            stateMachine = new StateMachine(new StandState(this));
+
             this.manager = manager;
             this.node = node;
 
-            AdventureGirlIdle
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Idle()) {
-                Duration = .8f
-            };
-            AdventureGirlJump
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Jump()) {
-                Repeat = false,
-                Duration = .5f
-            };
-            AdventureGirlMelee
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Melee()) {
-                Repeat = false,
-                Duration = .35f
-            };
-            AdventureGirlRun
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Run()) {
-                Duration = .6f
-            };
-            AdventureGirlShoot
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Shoot()) {
-                Duration = .2f,
-                Repeat = false
-            };
-            AdventureGirlSlide
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Slide()) {
-                Duration = .5f,
-                Repeat = false
-            };
-
-            /// Fuck this
-            currentAnimation 
-                = new Animation(texture, new NutPacker.Content.AdventureGirl.Idle()) {
+            CurrentAnimation 
+                = new Animation(Assets.Texture, new NutPacker.Content.AdventureGirl.Idle()) {
                 Duration = .8f
             };
 
-            currentAnimation.Effects = SpriteEffects.None; /// Flip
-            currentAnimation.Scale = new Vector2(.3f, .3f);
+            CurrentAnimation.Effects = SpriteEffects.None; /// Flip
+            CurrentAnimation.Scale = new Vector2(.3f, .3f);
 
-            node.AddChild(currentAnimation);
+            node.AddChild(CurrentAnimation);
+
+            name = new Label(Assets.Font, "MadCat") {
+                ZOrder = 1,
+                Color = Color.BlueViolet,
+                Position = new Vector2(0, -300),
+                Scale = new Vector2(2)
+            };
+
+            CurrentAnimation.AddChild(name);
 
             Control = new Controls() {
                   RunRightKey = Keys.Right
@@ -175,8 +148,8 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
-            currentAnimation.Color = Color.White;
-            currentAnimation.Update(deltaTime);
+            CurrentAnimation.Color = Color.White;
+            CurrentAnimation.Update(deltaTime);
 
             /// Stand
             if (velocity == Vector2.Zero
@@ -185,7 +158,7 @@ namespace MadCat
                 && state != State.SHOOT
                 ) {
                 state = State.STAND;
-                currentAnimation.Change(AdventureGirlIdle);
+                CurrentAnimation.Change(Assets.AdventureGirlIdle);
             }
 
             /// Jump
@@ -194,7 +167,7 @@ namespace MadCat
                 && state != State.JUMP
                 ) {
                 state = State.JUMP;
-                currentAnimation.Change(AdventureGirlJump);
+                CurrentAnimation.Change(Assets.AdventureGirlJump);
             }
 
             /// Run
@@ -205,7 +178,7 @@ namespace MadCat
                 && state != State.SLIDE
                 ) {
                 state = State.RUN;
-                currentAnimation.Change(AdventureGirlRun);
+                CurrentAnimation.Change(Assets.AdventureGirlRun);
             }
 
             velocity = Physics.ApplyAccel(velocity, gravitation, deltaTime);
@@ -214,20 +187,20 @@ namespace MadCat
             Collider.X = position.X - Collider.Width / 2.0f;
             Collider.Y = position.Y - Collider.Height / 2.0f;
 
-            currentAnimation.Position = position;
+            CurrentAnimation.Position = position;
 
             /// If animation stopped and we should return to standing state
-            if (!currentAnimation.Enabled &&
+            if (!CurrentAnimation.Enabled &&
                   (state == State.MELEE
                 || state == State.SHOOT
                 || state == State.SLIDE)
                 ) {
                 state = State.STAND;
-                currentAnimation.Change(AdventureGirlIdle);
+                CurrentAnimation.Change(Assets.AdventureGirlIdle);
             }
 
             /// Set flipped or not
-            currentAnimation.Effects = direction == Direction.RIGHT
+            CurrentAnimation.Effects = direction == Direction.RIGHT
                                      ? SpriteEffects.None
                                      : SpriteEffects.FlipHorizontally;
         }
@@ -255,9 +228,8 @@ namespace MadCat
         /// </summary>
         public void SetColor(Color color)
         {
-            currentAnimation.Color = color;
+            CurrentAnimation.Color = color;
         }
-
         
         private void Stand()
         {
@@ -278,7 +250,7 @@ namespace MadCat
         private void Melee()
         {
             if (state != State.MELEE) {
-                currentAnimation.Change(AdventureGirlMelee);
+                CurrentAnimation.Change(Assets.AdventureGirlMelee);
                 state = State.MELEE;
                 velocity.X = 0.0f;
             }
@@ -287,11 +259,11 @@ namespace MadCat
         private void Shoot()
         {
             if (state != State.SHOOT) {
-                currentAnimation.Change(AdventureGirlShoot);
+                CurrentAnimation.Change(Assets.AdventureGirlShoot);
                 state = State.SHOOT;
                 velocity.X = 0.0f;
 
-                Bullet bullet = new Bullet(TextureBullet, position, (float)direction, node);
+                Bullet bullet = new Bullet(position, (float)direction, node);
                 manager.Add(bullet);
             }
         }
@@ -299,14 +271,14 @@ namespace MadCat
         private void Slide()
         {
             if (state != State.SLIDE) {
-                currentAnimation.Change(AdventureGirlSlide);
+                CurrentAnimation.Change(Assets.AdventureGirlSlide);
                 state = State.SLIDE;
             }
         }
 
         public override void Cleanup()
         {
-            currentAnimation.CommitSuicide();
+            CurrentAnimation.CommitSuicide();
         }
     }
 }

@@ -1,38 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NutInput = NutEngine.Input;
 using NutEngine;
 using NutPacker.Content;
-using System.Collections.Generic;
 
 namespace MadCat
 {
     public class DemoScene : Scene
     {
-        private Texture2D Texture;
-        private Texture2D TextureBullet;
         private Sprite background;
-        private SpriteFont font;
-        private Label label;      
 
         private Character[] characters;
         private GameObjectManager manager;
 
         public DemoScene(Application app) : base(app)
         {
-            font = Content.Load<SpriteFont>("myFont");
-            label = new Label(font, "MadCat") {
-                ZOrder = 1,
-                Color = Color.BlueViolet,
-                Position = new Vector2(0, -300),
-                Scale = new Vector2(2)
-            };
-
-            Texture = Content.Load<Texture2D>("Demo");
-            TextureBullet = Content.Load<Texture2D>("bullet");
-
-            background = new Sprite(Texture, Graveyard.Tiles.BG) {
+            background = new Sprite(Assets.Texture, Graveyard.Tiles.BG) {
                   Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2)
                 , Scale = new Vector2(.5f, .5f)
             };
@@ -43,11 +26,9 @@ namespace MadCat
             /// Create Characters.
             characters = new Character[3];
 
-            characters[0] = new Character(Texture, TextureBullet, World, manager);
+            characters[0] = new Character(World, manager);
 
-            characters[0].currentAnimation.AddChild(label);
-
-            characters[1] = new Character(Texture, TextureBullet, World, manager) {
+            characters[1] = new Character(World, manager) {
                 Control = new Character.Controls() {
                       RunRightKey = Keys.D
                     , RunLeftKey = Keys.A
@@ -58,7 +39,7 @@ namespace MadCat
                 }
             };
 
-            characters[2] = new Character(Texture, TextureBullet, World, manager) {
+            characters[2] = new Character(World, manager) {
                 Control = new Character.Controls() {
                       RunRightKey = Keys.L
                     , RunLeftKey = Keys.K
@@ -121,7 +102,7 @@ namespace MadCat
                             Y = i * frame.Height - frame.Height * 2.0f
                         };
 
-                        var wall = new Wall(Texture, World, position, frame);
+                        var wall = new Wall(World, position, frame);
                         manager.Add(wall);
                     }
                 }

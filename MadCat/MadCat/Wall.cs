@@ -1,8 +1,5 @@
 ﻿using NutEngine;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using NutPacker.Content;
-using System;
 
 namespace MadCat
 {
@@ -10,9 +7,9 @@ namespace MadCat
     {
         private Sprite sprite;
 
-        public Wall(Texture2D texture, Node node, Vector2 position, Rectangle frame)
+        public Wall(Node node, Vector2 position, Rectangle frame)
         {
-            sprite = new Sprite(texture, frame) {
+            sprite = new Sprite(Assets.Texture, frame) {
                 Position = position
             };
 
