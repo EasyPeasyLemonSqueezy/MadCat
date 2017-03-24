@@ -9,6 +9,10 @@ namespace NutEngine
     {
         public int Compare(Node x, Node y)
         {
+            if (x == y) {
+                return 0;
+            }
+
             int result = x.ZOrder.CompareTo(y.ZOrder);
 
             /// For stable sorting.
