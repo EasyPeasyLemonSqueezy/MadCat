@@ -2,7 +2,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using System;
 
 namespace MadCat
 {
@@ -37,6 +37,11 @@ namespace MadCat
 
             Collider.X = position.X;
             Collider.Y = position.Y;
+        }
+
+        public override void Cleanup()
+        {
+            sprite.CommitSuicide();
         }
     }
 }

@@ -127,7 +127,6 @@ namespace MadCat
                 }
             }
 
-
             manager.Detector.AddTypeRule<Character, Wall>(
                 (first, second) => {
                     var character = first as Character;
@@ -166,29 +165,31 @@ namespace MadCat
             }
 
             manager.Update(deltaTime);
-/*
-            /// Camera test
-            if (keyboardState.IsKeyDown(Keys.NumPad9)) {
-                Camera.Rotation += deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad7)) {
-                Camera.Rotation -= deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad8)) {
-                Camera.Position -= new Vector2(0, 100 * deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad2)) {
-                Camera.Position += new Vector2(0, 100 * deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad3)) {
-                Camera.Zoom *= 80 * deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad1)) {
-                Camera.Zoom /= 80 * deltaTime;
-            }
-*/
+
             background.Position = new Vector2(characters[0].position.X, App.ScreenHeight / 2);
             Camera.Position = new Vector2(characters[0].position.X - App.ScreenWidth / 2, -20);
+
+            /*
+                        /// Camera test
+                        if (keyboardState.IsKeyDown(Keys.NumPad9)) {
+                            Camera.Rotation += deltaTime;
+                        }
+                        if (keyboardState.IsKeyDown(Keys.NumPad7)) {
+                            Camera.Rotation -= deltaTime;
+                        }
+                        if (keyboardState.IsKeyDown(Keys.NumPad8)) {
+                            Camera.Position -= new Vector2(0, 100 * deltaTime);
+                        }
+                        if (keyboardState.IsKeyDown(Keys.NumPad2)) {
+                            Camera.Position += new Vector2(0, 100 * deltaTime);
+                        }
+                        if (keyboardState.IsKeyDown(Keys.NumPad3)) {
+                            Camera.Zoom *= 80 * deltaTime;
+                        }
+                        if (keyboardState.IsKeyDown(Keys.NumPad1)) {
+                            Camera.Zoom /= 80 * deltaTime;
+                        }
+            */
         }
     }
 }

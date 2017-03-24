@@ -29,5 +29,10 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
         }
+
+        public override void Cleanup()
+        {
+            sprite.CommitSuicide();
+        }
     }
 }

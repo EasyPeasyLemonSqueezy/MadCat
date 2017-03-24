@@ -302,6 +302,11 @@ namespace MadCat
                 currentAnimation.Change(AdventureGirlSlide);
                 state = State.SLIDE;
             }
-        } 
+        }
+
+        public override void Cleanup()
+        {
+            currentAnimation.CommitSuicide();
+        }
     }
 }
