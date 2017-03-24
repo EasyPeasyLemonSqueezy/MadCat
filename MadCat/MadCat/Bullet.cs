@@ -35,8 +35,8 @@ namespace MadCat
         {
             sprite.Position = position = Physics.ApplyVelocity(position, velocity, deltaTime);
 
-            Collider.X = position.X;
-            Collider.Y = position.Y;
+            Collider.X = position.X - Collider.Width / 2.0f;
+            Collider.Y = position.Y - Collider.Height / 2.0f;
         }
 
         public override void Cleanup()
