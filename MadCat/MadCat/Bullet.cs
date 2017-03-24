@@ -8,7 +8,7 @@ namespace MadCat
 {
     class Bullet : GameObject
     {
-        public Vector2 velocity { get; set; }
+        public Vector2 Velocity { get; set; }
         private Vector2 gravitation;
         private Vector2 position;
         public Sprite sprite;
@@ -16,11 +16,12 @@ namespace MadCat
         public Bullet(Texture2D texture, Vector2 position, float direction, Node node)
         {
             this.position = position;
-            velocity = new Vector2(500, 0) * direction;
+            Velocity = new Vector2(500, 0) * direction;
             gravitation = new Vector2(0, 2000);
-            sprite = new Sprite(texture);
-            sprite.Position = position;
-            sprite.Scale = new Vector2(0.05f, 0.05f);
+            sprite = new Sprite(texture) {
+                Position = position,
+                Scale = new Vector2(0.05f, 0.05f)
+            };
 
             Collider = new AABB() {
                   X = position.X
@@ -33,7 +34,7 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
-            sprite.Position = position = Physics.ApplyVelocity(position, velocity, deltaTime);
+            sprite.Position = position = Physics.ApplyVelocity(position, Velocity, deltaTime);
 
             Collider.X = position.X - Collider.Width / 2.0f;
             Collider.Y = position.Y - Collider.Height / 2.0f;

@@ -291,7 +291,7 @@ namespace MadCat
                 state = State.SHOOT;
                 velocity.X = 0.0f;
 
-                Bullet bullet = new Bullet(TextureBullet, position, (float)direction, node);
+                var bullet = new Bullet(TextureBullet, position, (float)direction, node);
                 manager.Add(bullet);
             }
         }
