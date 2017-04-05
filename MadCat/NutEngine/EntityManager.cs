@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+
 namespace NutEngine
 {
-    public class GameObjectManager
+    public class EntityManager
     {
-        public List<GameObject> Entities { get; } = new List<GameObject>();
+        public List<Entity> Entities { get; } = new List<Entity>();
         public CollisionDetector Detector { get; } = new CollisionDetector();
 
         public void Update(float deltaTime)
@@ -24,7 +25,7 @@ namespace NutEngine
             });
         }
 
-        public void Add(GameObject entity)
+        public void Add(Entity entity)
         {
             Entities.Add(entity);
         }
