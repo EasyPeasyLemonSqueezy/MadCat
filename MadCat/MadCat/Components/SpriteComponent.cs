@@ -5,9 +5,17 @@ namespace MadCat.Components
 {
     public class SpriteComponent : Component
     {
+        public Sprite Sprite { get; set; }
+
+        public SpriteComponent(Sprite sprite)
+        {
+            Sprite = sprite;
+        }
+
         public override void Update(float deltaTime)
         {
-            throw new NotImplementedException();
+            var position = Entity.GetComponent<PositionComponent>();
+            Sprite.Position = position.;
         }
     }
 }
