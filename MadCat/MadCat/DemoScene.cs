@@ -12,7 +12,7 @@ namespace MadCat
 
         private Character[] characters;
         private Map map;
-        private GameObjectManager manager;
+        private EntityManager manager;
 
         public DemoScene(Application app) : base(app)
         {
@@ -24,7 +24,7 @@ namespace MadCat
             };
             World.AddChild(background);
 
-            manager = new GameObjectManager();
+            manager = new EntityManager();
 
             /// Create Characters.
             characters = new Character[3];

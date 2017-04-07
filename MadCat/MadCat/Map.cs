@@ -16,7 +16,7 @@ namespace MadCat
                 , { 10, 2, 2, 8, 5, 10, 2, 5, 2,  2, 2,  2,  2, 2, 8, 5, 10, 2,  2,  2,  2, 2, 5,  2, 2, 2, 2, 8, 5, 10, 2, 5, 2, 2, 2, 2, 2, 2, 8, 10, 2,  2, 2,  2,  2, 2,  2, 2,  2,  2, 2, 8, 10, 2, 8,  5, 10, 2, 2, 8}
             };
 
-        public Map(Node world, GameObjectManager manager)
+        public Map(Node world, EntityManager manager)
         {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 60; j++) {

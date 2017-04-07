@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MadCat
 {
-    public class Wall : GameObject
+    public class Wall : Entity
     {
         private Sprite sprite;
 

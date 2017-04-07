@@ -7,7 +7,7 @@ using NutInput = NutEngine.Input;
 
 namespace MadCat
 {
-    public class Character : GameObject
+    public class Character : Entity
     {
         private StateMachine stateMachine;
 
@@ -35,7 +35,7 @@ namespace MadCat
         private Label name;
 
         public Node Node;
-        public GameObjectManager Manager;
+        public EntityManager Manager;
 
         public Vector2 Position;
         public Vector2 Velocity;
@@ -44,7 +44,7 @@ namespace MadCat
         private float runVelocity  =  400.0f;
         private float jumpVelocity = -800.0f;
 
-        public Character(Node node, GameObjectManager manager)
+        public Character(Node node, EntityManager manager)
         {
             stateMachine = new StateMachine(new StandState(this));
 

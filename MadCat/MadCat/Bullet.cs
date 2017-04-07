@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MadCat
 {
-    class Bullet : GameObject
+    class Bullet : Entity
     {
         public Vector2 velocity { get; set; }
         private Vector2 gravitation;
