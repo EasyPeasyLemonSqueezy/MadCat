@@ -81,7 +81,10 @@
   <ItemGroup>
     <Compile Include="Assets.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Components\AnimationComponent.cs" />
+    <Compile Include="Components\CharacterComponent.cs" />
     <Compile Include="Components\ColliderComponent.cs" />
+    <Compile Include="Components\GravitationComponent.cs" />
     <Compile Include="Components\PositionComponent.cs" />
     <Compile Include="Components\SpriteComponent.cs" />
     <Compile Include="Components\VelocityComponent.cs" />

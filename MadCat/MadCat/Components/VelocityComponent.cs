@@ -15,7 +15,7 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             var position = Entity.GetComponent<PositionComponent>();
-            position.Position += Velocity * deltaTime;
+            position.Position = Physics.ApplyVelocity(position.Position, Velocity, deltaTime);
         }
     }
 }

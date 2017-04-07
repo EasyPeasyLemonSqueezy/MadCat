@@ -4,19 +4,22 @@ namespace MadCat
 {
     class ShootState : IState
     {
-        private Character character;
+        private CharacterComponent character;
 
-        public ShootState(Character character)
+        public ShootState(CharacterComponent character)
         {
             this.character = character;
         }
 
         public void Enter()
         {
-            character.Stand();
-            character.CurrentAnimation.Change(Assets.AdventureGirlShoot);
+            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            animation.Change(Assets.AdventureGirlShoot);
 
-            Bullet bullet = new Bullet(character.Position, (float)character.Dir, character.Node);
+            character.Stand();
+
+            var position = character.Entity.GetComponent<PositionComponent>();
+            Bullet bullet = new Bullet(position.Position, (float)character.Dir, character.Node);
             character.Manager.Add(bullet);
         }
 
@@ -27,7 +30,9 @@ namespace MadCat
 
         public IState Update(float deltaTime)
         {
-            if (!character.CurrentAnimation.Enabled) {
+            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+
+            if (!animation.Enabled) {
                 return new StandState(character);
             }
 

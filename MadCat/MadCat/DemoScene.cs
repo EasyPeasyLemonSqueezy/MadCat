@@ -31,27 +31,25 @@ namespace MadCat
 
             characters[0] = new Character(World, manager);
 
-            characters[1] = new Character(World, manager) {
-                Control = new Character.Controls() {
+            characters[1] = new Character(World, manager);
+            characters[1].SetControls(new CharacterComponent.Controls {
                       RunRightKey = Keys.D
                     , RunLeftKey = Keys.A
                     , JumpKey = Keys.W
                     , ShootKey = Keys.Q
                     , MeleeKey = Keys.F
                     , SlideKey = Keys.S
-                }
-            };
+            });
 
-            characters[2] = new Character(World, manager) {
-                Control = new Character.Controls() {
+            characters[2] = new Character(World, manager);
+            characters[2].SetControls(new CharacterComponent.Controls {
                       RunRightKey = Keys.L
                     , RunLeftKey = Keys.K
                     , JumpKey = Keys.O
                     , ShootKey = Keys.J
                     , MeleeKey = Keys.P
                     , SlideKey = Keys.M
-                }
-            };
+            });
 
             manager.Add(characters[0]);
             manager.Add(characters[1]);
@@ -63,13 +61,15 @@ namespace MadCat
                 (first, second) => {
                     var character = first as Character;
                     var wall = second as Wall;
-                    character.CollideWall(wall);
+                    var characterComponent = character.GetComponent<CharacterComponent>();
+                    characterComponent.CollideWall(wall);
                 });
 
             manager.Detector.AddTypeRule<Character, Character>(
                 (first, second) => {
-                    var c = first as Character;
-                    c.SetColor(Color.Red);
+                    var character = first as Character;
+                    var characterComponent = character.GetComponent<CharacterComponent>();
+                    characterComponent.SetColor(Color.Red);
                 });
 
             manager.Detector.AddTypeRule<Bullet, Wall>(
@@ -82,8 +82,9 @@ namespace MadCat
 
             manager.Detector.AddTypeRule<Bullet, Character>(
                 (first, second) => {
-                    var c = second as Character;
-                    c.SetColor(Color.Aqua);
+                    var character = second as Character;
+                    var characterComponent = character.GetComponent<CharacterComponent>();
+                    characterComponent.SetColor(Color.Aqua);
                 });
         }
 
@@ -98,30 +99,10 @@ namespace MadCat
 
             manager.Update(deltaTime);
 
-            background.Position = new Vector2(characters[0].Position.X, App.ScreenHeight / 2);
-            Camera.Position = new Vector2(characters[0].Position.X - App.ScreenWidth / 2, -20);
+            var position = characters[0].GetComponent<PositionComponent>();
 
-            /*
-            /// Camera test
-            if (keyboardState.IsKeyDown(Keys.NumPad9)) {
-                Camera.Rotation += deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad7)) {
-                Camera.Rotation -= deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad8)) {
-                Camera.Position -= new Vector2(0, 100 * deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad2)) {
-                Camera.Position += new Vector2(0, 100 * deltaTime);
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad3)) {
-                Camera.Zoom *= 80 * deltaTime;
-            }
-            if (keyboardState.IsKeyDown(Keys.NumPad1)) {
-                Camera.Zoom /= 80 * deltaTime;
-            }
-            */
+            background.Position = new Vector2(position.Position.X, App.ScreenHeight / 2);
+            Camera.Position = new Vector2(position.Position.X - App.ScreenWidth / 2, -20);
         }
     }
 }

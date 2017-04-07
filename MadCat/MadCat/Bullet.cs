@@ -7,9 +7,10 @@ namespace MadCat
     {
         public Bullet(Vector2 position, float direction, Node node)
         {
-            var sprite = new Sprite(Assets.TextureBullet);
-            sprite.Position = position;
-            sprite.Scale = new Vector2(0.05f, 0.05f);
+            var sprite = new Sprite(Assets.TextureBullet) {
+                Position = position,
+                Scale = new Vector2(0.05f, 0.05f)
+            };
             node.AddChild(sprite);
 
             Collider = new AABB {
@@ -21,7 +22,7 @@ namespace MadCat
 
             AddComponent(new PositionComponent(position));
             AddComponent(new VelocityComponent(new Vector2(500, 0) * direction));
-            AddComponent(new SpriteComponent(new Sprite(Assets.TextureBullet)));
+            AddComponent(new SpriteComponent(sprite));
             AddComponent(new ColliderComponent(Collider));
         }
 

@@ -4,16 +4,17 @@ namespace MadCat
 {
     class SlideState : IState
     {
-        private Character character;
+        private CharacterComponent character;
 
-        public SlideState(Character character)
+        public SlideState(CharacterComponent character)
         {
             this.character = character;
         }
 
         public void Enter()
         {
-            character.CurrentAnimation.Change(Assets.AdventureGirlSlide);
+            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            animation.Change(Assets.AdventureGirlSlide);
         }
 
         public IState UpdateInput(NutEngine.Input.KeyboardState keyboardState)
@@ -23,7 +24,9 @@ namespace MadCat
 
         public IState Update(float deltaTime)
         {
-            if (!character.CurrentAnimation.Enabled) {
+            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+
+            if (!animation.Enabled) {
                 return new StandState(character);
             }
 

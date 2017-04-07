@@ -5,14 +5,11 @@ namespace MadCat
 {
     public class Wall : Entity
     {
-        private Sprite sprite;
-
         public Wall(Node node, Vector2 position, Rectangle frame)
         {
-            sprite = new Sprite(Assets.Texture, frame) {
+            var sprite = new Sprite(Assets.Texture, frame) {
                 Position = position
             };
-
             node.AddChild(sprite);
 
             Collider = new AABB() {
@@ -21,15 +18,10 @@ namespace MadCat
                 , Width = frame.Width
                 , Height = frame.Height
             };
-        }
 
-        public override void Update(float deltaTime)
-        {
-        }
-
-        public override void Cleanup()
-        {
-            sprite.CommitSuicide();
+            AddComponent(new PositionComponent(position));
+            AddComponent(new ColliderComponent(Collider));
+            AddComponent(new SpriteComponent(sprite));
         }
     }
 }

@@ -7,25 +7,26 @@ namespace MadCat
 {
     public class RunState : IState
     {
-        private Character character;
+        private CharacterComponent character;
 
-        public RunState(Character character)
+        public RunState(CharacterComponent character)
         {
             this.character = character;
         }
 
         public void Enter()
         {
-            character.CurrentAnimation.Change(Assets.AdventureGirlRun);
+            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            animation.Change(Assets.AdventureGirlRun);
         }
 
         public IState UpdateInput(KeyboardState keyboardState)
         {
             if (keyboardState.IsKeyDown(character.Control.RunRightKey)) {
-                character.Run(Character.Direction.RIGHT);
+                character.Run(CharacterComponent.Direction.RIGHT);
             }
             else if (keyboardState.IsKeyDown(character.Control.RunLeftKey)) {
-                character.Run(Character.Direction.LEFT);
+                character.Run(CharacterComponent.Direction.LEFT);
             }
             else {
                 character.Stand();
@@ -52,11 +53,13 @@ namespace MadCat
 
         public IState Update(float deltaTime)
         {
-            if (character.Velocity == Vector2.Zero) {
+            var velocity = character.Entity.GetComponent<VelocityComponent>();
+
+            if (velocity.Velocity == Vector2.Zero) {
                 return new StandState(character);
             }
 
-            if (character.Velocity.Y != 0) {
+            if (velocity.Velocity.Y != 0) {
                 return new JumpState(character);
             }
 
