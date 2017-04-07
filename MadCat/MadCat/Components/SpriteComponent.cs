@@ -1,9 +1,8 @@
-﻿using System;
-using NutEngine;
+﻿using NutEngine;
 
-namespace MadCat.Components
+namespace MadCat
 {
-    public class SpriteComponent : Component
+    public class SpriteComponent : Component, ICleanup
     {
         public Sprite Sprite { get; set; }
 
@@ -15,7 +14,12 @@ namespace MadCat.Components
         public override void Update(float deltaTime)
         {
             var position = Entity.GetComponent<PositionComponent>();
-            Sprite.Position = position.;
+            Sprite.Position = position.Position;
+        }
+
+        public void Cleanup()
+        {
+            Sprite.CommitSuicide();
         }
     }
 }
