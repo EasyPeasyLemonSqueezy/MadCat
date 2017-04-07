@@ -3,12 +3,17 @@ using Microsoft.Xna.Framework;
 
 namespace MadCat
 {
-    class Bullet : Entity
+    public class Bullet : Entity
     {
         public Vector2 velocity { get; set; }
         private Vector2 gravitation;
         private Vector2 position;
         public Sprite sprite;
+
+        public Bullet()
+        {
+
+        }
 
         public Bullet(Vector2 position, float direction, Node node)
         {

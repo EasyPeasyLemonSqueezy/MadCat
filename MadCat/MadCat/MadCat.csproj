@@ -81,10 +81,12 @@
   <ItemGroup>
     <Compile Include="Assets.cs" />
     <Compile Include="Bullet.cs" />
+    <Compile Include="Components\SpriteComponent.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="EntityFactory.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
