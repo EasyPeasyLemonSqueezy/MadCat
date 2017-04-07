@@ -29,6 +29,7 @@ namespace NutEngine
 
         public Entity AddComponent(Component component)
         {
+            component.Entity = this;
             components[component.GetType()] = component;
             return this;
         }
