@@ -45,10 +45,11 @@ namespace NutEngine
             return components.ContainsKey(typeof(T));
         }
 
-        public Component GetComponent<T>()
+        public T GetComponent<T>()
+            where T : class
         {
             if (HasComponent<T>()) {
-                return components[typeof(T)];
+                return components[typeof(T)] as T;
             }
             return null;
         }
