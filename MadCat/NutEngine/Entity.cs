@@ -11,14 +11,14 @@ namespace NutEngine
         private Dictionary<Type, Component> components =
             new Dictionary<Type, Component>();
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
             foreach (var component in components.Values) {
                 component.Update(deltaTime);
             }
         }
 
-        public void Cleanup()
+        public virtual void Cleanup()
         {
             foreach (var component in components.Values) {
                 if (component is ICleanup cleanup) {
