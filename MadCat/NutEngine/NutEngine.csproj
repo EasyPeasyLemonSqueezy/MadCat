@@ -94,6 +94,7 @@
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeComparer.cs" />
+    <Compile Include="Physics\BodiesManager.cs" />
     <Compile Include="Physics\Body.cs" />
     <Compile Include="Physics\Collider\AABBvsAABB.cs" />
     <Compile Include="Physics\Collider\AABBvsCircle.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Physics\Collider\CirclevsCircle.cs" />
     <Compile Include="Physics\Collider\Collider.cs" />
     <Compile Include="Physics\Collider\ResolveCollision.cs" />
+    <Compile Include="Physics\Collision.cs" />
     <Compile Include="Physics\Manifold.cs" />
     <Compile Include="Physics\Mass.cs" />
     <Compile Include="Physics\Shapes\AABB.cs" />
