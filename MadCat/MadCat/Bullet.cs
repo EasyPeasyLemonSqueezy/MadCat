@@ -20,10 +20,10 @@ namespace MadCat
                 Height = 10.0f
             };
 
-            AddComponent(new PositionComponent(position));
-            AddComponent(new VelocityComponent(new Vector2(500, 0) * direction));
-            AddComponent(new SpriteComponent(sprite));
-            AddComponent(new ColliderComponent(Collider));
+            AddComponent<PositionComponent>(position);
+            AddComponent<VelocityComponent>(new Vector2(500, 0) * direction);
+            AddComponent<SpriteComponent>(sprite);
+            AddComponent<ColliderComponent>(Collider);
         }
 
         public override void Cleanup()

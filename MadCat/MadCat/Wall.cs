@@ -19,9 +19,9 @@ namespace MadCat
                 , Height = frame.Height
             };
 
-            AddComponent(new PositionComponent(position));
-            AddComponent(new ColliderComponent(Collider));
-            AddComponent(new SpriteComponent(sprite));
+            AddComponent<PositionComponent>(position);
+            AddComponent<ColliderComponent>(Collider);
+            AddComponent<SpriteComponent>(sprite);
         }
     }
 }
