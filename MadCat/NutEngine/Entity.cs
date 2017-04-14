@@ -27,26 +27,34 @@ namespace NutEngine
             }
         }
 
-        public Entity AddComponent(Component component)
+        public void AddComponent(Component component)
         {
             component.Entity = this;
             components[component.GetType()] = component;
-            return this;
         }
 
-        public Entity RemoveComponent<T>()
+        public void AddComponent<T>(params object[] parameters)
+            where T : Component
+        {
+            var component = (T)Activator.CreateInstance(typeof(T), parameters);
+            component.Entity = this;
+            components[component.GetType()] = component;
+        }
+
+        public void RemoveComponent<T>()
+            where T : Component
         {
             components.Remove(typeof(T));
-            return this;
         }
 
         public bool HasComponent<T>()
+            where T : Component
         {
             return components.ContainsKey(typeof(T));
         }
 
         public T GetComponent<T>()
-            where T : class
+            where T : Component
         {
             if (HasComponent<T>()) {
                 return components[typeof(T)] as T;
