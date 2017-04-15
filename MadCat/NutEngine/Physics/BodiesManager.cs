@@ -15,8 +15,8 @@ namespace NutEngine.Physics
 
         public void CalculateCollisions()
         {
-            foreach (var body in Bodies) {
-                foreach (var body2 in Bodies) { // Here will be only static bodies
+            foreach (var body in Bodies) { // Here will be only rigid bodies
+                foreach (var body2 in Bodies) {
                     if (body != body2) {
                         if (Collider.Collide(body.Shape, body2.Shape, out var manifold)) {
                             Collisions.Add(new Collision(body, body2, manifold));
@@ -30,6 +30,9 @@ namespace NutEngine.Physics
         {
             foreach (var collision in Collisions) {
                 Collider.ResolveCollision(collision);
+                // After resolve collision we have to zeroes velocity (After position correction),
+                // or we can add some "bounce" effect, it'll be awesome.
+                // Probably we should do it in .ResolveCollision.
             }
         }
 
