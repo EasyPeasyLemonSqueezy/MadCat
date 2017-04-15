@@ -85,9 +85,7 @@
     <Compile Include="Camera\OrthographicSRTCamera.cs" />
     <Compile Include="Camera\Camera2D.cs" />
     <Compile Include="Camera\OrthographicTRSCamera.cs" />
-    <Compile Include="GameObjectManager.cs" />
     <Compile Include="IDrawable.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardState.cs" />
     <Compile Include="Label.cs" />
