@@ -6,8 +6,6 @@ namespace NutEngine.Physics
 {
     public static partial class Collider
     {
-        // We should use Bodies, because we can't calculate relative velocity in manifold.
-        // (Obviously we can, but it will be a bit weird)
         public static void ResolveCollision(Collision collision)
         {
             var relVelocity = collision.B.Velocity - collision.A.Velocity;
@@ -23,8 +21,8 @@ namespace NutEngine.Physics
 
             float j = -(1 + e) * velocityAlongNormal / (collision.A.Mass.MassInv + collision.B.Mass.MassInv);
 
-            collision.A.Velocity -= j * collision.Manifold.Normal;
-            collision.B.Velocity += j * collision.Manifold.Normal;
+            collision.A.Velocity -= j * collision.Manifold.Normal * collision.A.Mass.MassInv;
+            collision.B.Velocity += j * collision.Manifold.Normal * collision.B.Mass.MassInv;
         }
     }
 }
