@@ -11,20 +11,20 @@ namespace NutEngine.Physics
 
         // First - only not static bodies, second - all bodies.
         private HashSet<Tuple<IBody<Shape>, IBody<Shape>>> Pairs { get; set; }
-        public HashSet<Collision<Shape, Shape>> Collisions { get; private set; }
+        public HashSet<Collision> Collisions { get; private set; }
 
         public BodiesManager()
         {
             Bodies = new HashSet<IBody<Shape>>();
             Pairs = new HashSet<Tuple<IBody<Shape>, IBody<Shape>>>();
-            Collisions = new HashSet<Collision<Shape, Shape>>();
+            Collisions = new HashSet<Collision>();
         }
 
         public void CalculateCollisions()
         {
             foreach (var pair in Pairs) {
                 if (Collider.Collide(pair.Item1, pair.Item2, out var manifold)) {
-                    Collisions.Add(new Collision<Shape, Shape>(pair.Item1, pair.Item2, manifold));
+                    Collisions.Add(new Collision(pair.Item1, pair.Item2, manifold));
                 }
             }
         }

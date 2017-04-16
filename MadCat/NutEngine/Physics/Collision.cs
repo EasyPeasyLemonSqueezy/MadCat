@@ -3,16 +3,13 @@ using NutEngine.Physics.Shapes;
 
 namespace NutEngine.Physics
 {
-    // Probably here should be just Shape instead of generic First(Second)ShapeType
-    public class Collision<FirstShapeType, SecondShapeType>
-        where FirstShapeType : Shape
-        where SecondShapeType : Shape
+    public class Collision
     {
-        public IBody<FirstShapeType> A { get; set; }
-        public IBody<SecondShapeType> B { get; set; }
-        public Manifold<FirstShapeType, SecondShapeType> Manifold { get; set; }
+        public IBody<Shape> A { get; set; }
+        public IBody<Shape> B { get; set; }
+        public Manifold Manifold { get; set; }
 
-        public Collision(IBody<FirstShapeType> a, IBody<SecondShapeType> b, Manifold<FirstShapeType, SecondShapeType> manifold)
+        public Collision(IBody<Shape> a, IBody<Shape> b, Manifold manifold)
         {
             A = a;
             B = b;

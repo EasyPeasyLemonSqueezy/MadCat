@@ -8,7 +8,7 @@ namespace NutEngine.Physics
     {
         // We should use Bodies, because we can't calculate relative velocity in manifold.
         // (Obviously we can, but it will be a bit weird)
-        public static void ResolveCollision(Collision<Shape, Shape> collision)
+        public static void ResolveCollision(Collision collision)
         {
             var relVelocity = collision.B.Velocity - collision.A.Velocity;
             var velocityAlongNormal = Vector2.Dot(relVelocity, collision.Manifold.Normal);
