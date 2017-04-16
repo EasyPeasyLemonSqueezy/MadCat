@@ -28,15 +28,23 @@ namespace NutEngine.Physics
         //                                                  B.X extent
         // 
         // ### - Manifold.
-        public static bool Collide(AABB a, AABB b, out Manifold manifold)
+        public static bool Collide(IBody<AABB> a, IBody<AABB> b, out Manifold<AABB, AABB> manifold)
         {
             manifold = null;
 
-            var distance = b.Middle - a.Middle; // I'm not sure but it seems to work.
+            var distance = b.Position - a.Position;
+
+            // Temporary solution, I don't want to install ValueTuple from nuget.
+            // TODO: Update .NET to 4.7
+            var aMax = a.Position + a.Shape.Vec;
+            var aMin = a.Position - a.Shape.Vec;
+
+            var bMax = b.Position + b.Shape.Vec;
+            var bMin = b.Position - b.Shape.Vec;
 
             // Half extent along x/y axes.
-            var aExtent = (a.Max - a.Min) / 2;
-            var bExtent = (b.Max - b.Min) / 2;
+            var aExtent = (aMax - aMin) / 2;
+            var bExtent = (bMax - bMin) / 2;
 
             float xOverlap = aExtent.X + bExtent.X - Math.Abs(distance.X);
             if (xOverlap <= 0) {
@@ -51,7 +59,7 @@ namespace NutEngine.Physics
             // For new manifold.
             float depth;
             Vector2 normal;
-            var contacts = new Vector2[1];
+            var contact = new Vector2();
 
 
             /// https://github.com/RandyGaul/tinyheaders/blob/master/tinyc2.h
@@ -61,11 +69,11 @@ namespace NutEngine.Physics
 
                 if (distance.X < 0) {
                     normal = -Vector2.UnitX;
-                    contacts[0] = new Vector2(a.Middle.X - aExtent.X, a.Middle.Y);
+                    contact = new Vector2(a.Position.X - aExtent.X, a.Position.Y);
                 }
                 else {
                     normal = Vector2.UnitX;
-                    contacts[0] = new Vector2(a.Middle.X + aExtent.X, a.Middle.Y);
+                    contact = new Vector2(a.Position.X + aExtent.X, a.Position.Y);
                 }
 
             }
@@ -74,28 +82,36 @@ namespace NutEngine.Physics
 
                 if (distance.Y < 0) {
                     normal = -Vector2.UnitY;
-                    contacts[0] = new Vector2(a.Middle.X, a.Middle.Y - aExtent.Y);
+                    contact = new Vector2(a.Position.X, a.Position.Y - aExtent.Y);
                 }
                 else {
                     normal = Vector2.UnitY;
-                    contacts[0] = new Vector2(a.Middle.X, a.Middle.Y + aExtent.Y);
+                    contact = new Vector2(a.Position.X, a.Position.Y + aExtent.Y);
                 }
             }
 
-            manifold = new Manifold() {
+            manifold = new Manifold<AABB, AABB>() {
                 A = a, B = b,
                 Depth = depth,
                 Normal = normal,
-                Contacts = contacts
+                Contact = contact
             };
 
             return true;
         }
 
-        public static bool Collide(AABB a, AABB b)
+        public static bool Collide(IBody<AABB> a, IBody<AABB> b)
         {
-            return !(a.Max.X < b.Min.X || a.Min.X > b.Max.X ||
-                     a.Max.Y < b.Min.Y || a.Min.Y > b.Max.Y);
+            // Temporary solution, I don't want to install valuetuple from nuget
+            // TODO: Update .NET to 4.7
+            var aMax = a.Position + a.Shape.Vec;
+            var aMin = a.Position - a.Shape.Vec;
+
+            var bMax = b.Position + b.Shape.Vec;
+            var bMin = b.Position - b.Shape.Vec;
+
+            return !(aMax.X < bMin.X || aMin.X > bMax.X ||
+                     aMax.Y < bMin.Y || aMin.Y > bMax.Y);
         }
     }
 }

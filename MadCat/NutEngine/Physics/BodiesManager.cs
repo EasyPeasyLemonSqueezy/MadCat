@@ -1,25 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using NutEngine.Physics.Shapes;
+using System.Collections.Generic;
 
 namespace NutEngine.Physics
 {
     public class BodiesManager
     {
-        public HashSet<Body> Bodies { get; private set; }
-        public HashSet<Collision> Collisions { get; private set; }
+        public HashSet<IBody<Shape>> Bodies { get; private set; }
+        public HashSet<Collision<Shape, Shape>> Collisions { get; private set; }
 
         public BodiesManager()
         {
-            Bodies = new HashSet<Body>();
-            Collisions = new HashSet<Collision>();
+            Bodies = new HashSet<IBody<Shape>>();
+            Collisions = new HashSet<Collision<Shape, Shape>>();
         }
 
         public void CalculateCollisions()
         {
-            foreach (var body in Bodies) { // Here will be only rigid bodies
+            // In one wonderful day, here will be only one loop by pairs - (RigidBody, IBody)
+            // It's called "Broad Phase"
+            foreach (var body in Bodies) {
                 foreach (var body2 in Bodies) {
                     if (body != body2) {
-                        if (Collider.Collide(body.Shape, body2.Shape, out var manifold)) {
-                            Collisions.Add(new Collision(body, body2, manifold));
+                        if (Collider.Collide(body, body2, out var manifold)) {
+                            Collisions.Add(new Collision<Shape, Shape>(body, body2, manifold));
                         }
                     }
                 }
@@ -30,18 +34,14 @@ namespace NutEngine.Physics
         {
             foreach (var collision in Collisions) {
                 Collider.ResolveCollision(collision);
-                // After resolve collision we have to zeroes velocity (After position correction),
-                // or we can add some "bounce" effect, it'll be awesome.
-                // Probably we should do it in .ResolveCollision.
             }
         }
 
-        public void ApplyImpulses()
+        public void IntegrateVelocities(float dt)
         {
             foreach (var body in Bodies) {
-                // Dirty hack for pseudostatic bodies.
-                if (body.Mass.MassInv != 0) {
-                    body.ApplyImpulse();
+                if (body is RigidBody<Shape> rigid) {
+                    rigid.IntegrateVelocity(dt);
                 }
             }
         }
@@ -49,14 +49,38 @@ namespace NutEngine.Physics
         /// <summary>
         /// May the Force be with you.
         /// </summary>
-        public void ApplyForces(float delta)
+        public void IntegrateForces(float dt)
         {
             foreach (var body in Bodies) {
-                // Dirty hack for pseudostatic bodies.
-                if (body.Mass.MassInv != 0) {
-                    body.ApplyForce(delta);
+                if (body is RigidBody<Shape> rigid) {
+                    rigid.IntegrateForces(dt);
                 }
             }
+        }
+
+        public void ClearForces()
+        {
+            foreach (var body in Bodies) {
+                body.Force = Vector2.Zero;
+            }
+        }
+
+        public void PositionAdjustment()
+        {
+            foreach (var collision in Collisions) {
+                collision.PositionAdjustment();
+            }
+        }
+
+        public void Update(float dt)
+        {
+            CalculateCollisions();
+            IntegrateForces(dt); // I think we should do it before collision calculation.
+            ResolveCollisions(); // check
+            IntegrateVelocities(dt);
+            PositionAdjustment();
+            ClearForces();
+            Collisions.Clear();
         }
     }
 }

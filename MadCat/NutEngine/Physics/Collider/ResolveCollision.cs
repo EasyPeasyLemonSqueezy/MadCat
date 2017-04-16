@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using NutEngine.Physics.Shapes;
 using System;
 
 namespace NutEngine.Physics
@@ -7,7 +8,7 @@ namespace NutEngine.Physics
     {
         // We should use Bodies, because we can't calculate relative velocity in manifold.
         // (Obviously we can, but it will be a bit weird)
-        public static void ResolveCollision(Collision collision)
+        public static void ResolveCollision(Collision<Shape, Shape> collision)
         {
             var relVelocity = collision.B.Velocity - collision.A.Velocity;
             var velocityAlongNormal = Vector2.Dot(relVelocity, collision.Manifold.Normal);
@@ -22,8 +23,8 @@ namespace NutEngine.Physics
 
             float j = -(1 + e) * velocityAlongNormal / (collision.A.Mass.MassInv + collision.B.Mass.MassInv);
 
-            collision.A.Impulse += j * collision.Manifold.Normal;
-            collision.B.Impulse -= j * collision.Manifold.Normal;
+            collision.A.Velocity -= j * collision.Manifold.Normal;
+            collision.B.Velocity += j * collision.Manifold.Normal;
         }
     }
 }

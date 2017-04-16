@@ -4,17 +4,22 @@ namespace NutEngine.Physics.Shapes
 {
     public class Circle : Shape
     {
-        public float Radius { get; set; }
-        public Vector2 Position { get; set; }
+        // I hope we change radius less often than using sector for fast check intersections.
+        private float radius;
+        public float Radius {
+            get => radius;
+            set {
+                radius = value;
+                sector = new AABB(new Vector2(value, value));
+            }
+        }
 
-        public override AABB Sector
-            => new AABB(Position - new Vector2(Radius, Radius),
-                        Position + new Vector2(Radius, Radius));
+        private AABB sector;
+        public override AABB Sector => sector;
 
-        public Circle(float radius, Vector2 position)
+        public Circle(float radius)
         {
             Radius = radius;
-            Position = position;
         }
     }
 }
