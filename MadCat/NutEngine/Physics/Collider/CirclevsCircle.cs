@@ -26,9 +26,9 @@ namespace NutEngine.Physics
                 if (distance == 0) {
                     manifold = new Manifold() {
                         A = a, B = b,
-                        Depth = a.Radius, // Why not?
+                        Depth = a.Radius,
                         Normal = Vector2.UnitX,
-                        Contacts = new Vector2[1] { a.Position }
+                        Contact = a.Position
                     };
                 }
                 else {
@@ -38,7 +38,7 @@ namespace NutEngine.Physics
                         A = a, B = b,
                         Depth = radius - distance,
                         Normal = normalizable,
-                        Contacts = new Vector2[1] { normalizable * a.Radius + a.Position }
+                        Contact = normalizable * a.Radius + a.Position
                     };
                 }
 

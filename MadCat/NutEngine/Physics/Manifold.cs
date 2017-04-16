@@ -10,6 +10,6 @@ namespace NutEngine.Physics
 
         public float Depth { get; set; }
         public Vector2 Normal { get; set; }
-        public Vector2[] Contacts { get; set; }
+        public Vector2 Contact { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace NutEngine.Physics
             // For new manifold.
             float depth;
             Vector2 normal;
-            var contacts = new Vector2[1];
+            var contact = new Vector2();
 
 
             /// https://github.com/RandyGaul/tinyheaders/blob/master/tinyc2.h
@@ -61,11 +61,11 @@ namespace NutEngine.Physics
 
                 if (distance.X < 0) {
                     normal = -Vector2.UnitX;
-                    contacts[0] = new Vector2(a.Middle.X - aExtent.X, a.Middle.Y);
+                    contact = new Vector2(a.Middle.X - aExtent.X, a.Middle.Y);
                 }
                 else {
                     normal = Vector2.UnitX;
-                    contacts[0] = new Vector2(a.Middle.X + aExtent.X, a.Middle.Y);
+                    contact = new Vector2(a.Middle.X + aExtent.X, a.Middle.Y);
                 }
 
             }
@@ -74,11 +74,11 @@ namespace NutEngine.Physics
 
                 if (distance.Y < 0) {
                     normal = -Vector2.UnitY;
-                    contacts[0] = new Vector2(a.Middle.X, a.Middle.Y - aExtent.Y);
+                    contact = new Vector2(a.Middle.X, a.Middle.Y - aExtent.Y);
                 }
                 else {
                     normal = Vector2.UnitY;
-                    contacts[0] = new Vector2(a.Middle.X, a.Middle.Y + aExtent.Y);
+                    contact = new Vector2(a.Middle.X, a.Middle.Y + aExtent.Y);
                 }
             }
 
@@ -86,7 +86,7 @@ namespace NutEngine.Physics
                 A = a, B = b,
                 Depth = depth,
                 Normal = normal,
-                Contacts = contacts
+                Contact = contact
             };
 
             return true;
