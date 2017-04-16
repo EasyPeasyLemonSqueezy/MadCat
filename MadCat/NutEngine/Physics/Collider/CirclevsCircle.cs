@@ -5,7 +5,7 @@ namespace NutEngine.Physics
 {
     public static partial class Collider
     {
-        public static bool Collide(Circle a, Circle b, out Manifold manifold)
+        public static bool Collide(IBody<Circle> a, IBody<Circle> b, out Manifold<Circle, Circle> manifold)
         {
             // Probably here should be the sector collisions check,
             // but it needs additional method without manifolds
@@ -14,7 +14,7 @@ namespace NutEngine.Physics
             // And there is only one thing we say to Code: 'not today'."
 
             var normal = b.Position - a.Position;
-            float radius = a.Radius + b.Radius;
+            float radius = a.Shape.Radius + b.Shape.Radius;
 
             if (normal.LengthSquared() >= radius * radius) {
                 manifold = null;
@@ -24,9 +24,9 @@ namespace NutEngine.Physics
                 float distance = normal.Length();
 
                 if (distance == 0) {
-                    manifold = new Manifold() {
+                    manifold = new Manifold<Circle, Circle>() {
                         A = a, B = b,
-                        Depth = a.Radius,
+                        Depth = a.Shape.Radius,
                         Normal = Vector2.UnitX,
                         Contact = a.Position
                     };
@@ -34,11 +34,11 @@ namespace NutEngine.Physics
                 else {
                     var normalizable = normal / distance;
 
-                    manifold = new Manifold() {
+                    manifold = new Manifold<Circle, Circle>() {
                         A = a, B = b,
                         Depth = radius - distance,
                         Normal = normalizable,
-                        Contact = normalizable * a.Radius + a.Position
+                        Contact = normalizable * a.Shape.Radius + a.Position
                     };
                 }
 
@@ -46,11 +46,11 @@ namespace NutEngine.Physics
             }
         }
 
-        public static bool Collide(Circle a, Circle b)
+        public static bool Collide(IBody<Circle> a, IBody<Circle> b)
         {
-            var rSquare = (a.Radius + b.Radius) * (a.Radius + b.Radius);
+            var rSquare = (a.Shape.Radius + b.Shape.Radius) * (a.Shape.Radius + b.Shape.Radius);
 
-            return a.Sector.Collide(b.Sector) &&
+            return a.Shape.Sector.Collide(b.Shape.Sector) &&
                    rSquare < (a.Position.X - b.Position.X) * (a.Position.X - b.Position.X)
                            + (a.Position.Y - b.Position.Y) * (a.Position.Y - b.Position.Y);
         }

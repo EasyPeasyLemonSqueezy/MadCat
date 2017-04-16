@@ -1,25 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using NutEngine.Physics.Shapes;
+using System.Collections.Generic;
 
 namespace NutEngine.Physics
 {
     public class BodiesManager
     {
-        public HashSet<Body> Bodies { get; private set; }
-        public HashSet<Collision> Collisions { get; private set; }
+        public HashSet<IBody<Shape>> Bodies { get; private set; }
+        public HashSet<Collision<Shape, Shape>> Collisions { get; private set; }
 
         public BodiesManager()
         {
-            Bodies = new HashSet<Body>();
-            Collisions = new HashSet<Collision>();
+            Bodies = new HashSet<IBody<Shape>>();
+            Collisions = new HashSet<Collision<Shape, Shape>>();
         }
 
         public void CalculateCollisions()
         {
-            foreach (var body in Bodies) { // Here will be only rigid bodies
+            // In one wonderful day, here will be only one loop by pairs - (RigidBody, IBody)
+            // It's called "Broad Phase"
+            foreach (var body in Bodies) {
                 foreach (var body2 in Bodies) {
                     if (body != body2) {
-                        if (Collider.Collide(body.Shape, body2.Shape, out var manifold)) {
-                            Collisions.Add(new Collision(body, body2, manifold));
+                        if (Collider.Collide(body, body2, out var manifold)) {
+                            Collisions.Add(new Collision<Shape, Shape>(body, body2, manifold));
                         }
                     }
                 }
@@ -41,7 +44,7 @@ namespace NutEngine.Physics
             foreach (var body in Bodies) {
                 // Dirty hack for pseudostatic bodies.
                 if (body.Mass.MassInv != 0) {
-                    body.ApplyImpulse();
+                    // body.ApplyImpulse(Vector2.Zero); // TODO: fix it
                 }
             }
         }
@@ -54,7 +57,7 @@ namespace NutEngine.Physics
             foreach (var body in Bodies) {
                 // Dirty hack for pseudostatic bodies.
                 if (body.Mass.MassInv != 0) {
-                    body.ApplyForce(delta);
+                    // body.ApplyForce(Vector2.Zero); // TODO: fix it
                 }
             }
         }

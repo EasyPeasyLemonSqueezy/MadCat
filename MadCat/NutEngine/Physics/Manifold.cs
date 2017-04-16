@@ -3,10 +3,12 @@ using NutEngine.Physics.Shapes;
 
 namespace NutEngine.Physics
 {
-    public class Manifold
+    public class Manifold<FirstShapeType, SecondShapeType>
+        where FirstShapeType : Shape
+        where SecondShapeType : Shape
     {
-        public Shape A { get; set; }
-        public Shape B { get; set; }
+        public IBody<FirstShapeType> A { get; set; }
+        public IBody<SecondShapeType> B { get; set; }
 
         public float Depth { get; set; }
         public Vector2 Normal { get; set; }

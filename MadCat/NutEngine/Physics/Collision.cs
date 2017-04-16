@@ -1,14 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using NutEngine.Physics.Shapes;
 
 namespace NutEngine.Physics
 {
-    public class Collision
+    // Probably here should be just Shape instead of generic First(Second)ShapeType
+    public class Collision<FirstShapeType, SecondShapeType>
+        where FirstShapeType : Shape
+        where SecondShapeType : Shape
     {
-        public Body A { get; set; }
-        public Body B { get; set; }
-        public Manifold Manifold { get; set; }
+        public IBody<FirstShapeType> A { get; set; }
+        public IBody<SecondShapeType> B { get; set; }
+        public Manifold<FirstShapeType, SecondShapeType> Manifold { get; set; }
 
-        public Collision(Body a, Body b, Manifold manifold)
+        public Collision(IBody<FirstShapeType> a, IBody<SecondShapeType> b, Manifold<FirstShapeType, SecondShapeType> manifold)
         {
             A = a;
             B = b;
@@ -25,7 +29,6 @@ namespace NutEngine.Physics
                            * Manifold.Normal
                            * percent;
 
-            // Here we also should correct position of shapes(NOT BODIES)
             A.Position -= correction * A.Mass.MassInv;
             B.Position += correction * B.Mass.MassInv;
         }

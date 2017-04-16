@@ -3,9 +3,10 @@ using NutEngine.Physics.Shapes;
 
 namespace NutEngine.Physics
 {
-    public class Body
+    public class RigidBody<ShapeType> : IBody<ShapeType>
+        where ShapeType : Shape
     {
-        public Shape Shape { get; private set; }
+        public ShapeType Shape { get; private set; }
         public MassData Mass { get; private set; }
         public Material Material { get; private set; }
         public object Owner { get; set; }
@@ -14,7 +15,7 @@ namespace NutEngine.Physics
         public Vector2 Velocity { get; set; }
         public Vector2 Force { get; private set; }
 
-        public Body(Shape shape)
+        public RigidBody(ShapeType shape)
         {
             Shape = shape;
             Mass = new MassData();
