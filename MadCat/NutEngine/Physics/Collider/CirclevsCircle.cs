@@ -5,7 +5,7 @@ namespace NutEngine.Physics
 {
     public static partial class Collider
     {
-        public static bool Collide(IBody<Circle> a, IBody<Circle> b, out Manifold<Circle, Circle> manifold)
+        public static bool Collide(IBody<Circle> a, IBody<Circle> b, out Manifold<Shape, Shape> manifold)
         {
             // Probably here should be the sector collisions check,
             // but it needs additional method without manifolds
@@ -24,7 +24,7 @@ namespace NutEngine.Physics
                 float distance = normal.Length();
 
                 if (distance == 0) {
-                    manifold = new Manifold<Circle, Circle>() {
+                    manifold = new Manifold<Shape, Shape>() {
                         A = a, B = b,
                         Depth = a.Shape.Radius,
                         Normal = Vector2.UnitX,
@@ -34,7 +34,7 @@ namespace NutEngine.Physics
                 else {
                     var normalizable = normal / distance;
 
-                    manifold = new Manifold<Circle, Circle>() {
+                    manifold = new Manifold<Shape, Shape>() {
                         A = a, B = b,
                         Depth = radius - distance,
                         Normal = normalizable,
