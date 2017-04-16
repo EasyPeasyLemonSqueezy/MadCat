@@ -102,7 +102,7 @@ namespace NutEngine.Physics
 
         public static bool Collide(IBody<AABB> a, IBody<AABB> b)
         {
-            // Temporary solution, I don't want to install valuetypes from nuget
+            // Temporary solution, I don't want to install valuetuple from nuget
             // TODO: Update .NET to 4.7
             var aMax = a.Position + a.Shape.Vec;
             var aMin = a.Position - a.Shape.Vec;

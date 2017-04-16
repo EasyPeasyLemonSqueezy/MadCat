@@ -34,19 +34,6 @@ namespace NutEngine.Physics
         {
             foreach (var collision in Collisions) {
                 Collider.ResolveCollision(collision);
-                // After resolve collision we have to zeroes velocity (After position correction),
-                // or we can add some "bounce" effect, it'll be awesome.
-                // Probably we should do it in .ResolveCollision.
-            }
-        }
-
-        public void ApplyImpulses()
-        {
-            foreach (var body in Bodies) {
-                // Dirty hack for pseudostatic bodies.
-                if (body.Mass.MassInv != 0) {
-                    // body.ApplyImpulse(Vector2.Zero); // TODO: fix it
-                }
             }
         }
 
@@ -62,16 +49,6 @@ namespace NutEngine.Physics
         /// <summary>
         /// May the Force be with you.
         /// </summary>
-        public void ApplyForces(float dt)
-        {
-            foreach (var body in Bodies) {
-                // Dirty hack for pseudostatic bodies.
-                if (body.Mass.MassInv != 0) {
-                    // body.ApplyForce(Vector2.Zero); // TODO: fix it
-                }
-            }
-        }
-
         public void IntegrateForces(float dt)
         {
             foreach (var body in Bodies) {
@@ -98,7 +75,7 @@ namespace NutEngine.Physics
         public void Update(float dt)
         {
             CalculateCollisions();
-            IntegrateForces(dt);
+            IntegrateForces(dt); // I think we should do it before collision calculation.
             ResolveCollisions(); // check
             IntegrateVelocities(dt);
             PositionAdjustment();
