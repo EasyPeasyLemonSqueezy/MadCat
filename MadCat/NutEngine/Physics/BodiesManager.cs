@@ -39,7 +39,10 @@ namespace NutEngine.Physics
         public void ApplyImpulses()
         {
             foreach (var body in Bodies) {
-                body.ApplyImpulse();
+                // Dirty hack for pseudostatic bodies.
+                if (body.Mass.MassInv != 0) {
+                    body.ApplyImpulse();
+                }
             }
         }
 
@@ -49,7 +52,10 @@ namespace NutEngine.Physics
         public void ApplyForces(float delta)
         {
             foreach (var body in Bodies) {
-                body.ApplyForce(delta);
+                // Dirty hack for pseudostatic bodies.
+                if (body.Mass.MassInv != 0) {
+                    body.ApplyForce(delta);
+                }
             }
         }
     }
