@@ -80,7 +80,7 @@ namespace NutEngine.Physics
 
         public bool AddBody(IBody<Shape> body)
         {
-            if (!Bodies.Contains(body)) {
+            if (Bodies.Contains(body)) {
                 return false;
             }
 
