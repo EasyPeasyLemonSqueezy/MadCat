@@ -8,14 +8,14 @@ namespace MadCat
     public class Ground
     {
         public Sprite Sprite { get; set; }
-        public RigidBody<AABB> Body { get; private set; }
+        public RigidBody<Circle> Body { get; private set; }
 
         public Ground()
         {
             Sprite = Assets.Ground;
 
             var size = Sprite.TextureRegion.Frame.Size;
-            Body = new RigidBody<AABB>(new AABB(new Vector2(size.X, size.Y) / 2)) {
+            Body = new RigidBody<Circle>(new Circle(size.X / 2)) {
                 Position = new Vector2(300, 300),
                 Owner = this,
             };
