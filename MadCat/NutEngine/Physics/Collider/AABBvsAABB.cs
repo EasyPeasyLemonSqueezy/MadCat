@@ -90,7 +90,7 @@ namespace NutEngine.Physics
                 }
             }
 
-            manifold = new Manifold<AABB, AABB>() {
+            manifold = new Manifold<Shape, Shape>() {
                 A = a, B = b,
                 Depth = depth,
                 Normal = normal,
