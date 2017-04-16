@@ -28,7 +28,7 @@ namespace MadCat
             Ground = new Ground();
 
             World.AddChild(Ground.Sprite);
-            Bodies.Bodies.Add(Ground.Body);
+            Bodies.AddBody(Ground.Body);
         }
 
         public override void Update(float dt)
@@ -39,7 +39,7 @@ namespace MadCat
                 var skull = new Skull(new Vector2(mouseState.Position.X, mouseState.Position.Y));
                 Skulls.Add(skull);
                 World.AddChild(skull.Sprite);
-                Bodies.Bodies.Add(skull.Body);
+                Bodies.AddBody(skull.Body);
             }
 
 
