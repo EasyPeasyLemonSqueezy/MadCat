@@ -11,6 +11,8 @@ namespace MadCat
 
         public DemoGame()
         {
+            IsMouseVisible = true;
+
             Graphics = new GraphicsDeviceManager(this) {
                 PreferredBackBufferWidth = SCREEN_WIDTH,
                 PreferredBackBufferHeight = SCREEN_HEIGHT,
@@ -23,6 +25,7 @@ namespace MadCat
         protected override void Initialize()
         {
             base.Initialize();
+
             var startScene = new DemoScene(this);
 
             RunWithScene(startScene);

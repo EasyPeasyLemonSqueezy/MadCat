@@ -12,31 +12,45 @@ namespace MadCat
         private BodiesManager Bodies { get; set; }
 
         private Ground Ground { get; set; }
-        private Skull Skull { get; set; }
+        private List<Skull> Skulls { get; set; }
+
+        private MouseState PrevMouseState;
 
         public DemoScene(Application app) : base(app)
         {
+            PrevMouseState = Mouse.GetState();
+
             Assets.Init(Content);
 
             Bodies = new BodiesManager();
+            Skulls = new List<Skull>();
 
-            Skull = new Skull();
             Ground = new Ground();
 
             World.AddChild(Ground.Sprite);
             Bodies.Bodies.Add(Ground.Body);
-            World.AddChild(Skull.Sprite);
-            Bodies.Bodies.Add(Skull.Body);
         }
 
         public override void Update(float dt)
         {
-            var keyboardState = NutInput.Keyboard.GetState();
+            var mouseState = Mouse.GetState();
+
+            if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
+                var skull = new Skull(new Vector2(mouseState.Position.X, mouseState.Position.Y));
+                Skulls.Add(skull);
+                World.AddChild(skull.Sprite);
+                Bodies.Bodies.Add(skull.Body);
+            }
+
 
             Bodies.Update(dt);
 
             Ground.Update();
-            Skull.Update();
+            foreach (var skull in Skulls) {
+                skull.Update();
+            }
+
+            PrevMouseState = mouseState;
         }
     }
 }
