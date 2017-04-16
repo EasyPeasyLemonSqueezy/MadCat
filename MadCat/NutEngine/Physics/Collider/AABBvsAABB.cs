@@ -28,7 +28,7 @@ namespace NutEngine.Physics
         //                                                  B.X extent
         // 
         // ### - Manifold.
-        public static bool Collide(IBody<AABB> a, IBody<AABB> b, out Manifold<AABB, AABB> manifold)
+        public static bool Collide(IBody<AABB> a, IBody<AABB> b, out Manifold<Shape, Shape> manifold)
         {
             manifold = null;
 

@@ -4,10 +4,7 @@ namespace NutEngine.Physics
 {
     public static partial class Collider
     {
-        public static bool Collide<FirstShapeType, SecondShapeType>
-            (IBody<FirstShapeType> a, IBody<SecondShapeType> b, out Manifold<FirstShapeType, SecondShapeType> manifold)
-            where FirstShapeType : Shape
-            where SecondShapeType : Shape
+        public static bool Collide(IBody<Shape> a, IBody<Shape> b, out Manifold<Shape, Shape> manifold)
         {
             return Collide((dynamic)a, (dynamic)b, out manifold);
         }
