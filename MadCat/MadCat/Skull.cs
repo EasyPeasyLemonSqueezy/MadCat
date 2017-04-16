@@ -16,7 +16,7 @@ namespace MadCat
 
             var size = Sprite.TextureRegion.Frame.Size;
             Body = new RigidBody<AABB>(new AABB(new Vector2(size.X, size.Y) / 2)) {
-                Position = new Vector2(300, 300),
+                Position = new Vector2(300, 299),
                 Owner = this,
             };
 
