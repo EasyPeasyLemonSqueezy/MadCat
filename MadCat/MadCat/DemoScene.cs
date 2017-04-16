@@ -11,7 +11,7 @@ namespace MadCat
     {
         private BodiesManager Bodies { get; set; }
 
-        private Ground Ground { get; set; }
+        private List<Ground> Ground { get; set; }
         private List<Skull> Skulls { get; set; }
 
         private MouseState PrevMouseState;
@@ -23,12 +23,18 @@ namespace MadCat
             Assets.Init(Content);
 
             Bodies = new BodiesManager();
+            Ground = new List<Ground>();
             Skulls = new List<Skull>();
 
-            Ground = new Ground();
+            var groundSize = NutPacker.Content.Graveyard.Tiles.Tile_15_.Size.X;
 
-            World.AddChild(Ground.Sprite);
-            Bodies.AddBody(Ground.Body);
+            for (var pos = 0; pos < 960; pos += groundSize) {
+                var ground = new Ground(new Vector2(pos, 500));
+                Ground.Add(ground);
+                World.AddChild(ground.Sprite);
+                Bodies.AddBody(ground.Body);
+            }
+
         }
 
         public override void Update(float dt)
@@ -45,7 +51,10 @@ namespace MadCat
 
             Bodies.Update(dt);
 
-            Ground.Update();
+
+            foreach (var ground in Ground) {
+                ground.Update();
+            }
             foreach (var skull in Skulls) {
                 skull.Update();
             }
