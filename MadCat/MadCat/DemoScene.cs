@@ -1,16 +1,17 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using NutInput = NutEngine.Input;
+﻿using NutInput = NutEngine.Input;
 using NutEngine;
-using NutPacker.Content;
+using NutEngine.Physics;
 
 namespace MadCat
 {
     public class DemoScene : Scene
     {
+        private BodiesManager Bodies { get; set; }
+
         public DemoScene(Application app) : base(app)
         {
-            
+            Assets.Init(Content);
+            Bodies = new BodiesManager();
         }
 
         public override void Update(float deltaTime)
