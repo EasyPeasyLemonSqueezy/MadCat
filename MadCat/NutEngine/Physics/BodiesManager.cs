@@ -40,9 +40,7 @@ namespace NutEngine.Physics
         public void IntegrateVelocities(float dt)
         {
             foreach (var body in Bodies) {
-                if (body is RigidBody<Shape> rigid) {
-                    rigid.IntegrateVelocity(dt);
-                }
+                body.IntegrateVelocity(dt);
             }
         }
 
@@ -52,9 +50,7 @@ namespace NutEngine.Physics
         public void IntegrateForces(float dt)
         {
             foreach (var body in Bodies) {
-                if (body is RigidBody<Shape> rigid) {
-                    rigid.IntegrateForces(dt);
-                }
+                body.IntegrateForces(dt);
             }
         }
 
