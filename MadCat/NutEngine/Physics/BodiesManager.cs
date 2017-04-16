@@ -1,31 +1,30 @@
 ﻿using Microsoft.Xna.Framework;
 using NutEngine.Physics.Shapes;
+using System;
 using System.Collections.Generic;
 
 namespace NutEngine.Physics
 {
     public class BodiesManager
     {
-        public HashSet<IBody<Shape>> Bodies { get; private set; }
+        private HashSet<IBody<Shape>> Bodies { get; set; }
+
+        // First - only not static bodies, second - all bodies.
+        private HashSet<Tuple<IBody<Shape>, IBody<Shape>>> Pairs { get; set; }
         public HashSet<Collision<Shape, Shape>> Collisions { get; private set; }
 
         public BodiesManager()
         {
             Bodies = new HashSet<IBody<Shape>>();
+            Pairs = new HashSet<Tuple<IBody<Shape>, IBody<Shape>>>();
             Collisions = new HashSet<Collision<Shape, Shape>>();
         }
 
         public void CalculateCollisions()
         {
-            // In one wonderful day, here will be only one loop by pairs - (RigidBody, IBody)
-            // It's called "Broad Phase"
-            foreach (var body in Bodies) {
-                foreach (var body2 in Bodies) {
-                    if (body != body2) {
-                        if (Collider.Collide(body, body2, out var manifold)) {
-                            Collisions.Add(new Collision<Shape, Shape>(body, body2, manifold));
-                        }
-                    }
+            foreach (var pair in Pairs) {
+                if (Collider.Collide(pair.Item1, pair.Item2, out var manifold)) {
+                    Collisions.Add(new Collision<Shape, Shape>(pair.Item1, pair.Item2, manifold));
                 }
             }
         }
@@ -77,6 +76,38 @@ namespace NutEngine.Physics
             PositionAdjustment();
             ClearForces();
             Collisions.Clear();
+        }
+
+        public bool AddBody(IBody<Shape> body)
+        {
+            if (Bodies.Contains(body)) {
+                return false;
+            }
+
+            if (body.Mass.MassInv != 0) { // If not static
+                foreach (var b in Bodies) {
+                    Pairs.Add(Tuple.Create(body, b));
+                }
+            }
+
+            Bodies.Add(body);
+            return true;
+        }
+
+        public bool KillSomeBody(IBody<Shape> body)
+        {
+            if (!Bodies.Contains(body)) {
+                return false;
+            }
+
+            Pairs.RemoveWhere(pair => pair.Item2 == body);
+
+            if (body.Mass.MassInv != 0) { // If not static
+                Pairs.RemoveWhere(pair => pair.Item1 == body);
+            }
+
+            Bodies.Remove(body);
+            return true;
         }
     }
 }
