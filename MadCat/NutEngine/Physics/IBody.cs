@@ -11,6 +11,6 @@ namespace NutEngine.Physics
 
         Vector2 Position { get; set; }
         Vector2 Velocity { get; set; }
-        Vector2 Force { get; }
+        Vector2 Force { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NutEngine.Physics.Shapes;
+﻿using Microsoft.Xna.Framework;
+using NutEngine.Physics.Shapes;
 using System.Collections.Generic;
 
 namespace NutEngine.Physics
@@ -49,10 +50,19 @@ namespace NutEngine.Physics
             }
         }
 
+        public void IntegrateVelocities(float dt)
+        {
+            foreach (var body in Bodies) {
+                if (body is RigidBody<Shape> rigid) {
+                    rigid.IntegrateVelocity(dt);
+                }
+            }
+        }
+
         /// <summary>
         /// May the Force be with you.
         /// </summary>
-        public void ApplyForces(float delta)
+        public void ApplyForces(float dt)
         {
             foreach (var body in Bodies) {
                 // Dirty hack for pseudostatic bodies.
@@ -60,6 +70,40 @@ namespace NutEngine.Physics
                     // body.ApplyForce(Vector2.Zero); // TODO: fix it
                 }
             }
+        }
+
+        public void IntegrateForces(float dt)
+        {
+            foreach (var body in Bodies) {
+                if (body is RigidBody<Shape> rigid) {
+                    rigid.IntegrateForces(dt);
+                }
+            }
+        }
+
+        public void ClearForces()
+        {
+            foreach (var body in Bodies) {
+                body.Force = Vector2.Zero;
+            }
+        }
+
+        public void PositionAdjustment()
+        {
+            foreach (var collision in Collisions) {
+                collision.PositionAdjustment();
+            }
+        }
+
+        public void Update(float dt)
+        {
+            CalculateCollisions();
+            IntegrateForces(dt);
+            ResolveCollisions(); // check
+            IntegrateVelocities(dt);
+            PositionAdjustment();
+            ClearForces();
+            Collisions.Clear();
         }
     }
 }
