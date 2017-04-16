@@ -79,24 +79,34 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Collisions\AABB.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationType.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Camera\OrthographicSRTCamera.cs" />
     <Compile Include="Camera\Camera2D.cs" />
     <Compile Include="Camera\OrthographicTRSCamera.cs" />
-    <Compile Include="Collisions\Collider.cs" />
-    <Compile Include="Collisions\CollisionDetector.cs" />
-    <Compile Include="GameObjectManager.cs" />
     <Compile Include="IDrawable.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardState.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeComparer.cs" />
+    <Compile Include="Physics\BodiesManager.cs" />
+    <Compile Include="Physics\Body.cs" />
+    <Compile Include="Physics\Collider\AABBvsAABB.cs" />
+    <Compile Include="Physics\Collider\AABBvsCircle.cs" />
+    <Compile Include="Physics\Collider\CirclevsAABB.cs" />
+    <Compile Include="Physics\Collider\CirclevsCircle.cs" />
+    <Compile Include="Physics\Collider\Collider.cs" />
+    <Compile Include="Physics\Collider\ResolveCollision.cs" />
+    <Compile Include="Physics\Collision.cs" />
+    <Compile Include="Physics\Manifold.cs" />
+    <Compile Include="Physics\Mass.cs" />
+    <Compile Include="Physics\Shapes\AABB.cs" />
+    <Compile Include="Physics\Shapes\Circle.cs" />
+    <Compile Include="Physics\Shapes\Shape.cs" />
+    <Compile Include="Physics\Material.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
@@ -105,6 +115,7 @@
     <Compile Include="TextureRegion.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -116,6 +127,7 @@
       <Name>NutPackerLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
