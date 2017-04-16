@@ -20,7 +20,6 @@ namespace MadCat
                 Owner = this,
             };
 
-            Body.Mass.MassInv = 1;
             Body.Material.Restitution = .8f;
 
             Update();
