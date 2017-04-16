@@ -5,14 +5,14 @@ using NutEngine.Physics.Shapes;
 
 namespace MadCat
 {
-    public class Ground
+    public class Skull
     {
         public Sprite Sprite { get; set; }
         public Body Body { get; private set; }
 
-        public Ground()
+        public Skull()
         {
-            Sprite = Assets.Ground;
+            Sprite = Assets.Skull;
 
             var maxPoint = new Vector2(Sprite.TextureRegion.Frame.Size.X,
                                        Sprite.TextureRegion.Frame.Size.Y);
@@ -24,10 +24,10 @@ namespace MadCat
             Body = new Body(shape) {
                 Owner = this,
                 Position = shape.Min,
-                Velocity = new Vector2(.0001f)
+                Velocity = new Vector2(-.0001f),
             };
 
-            Body.Mass.MassInv = 100;
+            Body.Mass.Mass = 1f;
             Body.Material.Restitution = .2f;
 
             Update();

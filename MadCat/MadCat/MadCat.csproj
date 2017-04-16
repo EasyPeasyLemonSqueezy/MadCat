@@ -80,7 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
-    <Compile Include="Bones.cs" />
+    <Compile Include="Skull.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
