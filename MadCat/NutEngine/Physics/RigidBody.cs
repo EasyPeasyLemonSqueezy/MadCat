@@ -13,6 +13,7 @@ namespace NutEngine.Physics
 
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
+        public Vector2 Acceleration { get; set; }
         public Vector2 Force { get; set; }
 
         public RigidBody(ShapeType shape)
@@ -39,7 +40,7 @@ namespace NutEngine.Physics
 
         public void IntegrateForces(float dt)
         {
-            Velocity += (Force * Mass.MassInv) * dt / 2f;
+            Velocity += (Force * Mass.MassInv + Acceleration) * dt / 2f;
         }
     }
 }
