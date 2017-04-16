@@ -8,34 +8,27 @@ namespace MadCat
     public class Skull
     {
         public Sprite Sprite { get; set; }
-        public Body Body { get; private set; }
+        public RigidBody<AABB> Body { get; private set; }
 
         public Skull()
         {
             Sprite = Assets.Skull;
 
-            var maxPoint = new Vector2(Sprite.TextureRegion.Frame.Size.X,
-                                       Sprite.TextureRegion.Frame.Size.Y);
-
-            var offset = new Vector2(300, 300);
-
-            var shape = new AABB(offset, offset + maxPoint);
-
-            Body = new Body(shape) {
+            var size = Sprite.TextureRegion.Frame.Size;
+            Body = new RigidBody<AABB>(new AABB(new Vector2(size.X, size.Y) / 2)) {
+                Position = new Vector2(300, 300),
                 Owner = this,
-                Position = shape.Min,
-                Velocity = new Vector2(-.0001f),
             };
 
-            Body.Mass.Mass = 1f;
-            Body.Material.Restitution = .2f;
+            Body.Mass.MassInv = 1;
+            Body.Material.Restitution = .8f;
 
             Update();
         }
 
         public void Update()
         {
-            Sprite.Position = Body.Shape.Sector.Min = Body.Position;
+            Sprite.Position = Body.Position;
         }
     }
 }

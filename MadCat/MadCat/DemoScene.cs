@@ -29,14 +29,11 @@ namespace MadCat
             Bodies.Bodies.Add(Skull.Body);
         }
 
-        public override void Update(float deltaTime)
+        public override void Update(float dt)
         {
             var keyboardState = NutInput.Keyboard.GetState();
 
-            Bodies.CalculateCollisions();
-            Bodies.ResolveCollisions();
-            Bodies.ApplyImpulses();
-            Bodies.ApplyForces(deltaTime);
+            Bodies.Update(dt);
 
             Ground.Update();
             Skull.Update();
