@@ -12,8 +12,7 @@ namespace NutEngine.Physics
 
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
-        public Vector2 Impulse { get; set; }
-        public Vector2 Force { get; set; }
+        public Vector2 Force { get; private set; }
 
         public Body(Shape shape)
         {
@@ -22,19 +21,14 @@ namespace NutEngine.Physics
             Material = new Material();
         }
 
-        public void ApplyImpulse()
+        public void ApplyImpulse(Vector2 impulse)
         {
-            Velocity += Mass.MassInv * Impulse;
-            Impulse = Vector2.Zero;
+            Velocity += impulse * Mass.MassInv;
         }
 
-        public void ApplyForce(float delta)
+        public void ApplyForce(Vector2 force)
         {
-            /// No, it's not undefined behaviour.
-            /// Evaluation from left to right.
-            Position += (Velocity + (Velocity += (Force * Mass.MassInv * delta))) * delta / 2;
-
-            Force = Vector2.Zero;
+            Force += force;
         }
     }
 }
