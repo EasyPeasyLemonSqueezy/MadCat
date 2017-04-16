@@ -15,6 +15,13 @@ namespace NutEngine.Physics
         public Vector2 Impulse { get; set; }
         public Vector2 Force { get; set; }
 
+        public Body(Shape shape)
+        {
+            Shape = shape;
+            Mass = new MassData();
+            Material = new Material();
+        }
+
         public void ApplyImpulse()
         {
             Velocity += Mass.MassInv * Impulse;
