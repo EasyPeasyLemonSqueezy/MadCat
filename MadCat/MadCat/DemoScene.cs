@@ -4,6 +4,7 @@ using NutEngine;
 using NutEngine.Physics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using NutPacker.Content;
 
 namespace MadCat
 {
@@ -26,7 +27,7 @@ namespace MadCat
             Ground = new List<Ground>();
             Skulls = new List<Skull>();
 
-            var groundSize = NutPacker.Content.Graveyard.Tiles.Tile_15_.Size.X;
+            var groundSize = Graveyard.Tiles.Tile_15_.Size.X;
 
             for (var pos = 0; pos < 960; pos += groundSize) {
                 var ground = new Ground(new Vector2(pos, 500));

@@ -80,6 +80,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="BrowserScene.cs" />
+    <Compile Include="ChromeLogo.cs" />
+    <Compile Include="GoogleLogo.cs" />
     <Compile Include="Skull.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />

@@ -26,7 +26,7 @@ namespace MadCat
         {
             base.Initialize();
 
-            var startScene = new DemoScene(this);
+            var startScene = new BrowserScene(this);
 
             RunWithScene(startScene);
         }
