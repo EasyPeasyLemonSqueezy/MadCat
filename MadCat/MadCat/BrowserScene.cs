@@ -59,12 +59,12 @@ namespace MadCat
 
             Bodies.Update(dt);
 
+            Bodies.KillSome(body => body.Position.Y > App.ScreenHeight);
 
-            foreach (var chrome in Ground) {
-                chrome.Update();
-            }
-            foreach (var google in Google) {
-                google.Update();
+            foreach (var body in Bodies.GetBodies()) {
+                if (body.Owner is GoogleLogo google) {
+                    google.Update();
+                }
             }
 
             PrevMouseState = mouseState;
