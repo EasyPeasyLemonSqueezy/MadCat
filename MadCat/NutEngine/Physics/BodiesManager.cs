@@ -124,6 +124,13 @@ namespace NutEngine.Physics
             return result;
         }
 
+        public bool KillSome(Func<IBody<Shape>, bool> predicate)
+        {
+            var bodies = Bodies.Where(predicate).ToList();
+
+            return KillSome(bodies);
+        }
+
         public IEnumerable<IBody<Shape>> GetBodies()
         {
             foreach (var body in Bodies) {
