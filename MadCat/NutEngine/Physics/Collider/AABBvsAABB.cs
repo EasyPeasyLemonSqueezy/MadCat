@@ -34,13 +34,8 @@ namespace NutEngine.Physics
 
             var distance = b.Position - a.Position;
 
-            // Temporary solution, I don't want to install ValueTuple from nuget.
-            // TODO: Update .NET to 4.7
-            var aMax = a.Position + a.Shape.Vec;
-            var aMin = a.Position - a.Shape.Vec;
-
-            var bMax = b.Position + b.Shape.Vec;
-            var bMin = b.Position - b.Shape.Vec;
+            (var aMin, var aMax) = a.Shape.MinMax(a.Position);
+            (var bMin, var bMax) = b.Shape.MinMax(b.Position);
 
             // Half extent along x/y axes.
             var aExtent = (aMax - aMin) / 2;
@@ -102,13 +97,8 @@ namespace NutEngine.Physics
 
         public static bool Collide(IBody<AABB> a, IBody<AABB> b)
         {
-            // Temporary solution, I don't want to install valuetuple from nuget
-            // TODO: Update .NET to 4.7
-            var aMax = a.Position + a.Shape.Vec;
-            var aMin = a.Position - a.Shape.Vec;
-
-            var bMax = b.Position + b.Shape.Vec;
-            var bMin = b.Position - b.Shape.Vec;
+            (var aMin, var aMax) = a.Shape.MinMax(a.Position);
+            (var bMin, var bMax) = b.Shape.MinMax(b.Position);
 
             return !(aMax.X < bMin.X || aMin.X > bMax.X ||
                      aMax.Y < bMin.Y || aMin.Y > bMax.Y);

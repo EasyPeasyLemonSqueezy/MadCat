@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 
 namespace NutEngine.Physics.Shapes
 {
@@ -26,10 +25,9 @@ namespace NutEngine.Physics.Shapes
             Vec = vec;
         }
 
-        // TODO: Update .NET to 4.7
-        //public (Vector2, Vector2) MinMax(Vector2 offset)
-        //{
-        //    return (offset - Vec, offset + Vec);
-        //}
+        public (Vector2 Min, Vector2 Max) MinMax(Vector2 offset)
+        {
+            return (offset - Vec, offset + Vec);
+        }
     }
 }
