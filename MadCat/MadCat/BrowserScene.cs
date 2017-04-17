@@ -60,6 +60,8 @@ namespace MadCat
                     if (body.Owner is GoogleLogo google) {
                         google.Sprite.CommitSuicide();
                     }
+
+                    return true;
                 }
 
                 return false;
