@@ -30,7 +30,7 @@ namespace MadCat
 
             int pos = 0;
             while (pos < App.ScreenWidth) {
-                var chrome = new ChromeLogo(new Vector2(pos, 500));
+                var chrome = new ChromeLogo(new Vector2(pos, App.ScreenHeight - 50)); // 50 - size of logo
                 World.AddChild(chrome.Sprite);
                 Bodies.AddBody(chrome.Body);
 
@@ -53,8 +53,19 @@ namespace MadCat
 
             Bodies.Update(dt);
 
-            Bodies.KillSome(body => body.Position.Y > App.ScreenHeight);
+            // Remove bodies from Manager and World if those under the screen.
+            Bodies.KillSome(body => {
+                if (body.Position.Y > App.ScreenHeight) {
+                    // We should rethink about this way
+                    if (body.Owner is GoogleLogo google) {
+                        google.Sprite.CommitSuicide();
+                    }
+                }
 
+                return false;
+            });
+
+            // Update sprites.
             foreach (var body in Bodies.GetBodies()) {
                 if (body.Owner is GoogleLogo google) {
                     google.Update();
