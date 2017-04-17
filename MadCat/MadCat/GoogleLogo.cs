@@ -21,8 +21,9 @@ namespace MadCat
                 Owner = this,
                 Acceleration = new Vector2(0, 1000)
             };
-
-            Body.Mass.MassInv = 1;
+            
+            // Here should be mass calculation through the density, but not now.
+            Body.Mass.MassInv = 1 / scale;
             Body.Material.Restitution = .5f;
 
             Update();
