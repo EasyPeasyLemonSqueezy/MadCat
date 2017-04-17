@@ -11,9 +11,6 @@ namespace MadCat
     {
         private BodiesManager Bodies { get; set; }
 
-        private List<ChromeLogo> Ground { get; set; }
-        private List<GoogleLogo> Google { get; set; }
-
         private MouseState PrevMouseState;
 
         public BrowserScene(Application app) : base(app)
@@ -29,14 +26,10 @@ namespace MadCat
             World.AddChild(bg);
 
             Bodies = new BodiesManager();
-            Ground = new List<ChromeLogo>();
-            Google = new List<GoogleLogo>();
-
 
             int pos = 0;
             while (pos < 960) {
                 var chrome = new ChromeLogo(new Vector2(pos, 500));
-                Ground.Add(chrome);
                 World.AddChild(chrome.Sprite);
                 Bodies.AddBody(chrome.Body);
 
@@ -51,7 +44,6 @@ namespace MadCat
 
             if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
                 var google = new GoogleLogo(new Vector2(mouseState.Position.X, mouseState.Position.Y));
-                Google.Add(google);
                 World.AddChild(google.Sprite);
                 Bodies.AddBody(google.Body);
             }
