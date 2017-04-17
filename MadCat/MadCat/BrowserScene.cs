@@ -20,9 +20,9 @@ namespace MadCat
 
             Assets.Init(Content);
 
-            float bgScale = .5275f; // Scale to 960/540
+            float bgScale = App.ScreenWidth / Logo.Mozilla_Mascot.Size.X;
             var bg = Assets.Mozilla;
-            bg.Position += new Vector2(Logo.Mozilla_Mascot.Size.X, Logo.Mozilla_Mascot.Size.Y) * bgScale / 2;
+            bg.Position += new Vector2(App.ScreenWidth, App.ScreenHeight) / 2;
             bg.Scale *= bgScale;
             World.AddChild(bg);
 
