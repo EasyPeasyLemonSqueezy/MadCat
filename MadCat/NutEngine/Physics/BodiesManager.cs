@@ -2,6 +2,7 @@
 using NutEngine.Physics.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NutEngine.Physics
 {
@@ -94,7 +95,7 @@ namespace NutEngine.Physics
             return true;
         }
 
-        public bool KillSomeBody(IBody<Shape> body)
+        public bool KillSome(IBody<Shape> body)
         {
             if (!Bodies.Contains(body)) {
                 return false;
@@ -108,6 +109,26 @@ namespace NutEngine.Physics
 
             Bodies.Remove(body);
             return true;
+        }
+
+        public bool KillSome(IEnumerable<IBody<Shape>> bodies)
+        {
+            Pairs.RemoveWhere(pair => bodies.Contains(pair.Item1)
+                                   || bodies.Contains(pair.Item2));
+
+            bool result = true;
+            foreach (var body in bodies) {
+                result &= Bodies.Remove(body);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<IBody<Shape>> GetBodies()
+        {
+            foreach (var body in Bodies) {
+                yield return body;
+            }
         }
     }
 }
