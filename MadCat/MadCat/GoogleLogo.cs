@@ -10,10 +10,10 @@ namespace MadCat
         public Sprite Sprite { get; set; }
         public RigidBody<Circle> Body { get; private set; }
 
-        public GoogleLogo(Vector2 position)
+        public GoogleLogo(Vector2 position, float scale)
         {
             Sprite = Assets.GoogleLogo;
-            Sprite.Scale *= .1f;
+            Sprite.Scale *= .1f * scale;
 
             var size = Sprite.TextureRegion.Frame.Size.X - 100; // Offset from borders
             Body = new RigidBody<Circle>(new Circle(size * Sprite.Scale.X / 2)) {
