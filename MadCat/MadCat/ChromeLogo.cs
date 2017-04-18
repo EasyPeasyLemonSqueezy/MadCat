@@ -22,6 +22,8 @@ namespace MadCat
             };
 
             Body.Material.Restitution = .3f;
+            Body.Material.StaticFriction = .2f;
+            Body.Material.DynamicFriction = .2f;
 
             Update();
         }

@@ -25,6 +25,8 @@ namespace MadCat
             // Here should be mass calculation through the density, but not now.
             Body.Mass.MassInv = 1 / scale;
             Body.Material.Restitution = .5f;
+            Body.Material.StaticFriction = .1f;
+            Body.Material.DynamicFriction = .1f;
 
             Update();
         }
