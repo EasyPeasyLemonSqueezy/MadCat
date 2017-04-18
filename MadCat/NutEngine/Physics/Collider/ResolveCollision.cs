@@ -29,6 +29,10 @@ namespace NutEngine.Physics
 
             float jt = -Vector2.Dot(relVelocity, tangent) / (collision.A.Mass.MassInv + collision.B.Mass.MassInv);
 
+            if (Single.IsNaN(jt)) {
+                return;
+            }
+
             var staticFriction = (float)Math.Sqrt(collision.A.Material.StaticFriction * collision.B.Material.StaticFriction);
             var dynamicFriction = (float)Math.Sqrt(collision.A.Material.DynamicFriction * collision.B.Material.DynamicFriction);
 
