@@ -21,8 +21,21 @@ namespace NutEngine.Physics
 
             float j = -(1 + e) * velocityAlongNormal / (collision.A.Mass.MassInv + collision.B.Mass.MassInv);
 
-            collision.A.Velocity -= j * collision.Manifold.Normal * collision.A.Mass.MassInv;
-            collision.B.Velocity += j * collision.Manifold.Normal * collision.B.Mass.MassInv;
+            collision.A.ApplyImpulse(-j * collision.Manifold.Normal);
+            collision.B.ApplyImpulse(j * collision.Manifold.Normal);
+
+            var tangent = relVelocity - (collision.Manifold.Normal * Vector2.Dot(relVelocity, collision.Manifold.Normal));
+            tangent.Normalize();
+
+            float jt = -Vector2.Dot(relVelocity, tangent) / (collision.A.Mass.MassInv + collision.B.Mass.MassInv);
+
+            var staticFriction = (float)Math.Sqrt(collision.A.Material.StaticFriction * collision.B.Material.StaticFriction);
+            var dynamicFriction = (float)Math.Sqrt(collision.A.Material.DynamicFriction * collision.B.Material.DynamicFriction);
+
+            var tangentImpulse = Math.Abs(jt) < j * staticFriction ? tangent * jt : tangent * (-j) * dynamicFriction;
+
+            collision.A.ApplyImpulse(-tangentImpulse);
+            collision.B.ApplyImpulse(tangentImpulse);
         }
     }
 }
