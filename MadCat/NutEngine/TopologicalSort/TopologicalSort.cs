@@ -14,7 +14,7 @@ namespace NutEngine
             {
                 var dependencies = getDependencies(item);
                 return dependencies != null
-                    ? dependencies.Select(key => map[key])
+                    ? dependencies.Where(key => map.ContainsKey(key)).Select(key => map[key])
                     : null;
             };
         }
