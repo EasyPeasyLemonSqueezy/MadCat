@@ -1,10 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using NutEngine;
+using System;
 
 namespace MadCat
 {
     public class ColliderComponent : Component
     {
+        public override Type[] Dependencies { get; } = {
+            typeof(VelocityComponent)
+        };
         public AABB Collider { get; set; }
 
         public ColliderComponent(AABB collider)

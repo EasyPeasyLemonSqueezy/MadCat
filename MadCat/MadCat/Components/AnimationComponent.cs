@@ -5,6 +5,10 @@ namespace MadCat
 {
     public class AnimationComponent : Component, ICleanup
     {
+        public override Type[] Dependencies { get; } = {
+            typeof(VelocityComponent),
+            typeof(CharacterComponent)
+        };
         public Animation Animation { get; set; }
 
         public AnimationComponent(Animation animation)

@@ -1,9 +1,13 @@
 ﻿using NutEngine;
+using System;
 
 namespace MadCat
 {
     public class SpriteComponent : Component, ICleanup
     {
+        public override Type[] Dependencies { get; } = {
+            typeof(VelocityComponent)
+        };
         public Sprite Sprite { get; set; }
 
         public SpriteComponent(Sprite sprite)
