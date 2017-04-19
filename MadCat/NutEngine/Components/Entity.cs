@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NutEngine
 {
@@ -31,6 +32,7 @@ namespace NutEngine
         {
             component.Entity = this;
             components[component.GetType()] = component;
+            SortComponents();
         }
 
         public void AddComponent<T>(params object[] parameters)
@@ -39,6 +41,7 @@ namespace NutEngine
             var component = (T)Activator.CreateInstance(typeof(T), parameters);
             component.Entity = this;
             components[component.GetType()] = component;
+            SortComponents();
         }
 
         public void RemoveComponent<T>()
@@ -60,6 +63,16 @@ namespace NutEngine
                 return components[typeof(T)] as T;
             }
             return null;
+        }
+
+        private void SortComponents()
+        {
+            var sorted = TopologicalSort.Sort(
+                components,
+                c => c.Value.Dependencies,
+                c => c.Key
+            );
+            components = sorted.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }
