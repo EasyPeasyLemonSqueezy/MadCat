@@ -7,7 +7,8 @@ namespace MadCat
     public class VelocityComponent : Component
     {
         public override Type[] Dependencies { get; } = {
-            typeof(GravitationComponent)
+            typeof(GravitationComponent),
+            typeof(CharacterComponent)
         };
         public Vector2 Velocity { get; set; }
 
