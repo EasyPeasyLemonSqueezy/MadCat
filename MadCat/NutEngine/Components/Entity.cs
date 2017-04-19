@@ -67,12 +67,13 @@ namespace NutEngine
 
         private void SortComponents()
         {
+            var values = components.Values;
             var sorted = TopologicalSort.Sort(
-                components,
-                c => c.Value.Dependencies,
-                c => c.Key
+                values,
+                c => c.Dependencies,
+                c => c.GetType()
             );
-            components = sorted.ToDictionary(pair => pair.Key, pair => pair.Value);
+            components = sorted.ToDictionary(c => c.GetType(), c => c);
         }
     }
 }
