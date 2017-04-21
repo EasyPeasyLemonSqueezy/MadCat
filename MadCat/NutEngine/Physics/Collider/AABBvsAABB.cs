@@ -34,12 +34,9 @@ namespace NutEngine.Physics
 
             var distance = b.Position - a.Position;
 
-            (var aMin, var aMax) = a.Shape.MinMax(a.Position);
-            (var bMin, var bMax) = b.Shape.MinMax(b.Position);
-
             // Half extent along x/y axes.
-            var aExtent = (aMax - aMin) / 2;
-            var bExtent = (bMax - bMin) / 2;
+            var aExtent = a.Shape.Vec;
+            var bExtent = b.Shape.Vec;
 
             float xOverlap = aExtent.X + bExtent.X - Math.Abs(distance.X);
             if (xOverlap <= 0) {
