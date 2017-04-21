@@ -93,6 +93,8 @@
     <Compile Include="Node.cs" />
     <Compile Include="NodeComparer.cs" />
     <Compile Include="Physics\BodiesManager.cs" />
+    <Compile Include="Physics\Materials\Density.cs" />
+    <Compile Include="Physics\Materials\Restitution.cs" />
     <Compile Include="Physics\RigidBody.cs" />
     <Compile Include="Physics\Collider\AABBvsAABB.cs" />
     <Compile Include="Physics\Collider\CirclevsCircle.cs" />
