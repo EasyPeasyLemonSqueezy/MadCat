@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NutEngine.Input;
 using System.Collections.Generic;
 
 namespace NutEngine
@@ -41,6 +42,7 @@ namespace NutEngine
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Keyboard.Update();
             Scenes.Peek().Update(deltaTime);
             base.Update(gameTime);
         }
