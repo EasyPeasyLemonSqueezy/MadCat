@@ -3,7 +3,7 @@ using NutEngine;
 
 namespace MadCat
 {
-    public class AnimationComponent : Component, ICleanup
+    public class AnimationComponent : Component, IDisposable
     {
         public Animation Animation { get; set; }
 
@@ -27,7 +27,7 @@ namespace MadCat
             };
         }
 
-        public void Cleanup()
+        public void Dispose()
         {
             Animation.CommitSuicide();
         }

@@ -3,7 +3,7 @@ using System;
 
 namespace MadCat
 {
-    public class SpriteComponent : Component, ICleanup
+    public class SpriteComponent : Component, IDisposable
     {
         public Sprite Sprite { get; set; }
 
@@ -25,7 +25,7 @@ namespace MadCat
             };
         }
 
-        public void Cleanup()
+        public void Dispose()
         {
             Sprite.CommitSuicide();
         }
