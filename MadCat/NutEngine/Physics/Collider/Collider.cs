@@ -8,5 +8,10 @@ namespace NutEngine.Physics
         {
             return Collide((dynamic)a, (dynamic)b, out manifold);
         }
+
+        public static bool Collide(IBody<IShape> a, IBody<IShape> b)
+        {
+            return Collide((dynamic)a, (dynamic)b);
+        }
     }
 }

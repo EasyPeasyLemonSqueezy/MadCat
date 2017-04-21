@@ -83,10 +83,8 @@ namespace NutEngine.Physics
             }
 
             manifold = new Manifold() {
-                A = a, B = b,
                 Depth = depth,
                 Normal = normal,
-                Contact = contact
             };
 
             return true;

@@ -33,7 +33,7 @@ namespace NutEngine.Physics
         public void ResolveCollisions()
         {
             foreach (var collision in Collisions) {
-                Collider.ResolveCollision(collision);
+                collision.ResolveCollision();
             }
         }
 
