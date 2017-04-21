@@ -6,8 +6,8 @@ namespace MadCat
 {
     public class DemoGame : Application
     {
-        private const int SCREEN_WIDTH = 1366;
-        private const int SCREEN_HEIGHT = 768;
+        private const int SCREEN_WIDTH = 960;
+        private const int SCREEN_HEIGHT = 540;
 
         public DemoGame()
         {
@@ -18,7 +18,6 @@ namespace MadCat
                 PreferredBackBufferHeight = SCREEN_HEIGHT,
                 GraphicsProfile = GraphicsProfile.HiDef
             };
-            Graphics.ToggleFullScreen();
 
             Content.RootDirectory = "Content"; /// Folder with content.
         }

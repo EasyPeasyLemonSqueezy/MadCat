@@ -13,7 +13,7 @@ namespace MadCat
         public ChromeLogo(Vector2 position)
         {
             Sprite = Assets.ChromeLogo;
-            Sprite.Scale *= .2f;
+            Sprite.Scale *= .1f;
 
             var size = Sprite.TextureRegion.Frame.Size;
             Body = new RigidBody<Circle>(new Circle(size.X * Sprite.Scale.X / 2)) {
@@ -21,9 +21,9 @@ namespace MadCat
                 Owner = this
             };
 
-            Body.Material.Restitution = .3f;
-            Body.Material.StaticFriction = .2f;
-            Body.Material.DynamicFriction = .2f;
+            Body.Material.Restitution = .5f;
+            Body.Material.StaticFriction = .1f;
+            Body.Material.DynamicFriction = .1f;
 
             Update();
         }

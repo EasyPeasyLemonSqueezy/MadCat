@@ -4,6 +4,7 @@ using NutEngine.Physics;
 using Microsoft.Xna.Framework;
 using NutPacker.Content;
 using NutInput = NutEngine.Input;
+using System;
 
 namespace MadCat
 {
@@ -29,12 +30,30 @@ namespace MadCat
             Bodies = new BodiesManager();
 
             int pos = 0;
-            while (pos < App.ScreenWidth) {
-                var chrome = new ChromeLogo(new Vector2(pos, App.ScreenHeight - 50)); // 50 - size of logo
+            var center = new Vector2(300, App.ScreenHeight / 2 - 50); // 50 - size of logo
+
+            for (float angle = MathHelper.PiOver2; angle < MathHelper.Pi; angle += MathHelper.PiOver4 / 6) {
+                var chrome = new ChromeLogo(new Vector2(center.X + 250 * (float)Math.Cos(angle), center.Y + 250 * (float)Math.Sin(angle)));
                 World.AddChild(chrome.Sprite);
                 Bodies.AddBody(chrome.Body);
 
-                pos += (int)(chrome.Sprite.TextureRegion.Frame.Size.X * chrome.Sprite.Scale.X);
+                chrome = new ChromeLogo(new Vector2(App.ScreenWidth - 300 - 250 * (float)Math.Cos(angle), center.Y + 250 * (float)Math.Sin(angle)));
+                World.AddChild(chrome.Sprite);
+                Bodies.AddBody(chrome.Body);
+            }
+
+
+            pos = 300;
+            while (pos < App.ScreenWidth - 300) {
+                var chrome = new ChromeLogo(new Vector2(pos, App.ScreenHeight / 2 + 200)); // 50 - size of logo
+                World.AddChild(chrome.Sprite);
+                Bodies.AddBody(chrome.Body);
+
+                chrome = new ChromeLogo(new Vector2(pos, 300)); // 50 - size of logo
+                World.AddChild(chrome.Sprite);
+                Bodies.AddBody(chrome.Body);
+
+                pos += (int)(chrome.Sprite.TextureRegion.Frame.Size.X * chrome.Sprite.Scale.X * .75f);
             }
         }
 

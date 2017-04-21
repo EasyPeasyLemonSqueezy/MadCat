@@ -13,7 +13,7 @@ namespace MadCat
         public GoogleLogo(Vector2 position, float scale)
         {
             Sprite = Assets.GoogleLogo;
-            Sprite.Scale *= .1f * scale;
+            Sprite.Scale *= .02f * scale;
 
             var size = Sprite.TextureRegion.Frame.Size.X - 100; // Offset from borders
             Body = new RigidBody<Circle>(new Circle(size * Sprite.Scale.X / 2)) {
@@ -24,9 +24,9 @@ namespace MadCat
             
             // Here should be mass calculation through the density, but not now.
             Body.Mass.MassInv = 1 / scale;
-            Body.Material.Restitution = .5f;
-            Body.Material.StaticFriction = .2f;
-            Body.Material.DynamicFriction = .2f;
+            Body.Material.Restitution = .3f;
+            Body.Material.StaticFriction = .1f;
+            Body.Material.DynamicFriction = .1f;
 
             Update();
         }
