@@ -88,13 +88,13 @@
     <Compile Include="Camera\OrthographicTRSCamera.cs" />
     <Compile Include="Collisions\Collider.cs" />
     <Compile Include="Collisions\CollisionDetector.cs" />
-    <Compile Include="Component.cs" />
-    <Compile Include="EntityManager.cs" />
-    <Compile Include="ICleanup.cs" />
+    <Compile Include="Components\Component.cs" />
+    <Compile Include="Components\EntityManager.cs" />
     <Compile Include="IDrawable.cs" />
-    <Compile Include="Entity.cs" />
+    <Compile Include="Components\Entity.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardState.cs" />
+    <Compile Include="TopologicalSort\GenericEqualityComparer.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Node.cs" />
@@ -105,6 +105,7 @@
     <Compile Include="IState.cs" />
     <Compile Include="StateMachine.cs" />
     <Compile Include="TextureRegion.cs" />
+    <Compile Include="TopologicalSort\TopologicalSort.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

@@ -18,7 +18,7 @@ namespace NutEngine
             Entities.RemoveAll(
             entity => {
                 if (entity.Invalid) {
-                    entity.Cleanup();
+                    entity.Dispose();
                     return true;
                 }
                 return false;
