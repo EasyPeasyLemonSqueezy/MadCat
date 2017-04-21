@@ -7,7 +7,6 @@
         public StateMachine(IState firstState)
         {
             currentState = firstState;
-            currentState.Enter();
         }
 
         public void UpdateInput(Input.KeyboardState keyboardState)
