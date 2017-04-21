@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace NutEngine
 {
-    public class Entity : ICleanup
+    public class Entity : IDisposable
     {
         public bool Invalid { get; set; }
         public AABB Collider { get; set; }
@@ -19,11 +19,11 @@ namespace NutEngine
             }
         }
 
-        public virtual void Cleanup()
+        public virtual void Dispose()
         {
             foreach (var component in components.Values) {
-                if (component is ICleanup cleanup) {
-                    cleanup.Cleanup();
+                if (component is IDisposable disposable) {
+                    disposable.Dispose();
                 }
             }
         }
