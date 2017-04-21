@@ -39,8 +39,15 @@ namespace NutEngine
             where T : Component
         {
             var component = (T)Activator.CreateInstance(typeof(T), parameters);
-            component.Entity = this;
-            components[component.GetType()] = component;
+            AddComponent(component);
+        }
+
+        public void AddComponents(params Component[] components)
+        {
+            foreach (var component in components) {
+                component.Entity = this;
+                this.components[component.GetType()] = component;
+            }
             SortComponents();
         }
 
@@ -70,7 +77,7 @@ namespace NutEngine
             var values = components.Values;
             var sorted = TopologicalSort.Sort(
                 values,
-                c => c.Dependencies,
+                c => c.GetDependencies(),
                 c => c.GetType()
             );
             components = sorted.ToDictionary(c => c.GetType(), c => c);
