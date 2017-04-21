@@ -1,4 +1,4 @@
-﻿namespace NutEngine.Physics
+﻿namespace NutEngine.Physics.Materials
 {
     public class Material
     {

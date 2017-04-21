@@ -2,7 +2,7 @@
 
 namespace NutEngine.Physics.Shapes
 {
-    public class Circle : Shape
+    public class Circle : IShape
     {
         // I hope we change radius less often than using sector for fast check intersections.
         private float radius;
@@ -15,7 +15,7 @@ namespace NutEngine.Physics.Shapes
         }
 
         private AABB sector;
-        public override AABB Sector => sector;
+        public AABB Sector => sector;
 
         public Circle(float radius)
         {

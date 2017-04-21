@@ -2,7 +2,7 @@
 
 namespace NutEngine.Physics.Shapes
 {
-    public class AABB : Shape
+    public class AABB : IShape
     {
         // +---------+
         // |         |
@@ -18,7 +18,7 @@ namespace NutEngine.Physics.Shapes
         // Vector from center to bottom right corner.
         public Vector2 Vec { get; set; }
 
-        public override AABB Sector => this;
+        public AABB Sector => this;
 
         public AABB(Vector2 vec)
         {

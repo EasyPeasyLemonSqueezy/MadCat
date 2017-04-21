@@ -5,8 +5,8 @@ namespace NutEngine.Physics
 {
     public class Manifold
     {
-        public IBody<Shape> A { get; set; }
-        public IBody<Shape> B { get; set; }
+        public IBody<IShape> A { get; set; }
+        public IBody<IShape> B { get; set; }
 
         public float Depth { get; set; }
         public Vector2 Normal { get; set; }

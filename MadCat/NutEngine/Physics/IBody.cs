@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using NutEngine.Physics.Materials;
 
 namespace NutEngine.Physics
 {
@@ -11,6 +12,7 @@ namespace NutEngine.Physics
 
         Vector2 Position { get; set; }
         Vector2 Velocity { get; set; }
+        Vector2 Acceleration { get; set; }
         Vector2 Force { get; set; }
 
         void ApplyImpulse(Vector2 impulse); // Because C# sucks

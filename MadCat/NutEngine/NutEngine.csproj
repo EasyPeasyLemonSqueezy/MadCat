@@ -93,6 +93,8 @@
     <Compile Include="Node.cs" />
     <Compile Include="NodeComparer.cs" />
     <Compile Include="Physics\BodiesManager.cs" />
+    <Compile Include="Physics\Materials\Density.cs" />
+    <Compile Include="Physics\Materials\Restitution.cs" />
     <Compile Include="Physics\RigidBody.cs" />
     <Compile Include="Physics\Collider\AABBvsAABB.cs" />
     <Compile Include="Physics\Collider\CirclevsCircle.cs" />
@@ -101,11 +103,11 @@
     <Compile Include="Physics\Collision.cs" />
     <Compile Include="Physics\IBody.cs" />
     <Compile Include="Physics\Manifold.cs" />
-    <Compile Include="Physics\Mass.cs" />
+    <Compile Include="Physics\MassData.cs" />
     <Compile Include="Physics\Shapes\AABB.cs" />
     <Compile Include="Physics\Shapes\Circle.cs" />
     <Compile Include="Physics\Shapes\Shape.cs" />
-    <Compile Include="Physics\Material.cs" />
+    <Compile Include="Physics\Materials\Material.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
