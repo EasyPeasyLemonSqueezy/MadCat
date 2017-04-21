@@ -5,7 +5,7 @@ using NutEngine.Physics.Shapes;
 namespace NutEngine.Physics
 {
     public class RigidBody<ShapeType> : IBody<ShapeType>
-        where ShapeType : Shape
+        where ShapeType : IShape
     {
         public ShapeType Shape { get; private set; }
         public MassData Mass { get; private set; }

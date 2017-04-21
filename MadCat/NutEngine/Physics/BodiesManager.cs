@@ -8,16 +8,16 @@ namespace NutEngine.Physics
 {
     public class BodiesManager
     {
-        private HashSet<IBody<Shape>> Bodies { get; set; }
+        private HashSet<IBody<IShape>> Bodies { get; set; }
 
         // First - only not static bodies, second - all bodies.
-        private HashSet<Tuple<IBody<Shape>, IBody<Shape>>> Pairs { get; set; }
+        private HashSet<Tuple<IBody<IShape>, IBody<IShape>>> Pairs { get; set; }
         public HashSet<Collision> Collisions { get; private set; }
 
         public BodiesManager()
         {
-            Bodies = new HashSet<IBody<Shape>>();
-            Pairs = new HashSet<Tuple<IBody<Shape>, IBody<Shape>>>();
+            Bodies = new HashSet<IBody<IShape>>();
+            Pairs = new HashSet<Tuple<IBody<IShape>, IBody<IShape>>>();
             Collisions = new HashSet<Collision>();
         }
 
@@ -79,7 +79,7 @@ namespace NutEngine.Physics
             Collisions.Clear();
         }
 
-        public bool AddBody(IBody<Shape> body)
+        public bool AddBody(IBody<IShape> body)
         {
             if (Bodies.Contains(body)) {
                 return false;
@@ -95,7 +95,7 @@ namespace NutEngine.Physics
             return true;
         }
 
-        public bool KillSome(IBody<Shape> body)
+        public bool KillSome(IBody<IShape> body)
         {
             if (!Bodies.Contains(body)) {
                 return false;
@@ -111,7 +111,7 @@ namespace NutEngine.Physics
             return true;
         }
 
-        public bool KillSome(IEnumerable<IBody<Shape>> bodies)
+        public bool KillSome(IEnumerable<IBody<IShape>> bodies)
         {
             Pairs.RemoveWhere(pair => bodies.Contains(pair.Item1)
                                    || bodies.Contains(pair.Item2));
@@ -124,14 +124,14 @@ namespace NutEngine.Physics
             return result;
         }
 
-        public bool KillSome(Func<IBody<Shape>, bool> predicate)
+        public bool KillSome(Func<IBody<IShape>, bool> predicate)
         {
             var bodies = Bodies.Where(predicate).ToList();
 
             return KillSome(bodies);
         }
 
-        public IEnumerable<IBody<Shape>> GetBodies()
+        public IEnumerable<IBody<IShape>> GetBodies()
         {
             foreach (var body in Bodies) {
                 yield return body;

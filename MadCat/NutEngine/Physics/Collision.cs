@@ -5,11 +5,11 @@ namespace NutEngine.Physics
 {
     public class Collision
     {
-        public IBody<Shape> A { get; set; }
-        public IBody<Shape> B { get; set; }
+        public IBody<IShape> A { get; set; }
+        public IBody<IShape> B { get; set; }
         public Manifold Manifold { get; set; }
 
-        public Collision(IBody<Shape> a, IBody<Shape> b, Manifold manifold)
+        public Collision(IBody<IShape> a, IBody<IShape> b, Manifold manifold)
         {
             A = a;
             B = b;

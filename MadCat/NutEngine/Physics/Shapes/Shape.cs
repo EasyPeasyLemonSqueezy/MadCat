@@ -1,12 +1,7 @@
 ﻿namespace NutEngine.Physics.Shapes
 {
-    public abstract class Shape
+    public interface IShape
     {
-        public abstract AABB Sector { get; }
-
-        public bool Collide(Shape shape)
-        {
-            return Collider.Collide((dynamic)this, (dynamic)shape);
-        }
+        AABB Sector { get; }
     }
 }
