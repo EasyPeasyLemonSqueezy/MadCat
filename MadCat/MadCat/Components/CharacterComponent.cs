@@ -37,9 +37,9 @@ namespace MadCat
         private float runVelocity = 400.0f;
         private float jumpVelocity = -800.0f;
 
-        public CharacterComponent(Node node, EntityManager manager)
+        public CharacterComponent(Node node, EntityManager manager, StateMachine stateMachine)
         {
-            StateMachine = new StateMachine(new StandState(this));
+            StateMachine = stateMachine;
 
             Manager = manager;
             Node = node;

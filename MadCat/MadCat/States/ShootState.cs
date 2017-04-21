@@ -4,16 +4,17 @@ namespace MadCat
 {
     class ShootState : IState
     {
-        private CharacterComponent character;
+        private Entity entity;
 
-        public ShootState(CharacterComponent character)
+        public ShootState(Entity entity)
         {
-            this.character = character;
+            this.entity = entity;
         }
 
         public void Enter()
         {
-            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            var character = entity.GetComponent<CharacterComponent>();
+            var animation = entity.GetComponent<AnimationComponent>().Animation;
             animation.Change(Assets.AdventureGirlShoot);
 
             character.Stand();
@@ -30,10 +31,10 @@ namespace MadCat
 
         public IState Update(float deltaTime)
         {
-            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            var animation = entity.GetComponent<AnimationComponent>().Animation;
 
             if (!animation.Enabled) {
-                return new StandState(character);
+                return new StandState(entity);
             }
 
             return null;

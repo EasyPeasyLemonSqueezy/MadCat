@@ -6,10 +6,6 @@ namespace MadCat
 {
     public class VelocityComponent : Component
     {
-        public override Type[] Dependencies { get; } = {
-            typeof(GravitationComponent),
-            typeof(CharacterComponent)
-        };
         public Vector2 Velocity { get; set; }
 
         public VelocityComponent(Vector2 velocity)
@@ -21,6 +17,14 @@ namespace MadCat
         {
             var position = Entity.GetComponent<PositionComponent>();
             position.Position = Physics.ApplyVelocity(position.Position, Velocity, deltaTime);
+        }
+
+        public override Type[] GetDependencies()
+        {
+            return new Type[] {
+                typeof(GravitationComponent),
+                typeof(CharacterComponent)
+            };
         }
     }
 }

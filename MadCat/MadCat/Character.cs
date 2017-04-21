@@ -35,12 +35,16 @@ namespace MadCat
                 , Height = 130.0f
             };
 
-            AddComponent<ColliderComponent>(Collider);
-            AddComponent<PositionComponent>(new Vector2(0.0f, -500.0f));
-            AddComponent<AnimationComponent>(animation);
-            AddComponent<CharacterComponent>(node, manager);
-            AddComponent<VelocityComponent>(new Vector2());
-            AddComponent<GravitationComponent>();
+            var stateMachine = new StateMachine(new StandState(this));
+
+            AddComponents(
+                new ColliderComponent(Collider),
+                new PositionComponent(new Vector2(0.0f, -500.0f)),
+                new AnimationComponent(animation),
+                new CharacterComponent(node, manager, stateMachine),
+                new VelocityComponent(new Vector2()),
+                new GravitationComponent()
+            );
         }
 
         public void Input(NutInput.KeyboardState keyboardState)

@@ -5,10 +5,6 @@ namespace MadCat
 {
     public class AnimationComponent : Component, ICleanup
     {
-        public override Type[] Dependencies { get; } = {
-            typeof(VelocityComponent),
-            typeof(CharacterComponent)
-        };
         public Animation Animation { get; set; }
 
         public AnimationComponent(Animation animation)
@@ -21,6 +17,14 @@ namespace MadCat
             var position = Entity.GetComponent<PositionComponent>();
             Animation.Position = position.Position;
             Animation.Update(deltaTime);
+        }
+
+        public override Type[] GetDependencies()
+        {
+            return new Type[] {
+                typeof(VelocityComponent),
+                typeof(CharacterComponent),
+            };
         }
 
         public void Cleanup()

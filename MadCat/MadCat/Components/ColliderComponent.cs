@@ -6,9 +6,6 @@ namespace MadCat
 {
     public class ColliderComponent : Component
     {
-        public override Type[] Dependencies { get; } = {
-            typeof(VelocityComponent)
-        };
         public AABB Collider { get; set; }
 
         public ColliderComponent(AABB collider)
@@ -21,6 +18,14 @@ namespace MadCat
             var position = Entity.GetComponent<PositionComponent>();
             Collider.X = position.Position.X - Collider.Width / 2.0f;
             Collider.Y = position.Position.Y - Collider.Height / 2.0f;
+        }
+
+        public override Type[] GetDependencies()
+        {
+            return new Type[] {
+                typeof(VelocityComponent),
+                typeof(CharacterComponent)
+            };
         }
     }
 }

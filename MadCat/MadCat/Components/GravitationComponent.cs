@@ -1,5 +1,6 @@
 ﻿using NutEngine;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace MadCat
 {
@@ -11,6 +12,13 @@ namespace MadCat
         {
             var velocity = Entity.GetComponent<VelocityComponent>();
             velocity.Velocity = Physics.ApplyAccel(velocity.Velocity, Gravitation, deltaTime);
+        }
+
+        public override Type[] GetDependencies()
+        {
+            return new Type[] {
+                typeof(CharacterComponent),
+            };
         }
     }
 }

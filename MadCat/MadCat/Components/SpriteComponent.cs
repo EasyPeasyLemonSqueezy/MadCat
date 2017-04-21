@@ -5,9 +5,6 @@ namespace MadCat
 {
     public class SpriteComponent : Component, ICleanup
     {
-        public override Type[] Dependencies { get; } = {
-            typeof(VelocityComponent)
-        };
         public Sprite Sprite { get; set; }
 
         public SpriteComponent(Sprite sprite)
@@ -19,6 +16,13 @@ namespace MadCat
         {
             var position = Entity.GetComponent<PositionComponent>();
             Sprite.Position = position.Position;
+        }
+
+        public override Type[] GetDependencies()
+        {
+            return new Type[] {
+                typeof(VelocityComponent),
+            };
         }
 
         public void Cleanup()

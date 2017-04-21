@@ -7,21 +7,23 @@ namespace MadCat
 {
     public class RunState : IState
     {
-        private CharacterComponent character;
+        private Entity entity;
 
-        public RunState(CharacterComponent character)
+        public RunState(Entity entity)
         {
-            this.character = character;
+            this.entity = entity;
         }
 
         public void Enter()
         {
-            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            var animation = entity.GetComponent<AnimationComponent>().Animation;
             animation.Change(Assets.AdventureGirlRun);
         }
 
         public IState UpdateInput(KeyboardState keyboardState)
         {
+            var character = entity.GetComponent<CharacterComponent>();
+
             if (keyboardState.IsKeyDown(character.Control.RunRightKey)) {
                 character.Run(CharacterComponent.Direction.RIGHT);
             }
@@ -37,15 +39,15 @@ namespace MadCat
             }
 
             if (keyboardState.IsKeyPressedRightNow(character.Control.MeleeKey)) {
-                return new MeleeState(character);
+                return new MeleeState(entity);
             }
 
             if (keyboardState.IsKeyPressedRightNow(character.Control.ShootKey)) {
-                return new ShootState(character);
+                return new ShootState(entity);
             }
 
             if (keyboardState.IsKeyPressedRightNow(character.Control.SlideKey)) {
-                return new SlideState(character);
+                return new SlideState(entity);
             }
 
             return null;
@@ -53,14 +55,15 @@ namespace MadCat
 
         public IState Update(float deltaTime)
         {
+            var character = entity.GetComponent<CharacterComponent>();
             var velocity = character.Entity.GetComponent<VelocityComponent>();
 
             if (velocity.Velocity == Vector2.Zero) {
-                return new StandState(character);
+                return new StandState(entity);
             }
 
             if (velocity.Velocity.Y != 0) {
-                return new JumpState(character);
+                return new JumpState(entity);
             }
 
             return null;

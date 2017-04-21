@@ -5,21 +5,23 @@ namespace MadCat
 {
     public class StandState : IState
     {
-        private CharacterComponent character;
+        private Entity entity;
 
-        public StandState(CharacterComponent character)
+        public StandState(Entity entity)
         {
-            this.character = character;
+            this.entity = entity;
         }
 
         public void Enter()
         {
-            var animation = character.Entity.GetComponent<AnimationComponent>().Animation;
+            var animation = entity.GetComponent<AnimationComponent>().Animation;
             animation.Change(Assets.AdventureGirlIdle);
         }
 
         public IState UpdateInput(KeyboardState keyboardState)
         {
+            var character = entity.GetComponent<CharacterComponent>();
+
             if (keyboardState.IsKeyDown(character.Control.RunRightKey)) {
                 character.Run(CharacterComponent.Direction.RIGHT);
             }
@@ -35,11 +37,11 @@ namespace MadCat
             }
 
             if (keyboardState.IsKeyPressedRightNow(character.Control.MeleeKey)) {
-                return new MeleeState(character);
+                return new MeleeState(entity);
             }
 
             if (keyboardState.IsKeyPressedRightNow(character.Control.ShootKey)) {
-                return new ShootState(character);
+                return new ShootState(entity);
             }
 
             return null;
@@ -47,15 +49,15 @@ namespace MadCat
 
         public IState Update(float deltaTime)
         {
-            var velocity = character.Entity.GetComponent<VelocityComponent>();
+            var velocity = entity.GetComponent<VelocityComponent>();
 
             if (velocity.Velocity.Y != 0) {
-                return new JumpState(character);
+                return new JumpState(entity);
             }
 
             if (velocity.Velocity.X != 0 &&
                 velocity.Velocity.Y == 0) {
-                return new RunState(character);
+                return new RunState(entity);
             }
 
             return null;
