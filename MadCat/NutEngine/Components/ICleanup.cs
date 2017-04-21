@@ -1,6 +1,6 @@
 ﻿namespace NutEngine
 {
-    public interface ICleanup
+    public interface IDisposable
     {
         void Cleanup();
     }
