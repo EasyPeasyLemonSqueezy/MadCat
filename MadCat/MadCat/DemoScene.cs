@@ -90,7 +90,7 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
-            var keyboardState = NutInput.Keyboard.GetState();
+            var keyboardState = NutInput.Keyboard.State;
             
             /// Input
             foreach (var character in characters) {
