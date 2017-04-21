@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 
 namespace NutEngine
 {
@@ -12,18 +13,16 @@ namespace NutEngine
         public virtual Matrix2D Transform { get; private set; }
 
         public Node Parent { get; private set; }
-        private SortedSet<Node> Children { get; }
+        private LinkedList<Node> Children { get; }
         public virtual Vector2 Position { get; set; }
         public Vector2 Scale { get; set; }
         public float Rotation { get; set; }
         public int ZOrder { get; set; } /// Position on the Z-axis.
         public bool Hidden { get; set; }
 
-        protected static IComparer<Node> Comparer = new NodeComparer();
-
         public Node()
         {
-            Children = new SortedSet<Node>(Comparer);
+            Children = new LinkedList<Node>();
             Initialize();
         }
 
@@ -64,7 +63,7 @@ namespace NutEngine
             /// If the world around us has been changed - we should change too.
             currentTransform = Transform * currentTransform;
 
-            var children = Children.GetEnumerator();
+            var children = Children.OrderBy(node => node.ZOrder).GetEnumerator();
             bool next = children.MoveNext();
 
             /// ZOrder less than 0.
@@ -88,13 +87,10 @@ namespace NutEngine
         /// <summary>
         /// Add child to current node.
         /// </summary>
-        /// <remarks>
-        /// Be careful time complexity O(log n).
-        /// </remarks>
         public void AddChild(Node child)
         {
             child.Parent = this;
-            Children.Add(child);
+            Children.AddLast(child);
         }
 
         /// <summary>
