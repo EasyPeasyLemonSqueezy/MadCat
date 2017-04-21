@@ -25,20 +25,16 @@ namespace NutEngine.Physics
 
                 if (distance == 0) {
                     manifold = new Manifold() {
-                        A = a, B = b,
                         Depth = a.Shape.Radius,
                         Normal = Vector2.UnitX,
-                        Contact = a.Position
                     };
                 }
                 else {
                     var normalizable = normal / distance;
 
                     manifold = new Manifold() {
-                        A = a, B = b,
                         Depth = radius - distance,
                         Normal = normalizable,
-                        Contact = normalizable * a.Shape.Radius + a.Position
                     };
                 }
 
