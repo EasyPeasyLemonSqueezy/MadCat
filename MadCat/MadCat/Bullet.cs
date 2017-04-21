@@ -27,11 +27,5 @@ namespace MadCat
                 new ColliderComponent(Collider)
             );
         }
-
-        public override void Cleanup()
-        {
-            var sprite = GetComponent<SpriteComponent>();
-            sprite.Sprite.CommitSuicide();
-        }
     }
 }
