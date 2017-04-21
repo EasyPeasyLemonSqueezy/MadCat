@@ -90,7 +90,6 @@
     <Compile Include="Collisions\CollisionDetector.cs" />
     <Compile Include="Components\Component.cs" />
     <Compile Include="Components\EntityManager.cs" />
-    <Compile Include="Components\ICleanup.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Components\Entity.cs" />
     <Compile Include="Input\Keyboard.cs" />

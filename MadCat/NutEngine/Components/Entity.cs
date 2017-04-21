@@ -19,11 +19,11 @@ namespace NutEngine
             }
         }
 
-        public virtual void Cleanup()
+        public virtual void Dispose()
         {
             foreach (var component in components.Values) {
-                if (component is IDisposable cleanup) {
-                    cleanup.Cleanup();
+                if (component is IDisposable disposable) {
+                    disposable.Dispose();
                 }
             }
         }
