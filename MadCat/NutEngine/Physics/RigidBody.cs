@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using NutEngine.Physics.Materials;
 using NutEngine.Physics.Shapes;
 
 namespace NutEngine.Physics
