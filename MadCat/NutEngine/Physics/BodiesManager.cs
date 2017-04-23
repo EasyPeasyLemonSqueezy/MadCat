@@ -72,7 +72,7 @@ namespace NutEngine.Physics
         {
             CalculateCollisions();
             IntegrateForces(dt); // I think we should do it before collision calculation.
-            ResolveCollisions(); // check
+            ResolveCollisions();
             IntegrateVelocities(dt);
             PositionAdjustment();
             ClearForces();
@@ -85,9 +85,9 @@ namespace NutEngine.Physics
                 return false;
             }
 
-            if (body.Mass.MassInv != 0) { // If not static
-                foreach (var b in Bodies) {
-                    Pairs.Add(Tuple.Create(body, b));
+            foreach (var b in Bodies) {
+                if (b.Mass.MassInv != 0) {
+                    Pairs.Add(Tuple.Create(b, body));
                 }
             }
 
