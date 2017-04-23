@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using NutEngine.Physics.Materials;
 using NutEngine.Physics.Shapes;
 
@@ -16,6 +17,11 @@ namespace NutEngine.Physics
         public Vector2 Velocity { get; set; }
         public Vector2 Acceleration { get; set; }
         public Vector2 Force { get; set; }
+
+        public Action OnUpdate { get; set; }
+        public Action<IBody<IShape>> OnCollisionEnter { get; set; }
+        public Action<IBody<IShape>> OnCollisionStay { get; set; }
+        public Action<IBody<IShape>> OnCollisionExit { get; set; }
 
         public RigidBody(ShapeType shape)
         {

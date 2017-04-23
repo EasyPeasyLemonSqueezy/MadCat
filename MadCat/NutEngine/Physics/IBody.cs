@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NutEngine.Physics.Materials;
+using NutEngine.Physics.Shapes;
+using System;
 
 namespace NutEngine.Physics
 {
@@ -14,6 +16,11 @@ namespace NutEngine.Physics
         Vector2 Velocity { get; set; }
         Vector2 Acceleration { get; set; }
         Vector2 Force { get; set; }
+
+        Action OnUpdate { get; set; }
+        Action<IBody<IShape>> OnCollisionEnter { get; set; }
+        Action<IBody<IShape>> OnCollisionStay { get; set; }
+        Action<IBody<IShape>> OnCollisionExit { get; set; }
 
         void ApplyImpulse(Vector2 impulse); // Because C# sucks
         void IntegrateVelocity(float dt); // Because C# sucks
