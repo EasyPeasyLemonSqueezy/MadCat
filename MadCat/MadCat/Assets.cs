@@ -24,6 +24,9 @@ namespace MadCat
         public static Sprite Mozilla {
             get => new Sprite(Texture, Logo.Mozilla_Mascot);
         }
+        public static Sprite Cat {
+            get => new Sprite(Texture, Logo.Cat);
+        }
 
         public static void Init(ContentManager Content)
         {

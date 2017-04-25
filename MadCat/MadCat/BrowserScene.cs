@@ -42,6 +42,15 @@ namespace MadCat
                 Bodies.AddBody(chrome.Body);
             }
 
+            pos = 400;
+            while (pos < app.ScreenWidth - 400) {
+                var cat = new CatInTheJar(new Vector2(pos, 200));
+                World.AddChild(cat.Sprite);
+                Bodies.AddBody(cat.Body);
+
+
+                pos += (int)(cat.Sprite.TextureRegion.Frame.Size.X * cat.Sprite.Scale.X);
+            }
 
             pos = 300;
             while (pos < App.ScreenWidth - 300) {
