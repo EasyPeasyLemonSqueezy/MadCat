@@ -86,7 +86,7 @@ namespace NutEngine.Physics
             }
 
             foreach (var b in Bodies) {
-                if (b.Mass.MassInv != 0) {
+                if (b.Mass.MassInv + body.Mass.MassInv != 0) {
                     Pairs.Add(Tuple.Create(b, body));
                 }
             }
