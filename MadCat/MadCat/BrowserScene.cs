@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using NutPacker.Content;
 using NutInput = NutEngine.Input;
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MadCat
 {
@@ -12,11 +13,25 @@ namespace MadCat
     {
         private BodiesManager Bodies { get; set; }
 
+        private SpriteFont font;
+        private Label label;
+        private int googleScore = 0;
+
         private MouseState PrevMouseState;
         private float GoogleScale = 1;
 
         public BrowserScene(Application app) : base(app)
         {
+            font = Content.Load<SpriteFont>("myFont");
+            label = new Label(font, "MadCat") {
+                ZOrder = 3,
+                Color = Color.BlueViolet,
+                Position = new Vector2(100, 100),
+                Scale = new Vector2(2)
+            };
+            label.Text = Convert.ToString(googleScore);
+            World.AddChild(label);
+
             PrevMouseState = Mouse.GetState();
 
             Assets.Init(Content);
@@ -76,8 +91,10 @@ namespace MadCat
                 var google = new GoogleLogo(new Vector2(mouseState.Position.X, mouseState.Position.Y), GoogleScale);
                 World.AddChild(google.Sprite);
                 Bodies.AddBody(google.Body);
+                googleScore += 1;
             }
 
+            label.Text = Convert.ToString(googleScore);
 
             Bodies.Update(dt);
 
@@ -87,6 +104,7 @@ namespace MadCat
                     // We should rethink about this way
                     if (body.Owner is GoogleLogo google) {
                         google.Sprite.CommitSuicide();
+                        googleScore -= 1;
                     }
 
                     return true;
