@@ -18,9 +18,7 @@ namespace NutEngine.Physics
         Vector2 Force { get; set; }
 
         Action OnUpdate { get; set; }
-        Action<IBody<IShape>> OnCollisionEnter { get; set; }
-        Action<IBody<IShape>> OnCollisionStay { get; set; }
-        Action<IBody<IShape>> OnCollisionExit { get; set; }
+        Action<IBody<IShape>> OnCollision { get; set; }
 
         void ApplyImpulse(Vector2 impulse); // Because C# sucks
         void IntegrateVelocity(float dt); // Because C# sucks

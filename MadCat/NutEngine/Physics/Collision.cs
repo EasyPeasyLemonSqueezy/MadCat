@@ -66,5 +66,11 @@ namespace NutEngine.Physics
             A.ApplyImpulse(-tangentImpulse);
             B.ApplyImpulse(tangentImpulse);
         }
+
+        public void OnCollision()
+        {
+            A.OnCollision?.Invoke(B);
+            B.OnCollision?.Invoke(A);
+        }
     }
 }
