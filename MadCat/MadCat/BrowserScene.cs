@@ -95,13 +95,6 @@ namespace MadCat
                 return false;
             });
 
-            // Update sprites.
-            foreach (var body in Bodies.GetBodies()) {
-                if (body.Owner is GoogleLogo google) {
-                    google.Update();
-                }
-            }
-
             PrevMouseState = mouseState;
         }
 

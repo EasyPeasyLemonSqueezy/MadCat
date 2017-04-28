@@ -28,12 +28,8 @@ namespace MadCat
             Body.Material.StaticFriction = .1f;
             Body.Material.DynamicFriction = .1f;
 
-            Update();
-        }
-
-        public void Update()
-        {
-            Sprite.Position = Body.Position;
+            Body.OnCollision = (o_O) => { Sprite.Color = Color.Red; };
+            Body.OnUpdate = () => { Sprite.Color = Color.White; Sprite.Position = Body.Position; };
         }
     }
 }
