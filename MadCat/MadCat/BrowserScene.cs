@@ -25,9 +25,8 @@ namespace MadCat
             font = Content.Load<SpriteFont>("myFont");
             label = new Label(font, "MadCat") {
                 ZOrder = 3,
-                Color = Color.BlueViolet,
-                Position = new Vector2(100, 100),
-                Scale = new Vector2(2)
+                Color = Color.Black,
+                Position = new Vector2(30, 10),
             };
             label.Text = Convert.ToString(googleScore);
             World.AddChild(label);
