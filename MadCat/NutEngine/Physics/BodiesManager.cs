@@ -76,6 +76,8 @@ namespace NutEngine.Physics
             IntegrateVelocities(dt);
             PositionAdjustment();
             ClearForces();
+            OnUpdateAll();
+            OnCollisionAll();
             Collisions.Clear();
         }
 
@@ -135,6 +137,20 @@ namespace NutEngine.Physics
         {
             foreach (var body in Bodies) {
                 yield return body;
+            }
+        }
+
+        public void OnUpdateAll()
+        {
+            foreach (var body in Bodies) {
+                body.OnUpdate?.Invoke();
+            }
+        }
+
+        public void OnCollisionAll()
+        {
+            foreach (var collision in Collisions) {
+                collision.OnCollision();
             }
         }
     }

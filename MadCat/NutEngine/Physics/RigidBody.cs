@@ -19,9 +19,7 @@ namespace NutEngine.Physics
         public Vector2 Force { get; set; }
 
         public Action OnUpdate { get; set; }
-        public Action<IBody<IShape>> OnCollisionEnter { get; set; }
-        public Action<IBody<IShape>> OnCollisionStay { get; set; }
-        public Action<IBody<IShape>> OnCollisionExit { get; set; }
+        public Action<IBody<IShape>> OnCollision { get; set; }
 
         public RigidBody(ShapeType shape)
         {
