@@ -12,19 +12,19 @@ namespace NutEngine.Input
         private static XnaInput.KeyboardState[] keyboardStates = new XnaInput.KeyboardState[2];
         private static bool current = false;
 
+        public static void Update()
+        {
+            keyboardStates[current ? 1 : 0] = XnaInput.Keyboard.GetState();
+            current = !current;
+        }
+
         /// <summary>
         /// Return the <see cref="NutEngine.Input.KeyboardState"/>.
         /// </summary>
-        public static KeyboardState GetState()
-        {
-            keyboardStates[current ? 1 : 0] = XnaInput.Keyboard.GetState();
-
-            current = !current;
-
-            return new KeyboardState {
+        public static KeyboardState State
+            => new KeyboardState {
                   CurrentState = keyboardStates[current ? 0 : 1]
                 , PrevState = keyboardStates[current ? 1 : 0]
             };
-        }
     }
 }

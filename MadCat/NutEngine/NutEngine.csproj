@@ -79,40 +79,64 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Collisions\AABB.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationType.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Camera\OrthographicSRTCamera.cs" />
     <Compile Include="Camera\Camera2D.cs" />
     <Compile Include="Camera\OrthographicTRSCamera.cs" />
-    <Compile Include="Collisions\Collider.cs" />
-    <Compile Include="Collisions\CollisionDetector.cs" />
-    <Compile Include="GameObjectManager.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="EntityManager.cs" />
+    <Compile Include="ICleanup.cs" />
     <Compile Include="IDrawable.cs" />
-    <Compile Include="GameObject.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyboardState.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="NodeComparer.cs" />
+    <Compile Include="Physics\BodiesManager.cs" />
+    <Compile Include="Physics\Collider\AABBvsCircle.cs" />
+    <Compile Include="Physics\Materials\Density.cs" />
+    <Compile Include="Physics\Materials\Restitution.cs" />
+    <Compile Include="Physics\RigidBody.cs" />
+    <Compile Include="Physics\Collider\AABBvsAABB.cs" />
+    <Compile Include="Physics\Collider\CirclevsCircle.cs" />
+    <Compile Include="Physics\Collider\Collider.cs" />
+    <Compile Include="Physics\Collision.cs" />
+    <Compile Include="Physics\IBody.cs" />
+    <Compile Include="Physics\Manifold.cs" />
+    <Compile Include="Physics\MassData.cs" />
+    <Compile Include="Physics\Shapes\AABB.cs" />
+    <Compile Include="Physics\Shapes\Circle.cs" />
+    <Compile Include="Physics\Shapes\IShape.cs" />
+    <Compile Include="Physics\Materials\Material.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="IState.cs" />
+    <Compile Include="StateMachine.cs" />
     <Compile Include="TextureRegion.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NutPackerLib\NutPackerLib.csproj">
       <Project>{20b6f5a5-0c3a-438f-ab19-e6b9a185c5a5}</Project>
       <Name>NutPackerLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
