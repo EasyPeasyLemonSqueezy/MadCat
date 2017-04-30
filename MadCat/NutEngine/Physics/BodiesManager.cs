@@ -10,7 +10,6 @@ namespace NutEngine.Physics
     {
         private HashSet<IBody<IShape>> Bodies { get; set; }
 
-        // First - only not static bodies, second - all bodies.
         private HashSet<Tuple<IBody<IShape>, IBody<IShape>>> Pairs { get; set; }
         public HashSet<Collision> Collisions { get; private set; }
 
@@ -103,11 +102,8 @@ namespace NutEngine.Physics
                 return false;
             }
 
-            Pairs.RemoveWhere(pair => pair.Item2 == body);
-
-            if (body.Mass.MassInv != 0) { // If not static
-                Pairs.RemoveWhere(pair => pair.Item1 == body);
-            }
+            Pairs.RemoveWhere(pair => pair.Item1 == body
+                                   || pair.Item2 == body);
 
             Bodies.Remove(body);
             return true;
@@ -115,8 +111,10 @@ namespace NutEngine.Physics
 
         public bool KillSome(IEnumerable<IBody<IShape>> bodies)
         {
-            Pairs.RemoveWhere(pair => bodies.Contains(pair.Item1)
-                                   || bodies.Contains(pair.Item2));
+            var bodySet = new HashSet<IBody<IShape>>(bodies);
+
+            Pairs.RemoveWhere(pair => bodySet.Contains(pair.Item1)
+                                   || bodySet.Contains(pair.Item2));
 
             bool result = true;
             foreach (var body in bodies) {
