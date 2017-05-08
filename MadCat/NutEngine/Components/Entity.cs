@@ -7,7 +7,6 @@ namespace NutEngine
     public class Entity : IDisposable
     {
         public bool Invalid { get; set; }
-        public AABB Collider { get; set; }
 
         private Dictionary<Type, Component> components =
             new Dictionary<Type, Component>();
