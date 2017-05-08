@@ -1,19 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NutEngine
 {
     public class EntityManager
     {
         public List<Entity> Entities { get; } = new List<Entity>();
-        public CollisionDetector Detector { get; } = new CollisionDetector();
+        public Dictionary<Type, Type[]> Dependencies { get; } = new Dictionary<Type, Type[]>();
 
         public void Update(float deltaTime)
         {
             foreach (var entity in Entities) {
                 entity.Update(deltaTime);
             }
-
-            Detector.CheckCollisions(Entities);
 
             Entities.RemoveAll(
             entity => {
@@ -27,7 +26,14 @@ namespace NutEngine
 
         public void Add(Entity entity)
         {
+            entity.Manager = this;
             Entities.Add(entity);
+        }
+
+        public void AddDependency<T>(params Type[] types)
+            where T : Component
+        {
+            Dependencies.Add(typeof(T), types);
         }
     }
 }

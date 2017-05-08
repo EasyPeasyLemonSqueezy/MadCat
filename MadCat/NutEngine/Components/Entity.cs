@@ -7,7 +7,7 @@ namespace NutEngine
     public class Entity : IDisposable
     {
         public bool Invalid { get; set; }
-        public AABB Collider { get; set; }
+        public EntityManager Manager { get; set; }
 
         private Dictionary<Type, Component> components =
             new Dictionary<Type, Component>();
@@ -77,7 +77,7 @@ namespace NutEngine
             var values = components.Values;
             var sorted = TopologicalSort.Sort(
                 values,
-                c => c.GetDependencies(),
+                c => Manager.Dependencies[c.GetType()],
                 c => c.GetType()
             );
             components = sorted.ToDictionary(c => c.GetType(), c => c);
