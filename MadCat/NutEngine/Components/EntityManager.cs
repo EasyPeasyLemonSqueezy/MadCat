@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NutEngine
 {
     public class EntityManager
     {
         public List<Entity> Entities { get; } = new List<Entity>();
+        public Dictionary<Type, Type[]> Dependencies { get; } = new Dictionary<Type, Type[]>();
 
         public void Update(float deltaTime)
         {
@@ -24,7 +26,14 @@ namespace NutEngine
 
         public void Add(Entity entity)
         {
+            entity.Manager = this;
             Entities.Add(entity);
+        }
+
+        public void AddDependency<T>(params Type[] types)
+            where T : Component
+        {
+            Dependencies.Add(typeof(T), types);
         }
     }
 }
