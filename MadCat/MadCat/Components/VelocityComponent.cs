@@ -18,13 +18,5 @@ namespace MadCat
             var position = Entity.GetComponent<PositionComponent>();
             position.Position = Physics.ApplyVelocity(position.Position, Velocity, deltaTime);
         }
-
-        public override Type[] GetDependencies()
-        {
-            return new Type[] {
-                typeof(GravitationComponent),
-                typeof(CharacterComponent)
-            };
-        }
     }
 }

@@ -18,13 +18,6 @@ namespace MadCat
             Sprite.Position = position.Position;
         }
 
-        public override Type[] GetDependencies()
-        {
-            return new Type[] {
-                typeof(VelocityComponent),
-            };
-        }
-
         public void Dispose()
         {
             Sprite.CommitSuicide();

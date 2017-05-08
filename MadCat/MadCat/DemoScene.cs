@@ -57,35 +57,58 @@ namespace MadCat
 
             map = new Map(World, manager);
 
-            manager.Detector.AddTypeRule<Character, Wall>(
-                (first, second) => {
-                    var character = first as Character;
-                    var wall = second as Wall;
-                    var characterComponent = character.GetComponent<CharacterComponent>();
-                    characterComponent.CollideWall(wall);
-                });
+            //manager.Detector.AddTypeRule<Character, Wall>(
+            //    (first, second) => {
+            //        var character = first as Character;
+            //        var wall = second as Wall;
+            //        var characterComponent = character.GetComponent<CharacterComponent>();
+            //        characterComponent.CollideWall(wall);
+            //    });
 
-            manager.Detector.AddTypeRule<Character, Character>(
-                (first, second) => {
-                    var character = first as Character;
-                    var characterComponent = character.GetComponent<CharacterComponent>();
-                    characterComponent.SetColor(Color.Red);
-                });
+            //manager.Detector.AddTypeRule<Character, Character>(
+            //    (first, second) => {
+            //        var character = first as Character;
+            //        var characterComponent = character.GetComponent<CharacterComponent>();
+            //        characterComponent.SetColor(Color.Red);
+            //    });
 
-            manager.Detector.AddTypeRule<Bullet, Wall>(
-                (first, second) => {
-                    var bullet = first as Bullet;
-                    var wall = second as Wall;                  
-                    
-                    bullet.Invalid = true;
-                });
+            //manager.Detector.AddTypeRule<Bullet, Wall>(
+            //    (first, second) => {
+            //        var bullet = first as Bullet;
+            //        var wall = second as Wall;                  
 
-            manager.Detector.AddTypeRule<Bullet, Character>(
-                (first, second) => {
-                    var character = second as Character;
-                    var characterComponent = character.GetComponent<CharacterComponent>();
-                    characterComponent.SetColor(Color.Aqua);
-                });
+            //        bullet.Invalid = true;
+            //    });
+
+            //manager.Detector.AddTypeRule<Bullet, Character>(
+            //    (first, second) => {
+            //        var character = second as Character;
+            //        var characterComponent = character.GetComponent<CharacterComponent>();
+            //        characterComponent.SetColor(Color.Aqua);
+            //    });
+
+            manager.AddDependency<AnimationComponent>(
+                typeof(VelocityComponent),
+                typeof(CharacterComponent)
+            );
+
+            manager.AddDependency<ColliderComponent>(
+                typeof(VelocityComponent),
+                typeof(CharacterComponent)
+            );
+
+            manager.AddDependency<GravitationComponent>(
+                typeof(CharacterComponent)
+            );
+
+            manager.AddDependency<SpriteComponent>(
+                typeof(VelocityComponent)
+            );
+
+            manager.AddDependency<VelocityComponent>(
+                typeof(GravitationComponent),
+                typeof(CharacterComponent)
+            );
         }
 
         public override void Update(float deltaTime)

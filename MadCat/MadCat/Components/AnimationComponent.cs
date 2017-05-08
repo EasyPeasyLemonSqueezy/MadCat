@@ -19,14 +19,6 @@ namespace MadCat
             Animation.Update(deltaTime);
         }
 
-        public override Type[] GetDependencies()
-        {
-            return new Type[] {
-                typeof(VelocityComponent),
-                typeof(CharacterComponent),
-            };
-        }
-
         public void Dispose()
         {
             Animation.CommitSuicide();
