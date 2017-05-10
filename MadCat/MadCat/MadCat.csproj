@@ -80,29 +80,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
-    <Compile Include="Bullet.cs" />
     <Compile Include="Components\AnimationComponent.cs" />
-    <Compile Include="Components\CharacterComponent.cs" />
     <Compile Include="Components\ColliderComponent.cs" />
     <Compile Include="Components\GravitationComponent.cs" />
-    <Compile Include="Components\PositionComponent.cs" />
     <Compile Include="Components\SpriteComponent.cs" />
-    <Compile Include="Components\VelocityComponent.cs" />
-    <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\JumpState.cs" />
-    <Compile Include="States\MeleeState.cs" />
-    <Compile Include="States\RunState.cs" />
-    <Compile Include="States\ShootState.cs" />
-    <Compile Include="States\SlideState.cs" />
-    <Compile Include="States\StandState.cs" />
-    <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
