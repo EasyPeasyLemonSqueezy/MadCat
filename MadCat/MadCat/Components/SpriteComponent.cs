@@ -14,8 +14,8 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
-            var position = Entity.GetComponent<PositionComponent>();
-            Sprite.Position = position.Position;
+            var body = Entity.GetComponent<ColliderComponent>().Body;
+            Sprite.Position = body.Position;
         }
 
         public void Dispose()

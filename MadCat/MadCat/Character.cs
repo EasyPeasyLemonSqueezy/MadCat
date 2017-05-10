@@ -1,14 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NutEngine;
-
+using NutEngine.Physics;
+using NutEngine.Physics.Shapes;
 using NutInput = NutEngine.Input;
 
 namespace MadCat
 {
     public class Character : Entity
     {
-        public Character(Node node, EntityManager manager)
+        public RigidBody<AABB> Body { get; private set; }
+
+        public Character(Node node, EntityManager manager, BodiesManager bodies)
         {
             var animation 
                 = new Animation(Assets.Texture, new NutPacker.Content.AdventureGirl.Idle()) {
@@ -28,22 +31,22 @@ namespace MadCat
             };
             animation.AddChild(name);
 
-            Collider = new AABB() {
-                  X = 0.0f
-                , Y = -500.0f
-                , Width = 81.0f
-                , Height = 130.0f
+            Body = new RigidBody<AABB>(new AABB(new Vector2(81.0f / 2.0f, 130.0f / 2.0f))) {
+                Position = new Vector2(0.0f, -500.0f),
+                Owner = this,
+                Acceleration = new Vector2(0.0f, 2000.0f)
             };
+
+            Body.Mass.MassInv = 1;
+            Body.Material.Restitution = .8f;
 
             var stateMachine = new StateMachine(new StandState(this));
 
+            manager.Add(this);
             AddComponents(
-                new ColliderComponent(Collider),
-                new PositionComponent(new Vector2(0.0f, -500.0f)),
-                new AnimationComponent(animation),
-                new CharacterComponent(node, manager, stateMachine),
-                new VelocityComponent(new Vector2()),
-                new GravitationComponent()
+                new CharacterComponent(node, manager, stateMachine, bodies),
+                new ColliderComponent(Body),
+                new AnimationComponent(animation)
             );
         }
 

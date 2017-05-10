@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Input;
 using NutInput = NutEngine.Input;
 using NutEngine;
 using NutPacker.Content;
+using NutEngine.Physics;
+using System;
 
 namespace MadCat
 {
@@ -10,9 +12,11 @@ namespace MadCat
     {
         private Sprite background;
 
+        private EntityManager manager;
+        private BodiesManager bodies;
+
         private Character[] characters;
         private Map map;
-        private EntityManager manager;
 
         public DemoScene(Application app) : base(app)
         {
@@ -25,72 +29,12 @@ namespace MadCat
             World.AddChild(background);
 
             manager = new EntityManager();
-
-            /// Create Characters.
-            characters = new Character[3];
-
-            characters[0] = new Character(World, manager);
-
-            characters[1] = new Character(World, manager);
-            characters[1].SetControls(new CharacterComponent.Controls {
-                      RunRightKey = Keys.D
-                    , RunLeftKey = Keys.A
-                    , JumpKey = Keys.W
-                    , ShootKey = Keys.Q
-                    , MeleeKey = Keys.F
-                    , SlideKey = Keys.S
-            });
-
-            characters[2] = new Character(World, manager);
-            characters[2].SetControls(new CharacterComponent.Controls {
-                      RunRightKey = Keys.L
-                    , RunLeftKey = Keys.K
-                    , JumpKey = Keys.O
-                    , ShootKey = Keys.J
-                    , MeleeKey = Keys.P
-                    , SlideKey = Keys.M
-            });
-
-            manager.Add(characters[0]);
-            manager.Add(characters[1]);
-            manager.Add(characters[2]);
-
-            map = new Map(World, manager);
-
-            //manager.Detector.AddTypeRule<Character, Wall>(
-            //    (first, second) => {
-            //        var character = first as Character;
-            //        var wall = second as Wall;
-            //        var characterComponent = character.GetComponent<CharacterComponent>();
-            //        characterComponent.CollideWall(wall);
-            //    });
-
-            //manager.Detector.AddTypeRule<Character, Character>(
-            //    (first, second) => {
-            //        var character = first as Character;
-            //        var characterComponent = character.GetComponent<CharacterComponent>();
-            //        characterComponent.SetColor(Color.Red);
-            //    });
-
-            //manager.Detector.AddTypeRule<Bullet, Wall>(
-            //    (first, second) => {
-            //        var bullet = first as Bullet;
-            //        var wall = second as Wall;                  
-
-            //        bullet.Invalid = true;
-            //    });
-
-            //manager.Detector.AddTypeRule<Bullet, Character>(
-            //    (first, second) => {
-            //        var character = second as Character;
-            //        var characterComponent = character.GetComponent<CharacterComponent>();
-            //        characterComponent.SetColor(Color.Aqua);
-            //    });
+            bodies = new BodiesManager();
 
             manager.AddDependency<AnimationComponent>(
-                typeof(VelocityComponent),
-                typeof(CharacterComponent)
-            );
+               typeof(VelocityComponent),
+               typeof(CharacterComponent)
+           );
 
             manager.AddDependency<ColliderComponent>(
                 typeof(VelocityComponent),
@@ -109,6 +53,43 @@ namespace MadCat
                 typeof(GravitationComponent),
                 typeof(CharacterComponent)
             );
+
+            manager.AddDependency<CharacterComponent>(
+            );
+
+            manager.AddDependency<PositionComponent>(
+            );
+
+            /// Create Characters.
+            characters = new Character[3];
+
+            characters[0] = new Character(World, manager, bodies);
+
+            characters[1] = new Character(World, manager, bodies);
+            characters[1].SetControls(new CharacterComponent.Controls {
+                      RunRightKey = Keys.D
+                    , RunLeftKey = Keys.A
+                    , JumpKey = Keys.W
+                    , ShootKey = Keys.Q
+                    , MeleeKey = Keys.F
+                    , SlideKey = Keys.S
+            });
+
+            characters[2] = new Character(World, manager, bodies);
+            characters[2].SetControls(new CharacterComponent.Controls {
+                      RunRightKey = Keys.L
+                    , RunLeftKey = Keys.K
+                    , JumpKey = Keys.O
+                    , ShootKey = Keys.J
+                    , MeleeKey = Keys.P
+                    , SlideKey = Keys.M
+            });
+
+            bodies.AddBody(characters[0].Body);
+            bodies.AddBody(characters[1].Body);
+            bodies.AddBody(characters[2].Body);
+
+            map = new Map(World, manager, bodies);
         }
 
         public override void Update(float deltaTime)
@@ -120,10 +101,10 @@ namespace MadCat
                 character.Input(keyboardState);
             }
 
+            bodies.Update(deltaTime);
             manager.Update(deltaTime);
 
-            var position = characters[0].GetComponent<PositionComponent>();
-
+            var position = characters[0].GetComponent<ColliderComponent>().Body;
             background.Position = new Vector2(position.Position.X, App.ScreenHeight / 2);
             Camera.Position = new Vector2(position.Position.X - App.ScreenWidth / 2, -20);
         }

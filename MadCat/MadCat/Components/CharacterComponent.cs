@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NutEngine;
+using NutEngine.Physics;
 
 namespace MadCat
 {
@@ -33,15 +34,17 @@ namespace MadCat
 
         public Node Node;
         public EntityManager Manager;
+        public BodiesManager Bodies;
 
         private float runVelocity = 400.0f;
         private float jumpVelocity = -800.0f;
 
-        public CharacterComponent(Node node, EntityManager manager, StateMachine stateMachine)
+        public CharacterComponent(Node node, EntityManager manager, StateMachine stateMachine, BodiesManager bodies)
         {
             StateMachine = stateMachine;
 
             Manager = manager;
+            Bodies = bodies;
             Node = node;
 
             name = new Label(Assets.Font, "MadCat") {
@@ -74,54 +77,23 @@ namespace MadCat
                                      : SpriteEffects.FlipHorizontally;
         }
 
-        public void CollideWall(Wall wall)
-        {
-            var position = Entity.GetComponent<PositionComponent>();
-            var velocity = Entity.GetComponent<VelocityComponent>();
-            var collider = Entity.GetComponent<ColliderComponent>();
-
-            var response = collider.Collider.Response(wall.Collider);
-
-            /// If we don't do this, we will stuck in the wall
-            if (response.Y != 0.0f) {
-                velocity.Velocity = new Vector2(velocity.Velocity.X, 0.0f);
-            }
-
-            if (response.X != 0.0f) {
-                velocity.Velocity = new Vector2(0.0f, velocity.Velocity.Y);
-            }
-
-            position.Position += response;
-            collider.Collider.X = position.Position.X - collider.Collider.Width / 2.0f;
-            collider.Collider.Y = position.Position.Y - collider.Collider.Height / 2.0f;
-        }
-
         public void Stand()
         {
-            var velocity = Entity.GetComponent<VelocityComponent>();
-            velocity.Velocity = new Vector2(0.0f, velocity.Velocity.Y);
+            var body = Entity.GetComponent<ColliderComponent>().Body;
+            body.Velocity = new Vector2(0.0f, body.Velocity.Y);
         }
 
         public void Run(Direction direction)
         {
-            var velocity = Entity.GetComponent<VelocityComponent>();
+            var body = Entity.GetComponent<ColliderComponent>().Body;
+            body.Velocity = new Vector2((int)direction * runVelocity, body.Velocity.Y);
             Dir = direction;
-            velocity.Velocity = new Vector2((int)direction * runVelocity, velocity.Velocity.Y);
         }
 
         public void Jump()
         {
-            var velocity = Entity.GetComponent<VelocityComponent>();
-            velocity.Velocity = new Vector2(velocity.Velocity.X, jumpVelocity);
-        }
-
-        /// <summary>
-        /// Just testing collision rules
-        /// </summary>
-        public void SetColor(Color color)
-        {
-            var animation = Entity.GetComponent<AnimationComponent>().Animation;
-            animation.Color = color;
+            var body = Entity.GetComponent<ColliderComponent>().Body;
+            body.Velocity = new Vector2(body.Velocity.X, jumpVelocity);
         }
     }
 }

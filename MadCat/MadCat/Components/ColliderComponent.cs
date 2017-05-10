@@ -1,23 +1,21 @@
-﻿using Microsoft.Xna.Framework;
-using NutEngine;
-using System;
+﻿using NutEngine;
+using NutEngine.Physics;
+using NutEngine.Physics.Shapes;
 
 namespace MadCat
 {
     public class ColliderComponent : Component
     {
-        public AABB Collider { get; set; }
+        public RigidBody<AABB> Body { get; set; }
 
-        public ColliderComponent(AABB collider)
+        public ColliderComponent(RigidBody<AABB> body)
         {
-            Collider = collider;
+            Body = body;
         }
 
         public override void Update(float deltaTime)
         {
-            var position = Entity.GetComponent<PositionComponent>();
-            Collider.X = position.Position.X - Collider.Width / 2.0f;
-            Collider.Y = position.Position.Y - Collider.Height / 2.0f;
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using NutEngine;
+using NutEngine.Physics;
 using NutPacker.Content;
 
 namespace MadCat
@@ -16,7 +17,7 @@ namespace MadCat
                 , { 10, 2, 2, 8, 5, 10, 2, 5, 2,  2, 2,  2,  2, 2, 8, 5, 10, 2,  2,  2,  2, 2, 5,  2, 2, 2, 2, 8, 5, 10, 2, 5, 2, 2, 2, 2, 2, 2, 8, 10, 2,  2, 2,  2,  2, 2,  2, 2,  2,  2, 2, 8, 10, 2, 8,  5, 10, 2, 2, 8}
             };
 
-        public Map(Node world, EntityManager manager)
+        public Map(Node world, EntityManager manager, BodiesManager bodies)
         {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 60; j++) {
@@ -55,8 +56,8 @@ namespace MadCat
                             Y = i * frame.Height - frame.Height * 2.0f
                         };
 
-                        var wall = new Wall(world, position, frame);
-                        manager.Add(wall);
+                        var wall = new Wall(world, position, frame, manager);
+                        bodies.AddBody(wall.Body);
                     }
                 }
             }

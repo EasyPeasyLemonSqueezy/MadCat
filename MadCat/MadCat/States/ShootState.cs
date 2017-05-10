@@ -19,9 +19,9 @@ namespace MadCat
 
             character.Stand();
 
-            var position = character.Entity.GetComponent<PositionComponent>();
-            Bullet bullet = new Bullet(position.Position, (float)character.Dir, character.Node);
-            character.Manager.Add(bullet);
+            var body = entity.GetComponent<ColliderComponent>().Body;
+            Bullet bullet = new Bullet(body.Position, (float)character.Dir, character.Node, character.Manager);
+            character.Bodies.AddBody(bullet.Body);
         }
 
         public IState UpdateInput(NutEngine.Input.KeyboardState keyboardState)

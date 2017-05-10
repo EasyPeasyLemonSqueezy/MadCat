@@ -56,13 +56,14 @@ namespace MadCat
         public IState Update(float deltaTime)
         {
             var character = entity.GetComponent<CharacterComponent>();
-            var velocity = character.Entity.GetComponent<VelocityComponent>();
+            var body = entity.GetComponent<ColliderComponent>().Body;
 
-            if (velocity.Velocity == Vector2.Zero) {
+
+            if (body.Velocity == Vector2.Zero) {
                 return new StandState(entity);
             }
 
-            if (velocity.Velocity.Y != 0) {
+            if (body.Velocity.Y != 0) {
                 return new JumpState(entity);
             }
 

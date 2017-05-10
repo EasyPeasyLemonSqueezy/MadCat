@@ -14,7 +14,7 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
-            var position = Entity.GetComponent<PositionComponent>();
+            var position = Entity.GetComponent<ColliderComponent>().Body;
             Animation.Position = position.Position;
             Animation.Update(deltaTime);
         }

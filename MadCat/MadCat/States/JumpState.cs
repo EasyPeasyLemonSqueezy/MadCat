@@ -39,14 +39,14 @@ namespace MadCat
         public IState Update(float deltaTime)
         {
             var character = entity.GetComponent<CharacterComponent>();
-            var velocity = entity.GetComponent<VelocityComponent>();
+            var body = entity.GetComponent<ColliderComponent>().Body;
 
-            if (velocity.Velocity == Vector2.Zero) {
+            if (body.Velocity == Vector2.Zero) {
                 return new StandState(entity);
             }
 
-            if (velocity.Velocity.X != 0 &&
-                velocity.Velocity.Y == 0) {
+            if (body.Velocity.X != 0 &&
+                body.Velocity.Y == 0) {
                 return new RunState(entity);
             }
 
