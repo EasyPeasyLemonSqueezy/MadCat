@@ -77,7 +77,7 @@ namespace NutEngine
             var values = components.Values;
             var sorted = TopologicalSort.Sort(
                 values,
-                c => Manager.Dependencies[c.GetType()],
+                c => EntityManager.GetDependency(c.GetType()),
                 c => c.GetType()
             );
             components = sorted.ToDictionary(c => c.GetType(), c => c);

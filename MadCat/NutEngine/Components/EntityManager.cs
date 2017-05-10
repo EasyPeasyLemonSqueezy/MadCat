@@ -6,7 +6,7 @@ namespace NutEngine
     public class EntityManager
     {
         public List<Entity> Entities { get; } = new List<Entity>();
-        public Dictionary<Type, Type[]> Dependencies { get; } = new Dictionary<Type, Type[]>();
+        private static Dictionary<Type, Type[]> Dependencies = new Dictionary<Type, Type[]>();
 
         public void Update(float deltaTime)
         {
@@ -30,10 +30,18 @@ namespace NutEngine
             Entities.Add(entity);
         }
 
-        public void AddDependency<T>(params Type[] types)
+        public static void AddDependency<T>(params Type[] types)
             where T : Component
         {
             Dependencies.Add(typeof(T), types);
+        }
+
+        public static Type[] GetDependency(Type type)
+        {
+            if (!Dependencies.ContainsKey(type)) {
+                Dependencies.Add(type, new Type[0]);
+            }
+            return Dependencies[type];
         }
     }
 }
