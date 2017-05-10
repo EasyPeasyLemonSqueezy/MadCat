@@ -15,7 +15,6 @@ namespace MadCat
 
         public override void Update(float deltaTime)
         {
-            
         }
     }
 }

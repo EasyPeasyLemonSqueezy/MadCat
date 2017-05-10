@@ -18,6 +18,8 @@ namespace MadCat
 
             manager = new EntityManager();
             bodies = new BodiesManager();
+
+
         }
 
         public override void Update(float deltaTime)
