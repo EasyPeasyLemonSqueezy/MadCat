@@ -83,8 +83,9 @@ namespace MadCat
         public override void Update(float dt)
         {
             var mouseState = Mouse.GetState();
+            NutInput.Keyboard.Update();
 
-            UpdateScale(NutInput.Keyboard.GetState());
+            UpdateScale(NutInput.Keyboard.State);
 
             if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
                 var google = new GoogleLogo(new Vector2(mouseState.Position.X, mouseState.Position.Y), GoogleScale);
