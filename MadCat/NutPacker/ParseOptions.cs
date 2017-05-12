@@ -45,13 +45,13 @@ namespace NutPacker
         public string GetUsage()
         {
             var help = new HelpText {
-                  Heading = new HeadingInfo("NutPacker", "0.2")
-                , Copyright = new CopyrightInfo("EasyPeasyLemonSqueezy", 2016)
+                  Heading = new HeadingInfo("NutPacker", "0.3")
+                , Copyright = new CopyrightInfo("EasyPeasyLemonSqueezy", 2017)
                 , AddDashesToOption = true
                 , MaximumDisplayWidth = Console.BufferWidth
             };
 
-            help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH_ONE [PATH_TWO [...]]] [--pictures[-p] PATH_ONE [PATH_TWO [...]]] [--output[-o] NAME] [--generate-source]");
+            help.AddPreOptionsLine("Usage: NutPacker [--sprites[-s] PATH_ONE [PATH_TWO [...]]] [--tileset[-t] PATH_ONE [PATH_TWO [...]]] [--name[-n] NAME] [--generate-source|--generate-dll]");
             help.AddOptions(this);
 
             if (LastParserState?.Errors.Any() == true) {
