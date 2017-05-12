@@ -9,24 +9,64 @@ namespace MadCat
 {
     public class DemoScene : Scene
     {
-        private EntityManager manager;
+        private EntityManager entities;
         private BodiesManager bodies;
+
+        private Sprite background;
+
+        private Hero hero;
 
         public DemoScene(Application app) : base(app)
         {
-            Assets.Init(Content);
-
-            manager = new EntityManager();
+            entities = new EntityManager();
             bodies = new BodiesManager();
 
+            Assets.Init(Content);
 
+            background = Assets.Background;
+            background.Position = new Vector2(App.ScreenWidth / 2.0f, App.ScreenHeight / 2.0f);
+            World.AddChild(background);
+
+            hero = new Hero(
+                new Vector2(480f, 270f),
+                World,
+                entities,
+                bodies
+            );
+
+            Vector2[] positions = {
+                new Vector2(-100f, 0f),
+                new Vector2(960f, 0f),
+                new Vector2(0, -100f),
+                new Vector2(0, 540f),
+            };
+
+            Vector2[] sizes = {
+                new Vector2(100f, 540f),
+                new Vector2(100f, 540f),
+                new Vector2(960f, 100f),
+                new Vector2(960f, 100f),
+            };
+
+            for (int i = 0; i < 4; i++) {
+                var wall1 = new Wall(
+                    positions[i],
+                    sizes[i],
+                    entities,
+                    bodies
+                );
+            }
         }
 
         public override void Update(float deltaTime)
         {
-            var keyboardState = NutInput.Keyboard.State;
+            var keyboardState = NutEngine.Input.Keyboard.State;
 
-            manager.Update(deltaTime);
+            if (keyboardState.IsKeyDown(Keys.Escape)) {
+                App.Exit();
+            }
+
+            entities.Update(deltaTime);
             bodies.Update(deltaTime);
         }
     }

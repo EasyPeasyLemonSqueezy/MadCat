@@ -12,25 +12,46 @@ namespace NutPacker.Content
 {
     
     [NutPackerLib.OriginalNameAttribute("sprites")]
-    public class Sprites : NutPacker.ISpriteSheet
+    public class Sprites : NutPacker.ITileSet
     {
-        private static Microsoft.Xna.Framework.Rectangle[] Frames = new Microsoft.Xna.Framework.Rectangle[] {
-                new Microsoft.Xna.Framework.Rectangle(0, 0, 960, 540),
-                new Microsoft.Xna.Framework.Rectangle(0, 693, 225, 225),
-                new Microsoft.Xna.Framework.Rectangle(960, 0, 612, 558),
-                new Microsoft.Xna.Framework.Rectangle(0, 540, 259, 153)};
-        public int Length
+        [NutPackerLib.OriginalNameAttribute("aim.png")]
+        public static Microsoft.Xna.Framework.Rectangle Aim
         {
             get
             {
-                return 4;
+                return new Microsoft.Xna.Framework.Rectangle(960, 0, 645, 645);
             }
         }
-        public Microsoft.Xna.Framework.Rectangle this[int index]
+        [NutPackerLib.OriginalNameAttribute("background.png")]
+        public static Microsoft.Xna.Framework.Rectangle Background
         {
             get
             {
-                return Frames[index];
+                return new Microsoft.Xna.Framework.Rectangle(0, 0, 960, 540);
+            }
+        }
+        [NutPackerLib.OriginalNameAttribute("box.png")]
+        public static Microsoft.Xna.Framework.Rectangle Box
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(612, 540, 225, 225);
+            }
+        }
+        [NutPackerLib.OriginalNameAttribute("bullet.png")]
+        public static Microsoft.Xna.Framework.Rectangle Bullet
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(0, 540, 612, 558);
+            }
+        }
+        [NutPackerLib.OriginalNameAttribute("hero.png")]
+        public static Microsoft.Xna.Framework.Rectangle Hero
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(0, 1098, 259, 153);
             }
         }
     }
