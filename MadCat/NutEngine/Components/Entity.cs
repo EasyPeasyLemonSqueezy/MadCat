@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NutEngine
 {
-    public class Entity : ICleanup
+    public class Entity : IDisposable
     {
         public bool Invalid { get; set; }
+        public EntityManager Manager { get; set; }
 
         private Dictionary<Type, Component> components =
             new Dictionary<Type, Component>();
@@ -17,11 +19,11 @@ namespace NutEngine
             }
         }
 
-        public virtual void Cleanup()
+        public virtual void Dispose()
         {
             foreach (var component in components.Values) {
-                if (component is ICleanup cleanup) {
-                    cleanup.Cleanup();
+                if (component is IDisposable disposable) {
+                    disposable.Dispose();
                 }
             }
         }
@@ -30,14 +32,23 @@ namespace NutEngine
         {
             component.Entity = this;
             components[component.GetType()] = component;
+            SortComponents();
         }
 
         public void AddComponent<T>(params object[] parameters)
             where T : Component
         {
             var component = (T)Activator.CreateInstance(typeof(T), parameters);
-            component.Entity = this;
-            components[component.GetType()] = component;
+            AddComponent(component);
+        }
+
+        public void AddComponents(params Component[] components)
+        {
+            foreach (var component in components) {
+                component.Entity = this;
+                this.components[component.GetType()] = component;
+            }
+            SortComponents();
         }
 
         public void RemoveComponent<T>()
@@ -59,6 +70,17 @@ namespace NutEngine
                 return components[typeof(T)] as T;
             }
             return null;
+        }
+
+        private void SortComponents()
+        {
+            var values = components.Values;
+            var sorted = TopologicalSort.Sort(
+                values,
+                c => EntityManager.GetDependency(c.GetType()),
+                c => c.GetType()
+            );
+            components = sorted.ToDictionary(c => c.GetType(), c => c);
         }
     }
 }
