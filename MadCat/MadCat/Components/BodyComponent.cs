@@ -7,10 +7,9 @@ namespace MadCat
 {
     public class BodyComponent : Component, IDisposable
     {
-        public BodiesManager Bodies { get; set; }
         public IBody<IShape> Body { get; set; }
 
-        public BodyComponent(IBody<IShape> body, BodiesManager bodies)
+        public BodyComponent(IBody<IShape> body)
         {
             Body = body;
         }
@@ -21,7 +20,7 @@ namespace MadCat
 
         public void Dispose()
         {
-            Bodies.KillSome(Body);
+            Director.Bodies.KillSome(Body);
         }
     }
 }

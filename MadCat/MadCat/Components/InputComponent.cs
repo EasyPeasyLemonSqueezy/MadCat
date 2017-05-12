@@ -13,6 +13,8 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             var body = Entity.GetComponent<BodyComponent>().Body;
+            var weapon = Entity.GetComponent<WeaponComponent>();
+
             var keyboardState = NutEngine.Input.Keyboard.State;
 
             var velocity = new Vector2();
@@ -38,6 +40,9 @@ namespace MadCat
             }
 
             body.Velocity = velocity;
+
+            var mouseState = Mouse.GetState();
+            weapon.Shooting = mouseState.LeftButton == ButtonState.Pressed;
         }
     }
 }

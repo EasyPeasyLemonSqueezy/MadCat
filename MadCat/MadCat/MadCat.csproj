@@ -80,14 +80,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Bullet.cs" />
     <Compile Include="Components\AimComponent.cs" />
     <Compile Include="Components\AnimationComponent.cs" />
     <Compile Include="Components\BodyComponent.cs" />
     <Compile Include="Components\InputComponent.cs" />
     <Compile Include="Components\SpriteComponent.cs" />
+    <Compile Include="Components\WeaponComponent.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
+    <Compile Include="Director.cs" />
     <Compile Include="Hero.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

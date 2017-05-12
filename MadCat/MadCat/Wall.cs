@@ -9,7 +9,7 @@ namespace MadCat
     {
         private RigidBody<AABB> body;
 
-        public Wall(Vector2 position, Vector2 size, EntityManager entities, BodiesManager bodies)
+        public Wall(Vector2 position, Vector2 size)
         {
             body = new RigidBody<AABB>(new AABB(size / 2f)) {
                 Position = position + size / 2f,
@@ -19,11 +19,11 @@ namespace MadCat
             body.Material.Restitution = 0f;
 
             AddComponents(
-                new BodyComponent(body, bodies)
+                new BodyComponent(body)
             );
 
-            entities.Add(this);
-            bodies.AddBody(body);
+            Director.Entities.Add(this);
+            Director.Bodies.AddBody(body);
         }
     }
 }

@@ -21,6 +21,10 @@ namespace MadCat
             entities = new EntityManager();
             bodies = new BodiesManager();
 
+            Director.World = World;
+            Director.Entities = entities;
+            Director.Bodies = bodies;
+
             Assets.Init(Content);
 
             background = Assets.Background;
@@ -28,10 +32,7 @@ namespace MadCat
             World.AddChild(background);
 
             hero = new Hero(
-                new Vector2(480f, 270f),
-                World,
-                entities,
-                bodies
+                new Vector2(480f, 270f)
             );
 
             Vector2[] positions = {
@@ -51,9 +52,7 @@ namespace MadCat
             for (int i = 0; i < 4; i++) {
                 var wall1 = new Wall(
                     positions[i],
-                    sizes[i],
-                    entities,
-                    bodies
+                    sizes[i]
                 );
             }
         }

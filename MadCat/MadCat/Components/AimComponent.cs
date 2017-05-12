@@ -8,6 +8,7 @@ namespace MadCat
     public class AimComponent : Component
     {
         public Sprite Aim { get; set; }
+        public float Angle { get; private set; }
 
         public AimComponent(Node node)
         {
@@ -24,10 +25,10 @@ namespace MadCat
             var sprite = Entity.GetComponent<SpriteComponent>().Sprite;
 
             var vec = (Aim.Position - sprite.Position);
-            float angle = (float)Math.Atan2(vec.Y, vec.X);
+            Angle = (float)Math.Atan2(vec.Y, vec.X);
 
-            sprite.Rotation = angle;
-            Aim.Rotation = angle;
+            sprite.Rotation = Angle;
+            Aim.Rotation = Angle;
         }
     }
 }

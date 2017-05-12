@@ -5,28 +5,27 @@ using NutEngine.Physics.Shapes;
 
 namespace MadCat
 {
-    public class Hero : Entity
+    public class Bullet : Entity
     {
         private RigidBody<Circle> body;
 
-        public Hero(Vector2 position)
+        public Bullet(Vector2 position, Vector2 direction)
         {
-            var sprite = Assets.Hero;
-            sprite.Scale = new Vector2(0.2f, 0.2f);
+            var sprite = Assets.Bullet;
+            sprite.Scale = new Vector2(0.05f, 0.05f);
 
-            body = new RigidBody<Circle>(new Circle(20f)) {
+            body = new RigidBody<Circle>(new Circle(5f)) {
                 Position = position,
                 Owner = this
             };
-            body.Mass.Mass = 5;
-            body.Material.Restitution = 0.5f;
+            body.Mass.Mass = 1;
+            body.Material.Restitution = 1f;
+
+            body.ApplyImpulse(direction);
 
             AddComponents(
-                new InputComponent(),
-                new WeaponComponent(),
                 new BodyComponent(body),
-                new SpriteComponent(sprite),
-                new AimComponent(Director.World)
+                new SpriteComponent(sprite)
             );
 
             Director.Entities.Add(this);
