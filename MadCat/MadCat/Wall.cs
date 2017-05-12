@@ -16,7 +16,7 @@ namespace MadCat
                 Owner = this
             };
             body.Mass.Mass = 0;
-            body.Material.Restitution = 0f;
+            body.Material.Restitution = 1f;
 
             AddComponents(
                 new BodyComponent(body)

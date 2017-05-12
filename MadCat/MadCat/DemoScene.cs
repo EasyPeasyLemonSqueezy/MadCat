@@ -55,6 +55,13 @@ namespace MadCat
                     sizes[i]
                 );
             }
+
+            Random random = new Random();
+            for (int i = 0; i < 5; i++) {
+                var box = new Box(
+                    new Vector2(random.Next(960), random.Next(540))
+                );
+            }
         }
 
         public override void Update(float deltaTime)

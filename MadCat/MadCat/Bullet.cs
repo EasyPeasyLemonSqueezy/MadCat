@@ -12,16 +12,16 @@ namespace MadCat
         public Bullet(Vector2 position, Vector2 direction)
         {
             var sprite = Assets.Bullet;
-            sprite.Scale = new Vector2(0.05f, 0.05f);
+            sprite.Scale = new Vector2(0.03f, 0.03f);
 
             body = new RigidBody<Circle>(new Circle(5f)) {
-                Position = position,
+                Position = position + direction * 10f,
                 Owner = this
             };
             body.Mass.Mass = 1;
             body.Material.Restitution = 1f;
 
-            body.ApplyImpulse(direction);
+            body.ApplyImpulse(direction * 500f);
 
             AddComponents(
                 new BodyComponent(body),

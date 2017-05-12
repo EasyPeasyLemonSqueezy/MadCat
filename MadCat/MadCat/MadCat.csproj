@@ -80,10 +80,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Box.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Components\AimComponent.cs" />
     <Compile Include="Components\AnimationComponent.cs" />
     <Compile Include="Components\BodyComponent.cs" />
+    <Compile Include="Components\FrictionComponent.cs" />
     <Compile Include="Components\InputComponent.cs" />
     <Compile Include="Components\SpriteComponent.cs" />
     <Compile Include="Components\WeaponComponent.cs" />

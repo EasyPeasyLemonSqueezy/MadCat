@@ -22,6 +22,8 @@ namespace MadCat
                     body.Position,
                     direction
                 );
+
+                currentTime = 0.001f;
             }
             
             if (currentTime != 0) {
