@@ -21,6 +21,8 @@ namespace NutEngine.Physics
         public Action OnUpdate { get; set; }
         public Action<IBody<IShape>> OnCollision { get; set; }
 
+        public float EPSILON { get; set; } = .5f;
+
         public RigidBody(ShapeType shape)
         {
             Shape = shape;
@@ -31,10 +33,18 @@ namespace NutEngine.Physics
         public void ApplyImpulse(Vector2 impulse)
         {
             Velocity += impulse * Mass.MassInv;
+
+            if (Velocity.LengthSquared() < EPSILON) {
+                Velocity = Vector2.Zero;
+            }
         }
 
         public void IntegrateVelocity(float dt)
         {
+            if (Velocity.LengthSquared() * dt < EPSILON) {
+                return;
+            }
+
             Position += Velocity * dt;
         }
 
@@ -46,6 +56,10 @@ namespace NutEngine.Physics
         public void IntegrateForces(float dt)
         {
             Velocity += (Force * Mass.MassInv + Acceleration) * dt / 2f;
+
+            if (Velocity.LengthSquared() < EPSILON) {
+                Velocity = Vector2.Zero;
+            }
         }
     }
 }
