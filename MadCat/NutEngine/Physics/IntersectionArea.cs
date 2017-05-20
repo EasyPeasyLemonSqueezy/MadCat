@@ -2,7 +2,7 @@
 
 namespace NutEngine.Physics
 {
-    public class Manifold
+    public class IntersectionArea
     {
         public float Depth { get; set; }
         public Vector2 Normal { get; set; }

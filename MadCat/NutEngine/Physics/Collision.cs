@@ -8,13 +8,13 @@ namespace NutEngine.Physics
     {
         public IBody<IShape> A { get; set; }
         public IBody<IShape> B { get; set; }
-        public Manifold Manifold { get; set; }
+        public IntersectionArea Intersection { get; set; }
 
-        public Collision(IBody<IShape> a, IBody<IShape> b, Manifold manifold)
+        public Collision(IBody<IShape> a, IBody<IShape> b, IntersectionArea intersection)
         {
             A = a;
             B = b;
-            Manifold = manifold;
+            Intersection = intersection;
         }
 
         public void PositionAdjustment()
@@ -22,9 +22,9 @@ namespace NutEngine.Physics
             const float kSlop = .05f; // Penetration allowance
             const float percent = .5f; // Penetration percentage to correct
 
-            var correction = (MathHelper.Max(Manifold.Depth - kSlop, 0)
+            var correction = (MathHelper.Max(Intersection.Depth - kSlop, 0)
                            / (A.Mass.MassInv + B.Mass.MassInv))
-                           * Manifold.Normal
+                           * Intersection.Normal
                            * percent;
 
             A.Position -= correction * A.Mass.MassInv;
@@ -34,7 +34,7 @@ namespace NutEngine.Physics
         public void ResolveCollision()
         {
             var relVelocity = B.Velocity - A.Velocity;
-            var velocityAlongNormal = Vector2.Dot(relVelocity, Manifold.Normal);
+            var velocityAlongNormal = Vector2.Dot(relVelocity, Intersection.Normal);
 
             // Only if objects moving towards each other
             if (velocityAlongNormal > 0) {
@@ -46,10 +46,10 @@ namespace NutEngine.Physics
 
             float j = -(1 + e) * velocityAlongNormal / (A.Mass.MassInv + B.Mass.MassInv);
 
-            A.ApplyImpulse(-j * Manifold.Normal);
-            B.ApplyImpulse(j * Manifold.Normal);
+            A.ApplyImpulse(-j * Intersection.Normal);
+            B.ApplyImpulse(j * Intersection.Normal);
 
-            var tangent = relVelocity - (Manifold.Normal * Vector2.Dot(relVelocity, Manifold.Normal));
+            var tangent = relVelocity - (Intersection.Normal * Vector2.Dot(relVelocity, Intersection.Normal));
             tangent.Normalize();
 
             float jt = -Vector2.Dot(relVelocity, tangent) / (A.Mass.MassInv + B.Mass.MassInv);

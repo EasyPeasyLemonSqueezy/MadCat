@@ -23,8 +23,8 @@ namespace NutEngine.Physics
         private void CalculateCollisions()
         {
             foreach (var pair in Pairs) {
-                if (Collider.Collide(pair.Item1, pair.Item2, out var manifold)) {
-                    Collisions.Add(new Collision(pair.Item1, pair.Item2, manifold));
+                if (Collider.Collide(pair.Item1, pair.Item2, out var intersection)) {
+                    Collisions.Add(new Collision(pair.Item1, pair.Item2, intersection));
                 }
             }
         }
