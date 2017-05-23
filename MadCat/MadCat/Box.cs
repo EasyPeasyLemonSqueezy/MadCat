@@ -20,6 +20,8 @@ namespace MadCat
             };
             body.Mass.Mass = 5;
             body.Material.Restitution = 0.8f;
+            body.Material.StaticFriction = .1f;
+            body.Material.DynamicFriction = .1f;
 
             AddComponents(
                 new FrictionComponent(),
