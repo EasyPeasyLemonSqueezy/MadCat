@@ -106,7 +106,7 @@
     <Compile Include="Physics\Collider\Collider.cs" />
     <Compile Include="Physics\Collision.cs" />
     <Compile Include="Physics\IBody.cs" />
-    <Compile Include="Physics\Manifold.cs" />
+    <Compile Include="Physics\IntersectionArea.cs" />
     <Compile Include="Physics\MassData.cs" />
     <Compile Include="Physics\Shapes\AABB.cs" />
     <Compile Include="Physics\Shapes\Circle.cs" />

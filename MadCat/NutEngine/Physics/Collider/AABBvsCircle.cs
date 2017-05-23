@@ -6,9 +6,9 @@ namespace NutEngine.Physics
 {
     public static partial class Collider
     {
-        public static bool Collide(IBody<AABB> a, IBody<Circle> c, out Manifold manifold)
+        public static bool Collide(IBody<AABB> a, IBody<Circle> c, out IntersectionArea intersection)
         {
-            manifold = null;
+            intersection = null;
 
             (var min, var max) = a.Shape.MinMax(a.Position);
 
@@ -43,7 +43,7 @@ namespace NutEngine.Physics
 
             float length = normal.Length();
 
-            manifold = new Manifold() {
+            intersection = new IntersectionArea() {
                 Depth = c.Shape.Radius + (inside ? length : -length),
                 Normal = (inside ? -1 : 1) * normal / length
             };
@@ -51,7 +51,7 @@ namespace NutEngine.Physics
             return true;
         }
 
-        public static bool Collide(IBody<Circle> c, IBody<AABB> a, out Manifold manifold)
+        public static bool Collide(IBody<Circle> c, IBody<AABB> a, out IntersectionArea manifold)
         {
             if (!Collide(a, c, out manifold)) {
                 return false;
