@@ -14,7 +14,7 @@ namespace NutEngine
 
         public virtual void Update(float deltaTime)
         {
-            foreach (var component in components.Values) {
+            foreach (var component in components.Values.ToList()) {
                 component.Update(deltaTime);
             }
         }

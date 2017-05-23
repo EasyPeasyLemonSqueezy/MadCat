@@ -23,9 +23,9 @@ namespace MadCat
 
             AddComponents(
                 new BodyComponent(body),
-                new HealthComponent(5),
                 new ZombieComponent(hero),
-                new SpriteComponent(sprite)
+                new SpriteComponent(sprite),
+                new HealthComponent(5)
             );
 
             Director.Entities.Add(this);

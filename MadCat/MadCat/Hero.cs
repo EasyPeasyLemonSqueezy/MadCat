@@ -24,10 +24,10 @@ namespace MadCat
             AddComponents(
                 new InputComponent(),
                 new WeaponComponent(),
-                new HealthComponent(1),
                 new BodyComponent(body),
                 new SpriteComponent(sprite),
-                new AimComponent(Director.World)
+                new AimComponent(Director.World),
+                new HealthComponent(1)
             );
 
             Director.Entities.Add(this);
@@ -36,7 +36,10 @@ namespace MadCat
 
             body.OnCollision = (collided) => {
                 if (collided.Owner is Zombie) {
-                    GetComponent<HealthComponent>().Health = 0;
+                    var zombie = collided.Owner as Zombie;
+                    if (zombie.HasComponent<ZombieComponent>()) {
+                        GetComponent<HealthComponent>().Health = 0;
+                    }
                 }
             };
         }

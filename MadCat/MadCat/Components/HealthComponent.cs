@@ -1,4 +1,5 @@
-﻿using NutEngine;
+﻿using Microsoft.Xna.Framework;
+using NutEngine;
 
 namespace MadCat
 {
@@ -14,7 +15,13 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             if (Health <= 0) {
-                Entity.RemoveComponent<BodyComponent>();
+                Entity.RemoveComponent<InputComponent>();
+                Entity.RemoveComponent<ZombieComponent>();
+                Entity.GetComponent<SpriteComponent>().Sprite.Color = Color.DarkRed;
+
+                if (Entity.HasComponent<BodyComponent>()) {
+                    Entity.AddComponent(new FrictionComponent());
+                }
             }
         }
     }
