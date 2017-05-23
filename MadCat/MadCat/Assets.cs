@@ -25,6 +25,9 @@ namespace MadCat
         public static Sprite Aim {
             get => new Sprite(Texture, Sprites.Aim);
         }
+        public static Sprite Zombie {
+            get => new Sprite(Texture, Sprites.Zombie);
+        }
 
         public static void Init(ContentManager Content)
         {

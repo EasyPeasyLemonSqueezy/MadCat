@@ -86,9 +86,11 @@
     <Compile Include="Components\AnimationComponent.cs" />
     <Compile Include="Components\BodyComponent.cs" />
     <Compile Include="Components\FrictionComponent.cs" />
+    <Compile Include="Components\HealthComponent.cs" />
     <Compile Include="Components\InputComponent.cs" />
     <Compile Include="Components\SpriteComponent.cs" />
     <Compile Include="Components\WeaponComponent.cs" />
+    <Compile Include="Components\ZombieComponent.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wall.cs" />
+    <Compile Include="Zombie.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

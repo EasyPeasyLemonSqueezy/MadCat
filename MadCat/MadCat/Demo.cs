@@ -19,7 +19,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(960, 0, 645, 645);
+                return new Microsoft.Xna.Framework.Rectangle(0, 540, 645, 645);
             }
         }
         [NutPackerLib.OriginalNameAttribute("background.png")]
@@ -35,7 +35,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(612, 540, 225, 225);
+                return new Microsoft.Xna.Framework.Rectangle(960, 153, 225, 225);
             }
         }
         [NutPackerLib.OriginalNameAttribute("bullet.png")]
@@ -43,7 +43,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(0, 540, 612, 558);
+                return new Microsoft.Xna.Framework.Rectangle(645, 540, 612, 558);
             }
         }
         [NutPackerLib.OriginalNameAttribute("hero.png")]
@@ -51,7 +51,15 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(0, 1098, 259, 153);
+                return new Microsoft.Xna.Framework.Rectangle(960, 0, 259, 153);
+            }
+        }
+        [NutPackerLib.OriginalNameAttribute("zombie.png")]
+        public static Microsoft.Xna.Framework.Rectangle Zombie
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(1219, 0, 192, 172);
             }
         }
     }

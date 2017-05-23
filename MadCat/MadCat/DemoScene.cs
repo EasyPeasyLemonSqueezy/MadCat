@@ -31,10 +31,6 @@ namespace MadCat
             background.Position = new Vector2(App.ScreenWidth / 2.0f, App.ScreenHeight / 2.0f);
             World.AddChild(background);
 
-            hero = new Hero(
-                new Vector2(480f, 270f)
-            );
-
             Vector2[] positions = {
                 new Vector2(-100f, 0f),
                 new Vector2(960f, 0f),
@@ -56,7 +52,19 @@ namespace MadCat
                 );
             }
 
+            hero = new Hero(
+                new Vector2(480f, 270f)
+            );
+
             Random random = new Random();
+
+            for (int i = 0; i < 10; i++) {
+                var zombie = new Zombie(
+                    new Vector2(random.Next(960), random.Next(540)),
+                    hero
+                );
+            }
+
             for (int i = 0; i < 5; i++) {
                 var box = new Box(
                     new Vector2(random.Next(960), random.Next(540))

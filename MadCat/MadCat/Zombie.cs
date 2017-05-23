@@ -5,13 +5,13 @@ using NutEngine.Physics.Shapes;
 
 namespace MadCat
 {
-    public class Hero : Entity
+    public class Zombie : Entity
     {
         private RigidBody<Circle> body;
 
-        public Hero(Vector2 position)
+        public Zombie(Vector2 position, Hero hero)
         {
-            var sprite = Assets.Hero;
+            var sprite = Assets.Zombie;
             sprite.Scale = new Vector2(0.2f, 0.2f);
 
             body = new RigidBody<Circle>(new Circle(20f)) {
@@ -22,12 +22,10 @@ namespace MadCat
             body.Material.Restitution = 0.5f;
 
             AddComponents(
-                new InputComponent(),
-                new WeaponComponent(),
-                new HealthComponent(1),
                 new BodyComponent(body),
-                new SpriteComponent(sprite),
-                new AimComponent(Director.World)
+                new HealthComponent(5),
+                new ZombieComponent(hero),
+                new SpriteComponent(sprite)
             );
 
             Director.Entities.Add(this);
@@ -35,8 +33,8 @@ namespace MadCat
             Director.World.AddChild(sprite);
 
             body.OnCollision = (collided) => {
-                if (collided.Owner is Zombie) {
-                    GetComponent<HealthComponent>().Health = 0;
+                if (collided.Owner is Bullet) {
+                    GetComponent<HealthComponent>().Health--;
                 }
             };
         }
