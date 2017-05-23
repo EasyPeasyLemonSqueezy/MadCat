@@ -31,6 +31,12 @@ namespace MadCat
             Director.Entities.Add(this);
             Director.Bodies.AddBody(body);
             Director.World.AddChild(sprite);
+
+            body.OnCollision = (collided) => {
+                if (!(collided.Owner is Hero)) {
+                    Invalid = true;
+                }
+            };
         }
     }
 }
