@@ -18,14 +18,14 @@ namespace MadCat
                 Position = position,
                 Owner = this
             };
-            body.Mass.Mass = 5;
+            body.Mass.Mass = 3;
             body.Material.Restitution = 0.5f;
 
             AddComponents(
                 new BodyComponent(body),
                 new ZombieComponent(hero),
                 new SpriteComponent(sprite),
-                new HealthComponent(5)
+                new HealthComponent(2)
             );
 
             Director.Entities.Add(this);
@@ -35,6 +35,7 @@ namespace MadCat
             body.OnCollision = (collided) => {
                 if (collided.Owner is Bullet) {
                     GetComponent<HealthComponent>().Health--;
+                    var blood = new Blood(GetComponent<BodyComponent>().Body.Position);
                 }
             };
         }

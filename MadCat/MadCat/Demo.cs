@@ -19,7 +19,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(0, 540, 645, 645);
+                return new Microsoft.Xna.Framework.Rectangle(0, 541, 645, 645);
             }
         }
         [NutPackerLib.OriginalNameAttribute("background.png")]
@@ -30,12 +30,36 @@ namespace NutPacker.Content
                 return new Microsoft.Xna.Framework.Rectangle(0, 0, 960, 540);
             }
         }
+        [NutPackerLib.OriginalNameAttribute("blood1.png")]
+        public static Microsoft.Xna.Framework.Rectangle Blood1
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(1212, 154, 200, 188);
+            }
+        }
+        [NutPackerLib.OriginalNameAttribute("blood2.png")]
+        public static Microsoft.Xna.Framework.Rectangle Blood2
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(0, 1187, 243, 226);
+            }
+        }
+        [NutPackerLib.OriginalNameAttribute("blood3.png")]
+        public static Microsoft.Xna.Framework.Rectangle Blood3
+        {
+            get
+            {
+                return new Microsoft.Xna.Framework.Rectangle(961, 154, 250, 226);
+            }
+        }
         [NutPackerLib.OriginalNameAttribute("box.png")]
         public static Microsoft.Xna.Framework.Rectangle Box
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(960, 153, 225, 225);
+                return new Microsoft.Xna.Framework.Rectangle(244, 1187, 225, 225);
             }
         }
         [NutPackerLib.OriginalNameAttribute("bullet.png")]
@@ -43,7 +67,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(645, 540, 612, 558);
+                return new Microsoft.Xna.Framework.Rectangle(646, 541, 612, 558);
             }
         }
         [NutPackerLib.OriginalNameAttribute("hero.png")]
@@ -51,7 +75,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(960, 0, 259, 153);
+                return new Microsoft.Xna.Framework.Rectangle(961, 0, 259, 153);
             }
         }
         [NutPackerLib.OriginalNameAttribute("zombie.png")]
@@ -59,7 +83,7 @@ namespace NutPacker.Content
         {
             get
             {
-                return new Microsoft.Xna.Framework.Rectangle(1219, 0, 192, 172);
+                return new Microsoft.Xna.Framework.Rectangle(1212, 343, 192, 172);
             }
         }
     }

@@ -80,6 +80,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Blood.cs" />
     <Compile Include="Box.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Components\AimComponent.cs" />

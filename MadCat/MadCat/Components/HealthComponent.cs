@@ -16,6 +16,7 @@ namespace MadCat
         {
             if (Health <= 0) {
                 Entity.RemoveComponent<InputComponent>();
+                Entity.RemoveComponent<WeaponComponent>();
                 Entity.RemoveComponent<ZombieComponent>();
                 Entity.GetComponent<SpriteComponent>().Sprite.Color = Color.DarkRed;
 

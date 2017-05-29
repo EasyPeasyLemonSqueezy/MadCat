@@ -8,7 +8,7 @@ namespace MadCat
     {
         public bool Shooting { get; set; }
 
-        private float reloadTime = 0.25f;
+        private float reloadTime = 0.15f;
         private float currentTime = 0;
 
         public override void Update(float deltaTime)

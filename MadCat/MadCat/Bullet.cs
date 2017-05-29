@@ -21,7 +21,7 @@ namespace MadCat
             body.Mass.Mass = 1;
             body.Material.Restitution = 1f;
 
-            body.ApplyImpulse(direction * 500f);
+            body.ApplyImpulse(direction * 1250f);
 
             AddComponents(
                 new BodyComponent(body),

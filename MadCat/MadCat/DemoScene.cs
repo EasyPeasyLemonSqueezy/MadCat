@@ -29,6 +29,7 @@ namespace MadCat
 
             background = Assets.Background;
             background.Position = new Vector2(App.ScreenWidth / 2.0f, App.ScreenHeight / 2.0f);
+            background.ZOrder = -100;
             World.AddChild(background);
 
             Vector2[] positions = {
@@ -58,13 +59,6 @@ namespace MadCat
 
             Random random = new Random();
 
-            for (int i = 0; i < 10; i++) {
-                var zombie = new Zombie(
-                    new Vector2(random.Next(960), random.Next(540)),
-                    hero
-                );
-            }
-
             for (int i = 0; i < 5; i++) {
                 var box = new Box(
                     new Vector2(random.Next(960), random.Next(540))
@@ -78,6 +72,17 @@ namespace MadCat
 
             if (keyboardState.IsKeyDown(Keys.Escape)) {
                 App.Exit();
+            }
+
+            if (keyboardState.IsKeyPressedRightNow(Keys.Space)) {
+                Random random = new Random();
+
+                for (int i = 0; i < 20; i++) {
+                    var zombie = new Zombie(
+                        new Vector2(200 + random.Next(760), 200 + random.Next(340)),
+                        hero
+                    );
+                }
             }
 
             entities.Update(deltaTime);

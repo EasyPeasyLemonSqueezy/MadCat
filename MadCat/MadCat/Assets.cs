@@ -28,6 +28,15 @@ namespace MadCat
         public static Sprite Zombie {
             get => new Sprite(Texture, Sprites.Zombie);
         }
+        public static Sprite Blood1 {
+            get => new Sprite(Texture, Sprites.Blood1);
+        }
+        public static Sprite Blood2 {
+            get => new Sprite(Texture, Sprites.Blood2);
+        }
+        public static Sprite Blood3 {
+            get => new Sprite(Texture, Sprites.Blood3);
+        }
 
         public static void Init(ContentManager Content)
         {

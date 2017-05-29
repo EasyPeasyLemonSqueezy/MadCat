@@ -5,7 +5,7 @@ namespace MadCat
 {
     public class ZombieComponent : Component
     {
-        private const float runVelocity = 50.0f;
+        private const float runVelocity = 80.0f;
         private Hero hero;
 
         public ZombieComponent(Hero hero)
