@@ -54,7 +54,9 @@ namespace NutEngine
         public void RemoveComponent<T>()
             where T : Component
         {
-            components.Remove(typeof(T));
+            if (HasComponent<T>()) {
+                components.Remove(typeof(T));
+            }
         }
 
         public bool HasComponent<T>()
