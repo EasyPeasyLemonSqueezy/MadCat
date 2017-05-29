@@ -21,7 +21,6 @@ namespace MadCat
         public MenuScene(Application app) : base(app)
         {
             App.IsMouseVisible = true;
-
             font = Content.Load<SpriteFont>("myFont");
             label = new Label(font, "Adventure gurl") {
                   ZOrder = 3
@@ -79,7 +78,7 @@ namespace MadCat
             if (Math.Abs(mouseState.Position.X - App.ScreenWidth / 2) < 90 && Math.Abs(mouseState.Position.Y - App.ScreenHeight / 2 - 20) < 10) {
                 labelExit.Color = Color.Aquamarine;
                 if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
-                    App.Exit();
+                    App.RunWithScene(new JustEmptyScene(App));
                 }
             }
             else {
@@ -87,13 +86,14 @@ namespace MadCat
             }
 
             if (keyboardState.IsKeyPressedRightNow(Keys.Enter)) {
-                var startScene = new DemoScene(App);
                 App.Scenes.Push(new DemoScene(App));
             }
 
             if (keyboardState.IsKeyPressedRightNow(Keys.Escape)) {
-                App.Exit();
+                App.RunWithScene(new JustEmptyScene(App));
             }
+
+            PrevMouseState = mouseState;
         }
     }
 }

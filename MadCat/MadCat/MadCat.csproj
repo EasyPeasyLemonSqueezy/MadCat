@@ -92,6 +92,7 @@
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoScene.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="JustEmptyScene.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MenuScene.cs" />
     <Compile Include="PauseScene.cs" />

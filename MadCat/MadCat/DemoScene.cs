@@ -20,8 +20,8 @@ namespace MadCat
 
         public DemoScene(Application app) : base(app)
         {
-            Assets.Init(Content);
             App.IsMouseVisible = false;
+            Assets.Init(Content);
 
             background = new Sprite(Assets.Texture, Graveyard.Tiles.BG) {
                   Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2)

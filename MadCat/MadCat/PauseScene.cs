@@ -80,7 +80,8 @@ namespace MadCat
             if (Math.Abs(mouseState.Position.X - App.ScreenWidth / 2) < 210 && Math.Abs(mouseState.Position.Y - App.ScreenHeight / 2 - 20) < 15) {
                 labelMenu.Color = Color.Aquamarine;
                 if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
-                    App.RunWithScene(new MenuScene(App));
+                    App.Scenes.Pop();
+                    App.Scenes.Pop();
                 }
             }
             else {
@@ -92,8 +93,11 @@ namespace MadCat
             }
 
             if (keyboardState.IsKeyPressedRightNow(Keys.Escape)) {
-                App.RunWithScene(new MenuScene(App));
+                App.Scenes.Pop();
+                App.Scenes.Pop();
             }
+
+            PrevMouseState = mouseState;
         }
     }
 }
