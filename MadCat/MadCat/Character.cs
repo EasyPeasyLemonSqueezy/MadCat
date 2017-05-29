@@ -23,7 +23,7 @@ namespace MadCat
 
             node.AddChild(animation);
 
-            var name = new Label(Assets.Font, "NutEngine") {
+            var name = new Label(Assets.Font, "Adventure Girl") {
                 ZOrder = 1,
                 Color = Color.Black,
                 Position = new Vector2(0, -300),

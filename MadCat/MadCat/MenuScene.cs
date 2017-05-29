@@ -13,7 +13,6 @@ namespace MadCat
     {
         private MouseState PrevMouseState;
 
-        private SpriteFont font;
         private Label label;
         private Label labelStart;
         private Label labelExit;
@@ -21,12 +20,13 @@ namespace MadCat
         public MenuScene(Application app) : base(app)
         {
             App.IsMouseVisible = true;
-            font = Content.Load<SpriteFont>("myFont");
-            label = new Label(font, "Adventure girl") {
+            var font = Content.Load<SpriteFont>("myFont");
+            var mistral = Content.Load<SpriteFont>("Jokerman");
+            label = new Label(mistral, "Adventure girl") {
                   ZOrder = 3
                 , Color = Color.White
                 , Position = new Vector2(App.ScreenWidth / 2, 100)
-                , Scale = new Vector2(1.5f, 1.5f)
+                , Scale = new Vector2(.7f, .7f)
             };
             World.AddChild(label);
 

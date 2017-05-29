@@ -18,15 +18,23 @@ namespace MadCat
 
         public SplashScreenScene(Application app) : base(app)
         {
+            Assets.Init(Content);
+
             App.IsMouseVisible = false;
             Color = Color.White;
+
+            var logo = Assets.NutLogo;
+
+            logo.Position = new Vector2(App.ScreenWidth / 2, 250);
+            logo.Scale = new Vector2(.7f, .7f);
+            World.AddChild(logo);
           
-            font = Content.Load<SpriteFont>("myFont");
+            font = Content.Load<SpriteFont>("Jokerman");
             label = new Label(font, "Powered by NutEngine") {
                   ZOrder = 3
                 , Color = Color.Black
-                , Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight/2)
-                , Scale = new Vector2(.7f, .7f)
+                , Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight * 3 / 4)
+                , Scale = new Vector2(.3f, .3f)
             };
 
             World.AddChild(label);
@@ -36,7 +44,7 @@ namespace MadCat
         {
             Elapsed += dt;
 
-            if (Elapsed > 3) {
+            if (Elapsed > 1) {
                 App.RunWithScene(new MenuScene(App));
             }
         }
