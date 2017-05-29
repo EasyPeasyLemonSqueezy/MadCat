@@ -14,6 +14,8 @@ namespace NutEngine
         protected Node World { get; set; }
         protected Camera2D Camera { get; set; }
 
+        protected Color Color { get; set; }
+
         public Scene(Application app)
         {
             App = app;
@@ -21,6 +23,7 @@ namespace NutEngine
             Content = app.Content;
             World = new Node();
             Camera = new OrthographicSRTCamera(new Vector2(App.ScreenWidth, App.ScreenHeight));
+            Color = Color.Black;
         }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace NutEngine
         public void Draw()
         {
             /// Fill background with black color.
-            App.GraphicsDevice.Clear(Color.Black);
+            App.GraphicsDevice.Clear(Color);
 
             Batcher.Begin();
 

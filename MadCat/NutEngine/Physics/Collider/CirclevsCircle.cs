@@ -46,7 +46,7 @@ namespace NutEngine.Physics
         {
             var rSquare = (a.Shape.Radius + b.Shape.Radius) * (a.Shape.Radius + b.Shape.Radius);
 
-            return rSquare < (a.Position.X - b.Position.X) * (a.Position.X - b.Position.X)
+            return rSquare > (a.Position.X - b.Position.X) * (a.Position.X - b.Position.X)
                            + (a.Position.Y - b.Position.Y) * (a.Position.Y - b.Position.Y);
         }
     }
