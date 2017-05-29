@@ -9,6 +9,7 @@ namespace MadCat
         public static Texture2D Texture;
         public static Texture2D TextureBullet;
         public static SpriteFont Font;
+        public static Sprite NutLogo;
 
         public static Animation AdventureGirlIdle;
         public static Animation AdventureGirlJump;
@@ -21,6 +22,7 @@ namespace MadCat
         {
             Texture = Content.Load<Texture2D>("Demo");
             TextureBullet = Content.Load<Texture2D>("bullet");
+            var textureLogo = Content.Load<Texture2D>("nutengine");
             Font = Content.Load<SpriteFont>("myFont");
 
             AdventureGirlIdle
@@ -51,6 +53,8 @@ namespace MadCat
                     Duration = .5f,
                     Repeat = false
                 };
+
+            NutLogo = new Sprite(textureLogo);
         }
     }
 }

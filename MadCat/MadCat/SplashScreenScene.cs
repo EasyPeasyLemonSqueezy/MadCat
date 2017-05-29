@@ -14,8 +14,7 @@ namespace MadCat
     {
         private SpriteFont font;
         private Label label;
-        Timer timer;
-        int t = 0;
+        private float Elapsed;
 
         public SplashScreenScene(Application app) : base(app)
         {
@@ -29,17 +28,15 @@ namespace MadCat
                 , Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight/2)
                 , Scale = new Vector2(.7f, .7f)
             };
+
             World.AddChild(label);
-            
-            timer = new Timer();
-            timer.Enabled = true;
         }
 
         public override void Update(float dt)
-        { 
-            t++;
-            var keyboardState = NutInput.Keyboard.State;
-            if (t > 200) {
+        {
+            Elapsed += dt;
+
+            if (Elapsed > 3) {
                 App.RunWithScene(new MenuScene(App));
             }
         }
