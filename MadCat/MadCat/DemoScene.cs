@@ -85,6 +85,15 @@ namespace MadCat
                 }
             }
 
+            if (keyboardState.IsKeyPressedRightNow(Keys.Back)) {
+                foreach (var entity in Director.Entities.Entities) {
+                    if (entity is Zombie ||
+                        entity is Blood) {
+                        entity.Invalid = true;
+                    }
+                }
+            }
+
             entities.Update(deltaTime);
             bodies.Update(deltaTime);
         }
