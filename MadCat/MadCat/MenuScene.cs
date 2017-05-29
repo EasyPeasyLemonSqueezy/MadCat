@@ -22,7 +22,7 @@ namespace MadCat
         {
             App.IsMouseVisible = true;
             font = Content.Load<SpriteFont>("myFont");
-            label = new Label(font, "Adventure gurl") {
+            label = new Label(font, "Adventure girl") {
                   ZOrder = 3
                 , Color = Color.White
                 , Position = new Vector2(App.ScreenWidth / 2, 100)
