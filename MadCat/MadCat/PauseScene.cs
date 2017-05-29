@@ -16,6 +16,7 @@ namespace MadCat
         private SpriteFont font;
         private Label label;
         private Label labelContinue;
+        private Label labelMenu;
 
         public PauseScene(Application app) : base(app)
         {
@@ -33,10 +34,19 @@ namespace MadCat
             labelContinue = new Label(font, "Continue") {
                 ZOrder = 3,
                 Color = Color.Black,
-                Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2),
+                Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2  - 35),
                 Scale = new Vector2(.7f, .7f)
             };
             World.AddChild(labelContinue);
+
+            labelMenu = new Label(font, "Quit to main menu")
+            {
+                ZOrder = 3,
+                Color = Color.Black,
+                Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2 + 20),
+                Scale = new Vector2(.7f, .7f)
+            };
+            World.AddChild(labelMenu);
 
             PrevMouseState = Mouse.GetState();
 
@@ -57,7 +67,7 @@ namespace MadCat
             var mouseState = Mouse.GetState();
             var keyboardState = NutInput.Keyboard.State;
 
-            if (Math.Abs(mouseState.Position.X - App.ScreenWidth / 2) < 60 && Math.Abs(mouseState.Position.Y - App.ScreenHeight / 2) < 10) {
+            if (Math.Abs(mouseState.Position.X - App.ScreenWidth / 2) < 90 && Math.Abs(mouseState.Position.Y - App.ScreenHeight / 2 + 35) < 15) {
                 labelContinue.Color = Color.Aquamarine;
                 if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
                     App.Scenes.Pop();
@@ -66,9 +76,23 @@ namespace MadCat
             else {
                 labelContinue.Color = Color.Black;
             }
+ 
+            if (Math.Abs(mouseState.Position.X - App.ScreenWidth / 2) < 210 && Math.Abs(mouseState.Position.Y - App.ScreenHeight / 2 - 20) < 15) {
+                labelMenu.Color = Color.Aquamarine;
+                if (mouseState.LeftButton == ButtonState.Pressed && PrevMouseState.LeftButton == ButtonState.Released) {
+                    App.RunWithScene(new MenuScene(App));
+                }
+            }
+            else {
+                labelMenu.Color = Color.Black;
+            }
 
             if (keyboardState.IsKeyPressedRightNow(Keys.Enter)) {
                 App.Scenes.Pop();
+            }
+
+            if (keyboardState.IsKeyPressedRightNow(Keys.Escape)) {
+                App.RunWithScene(new MenuScene(App));
             }
         }
     }
