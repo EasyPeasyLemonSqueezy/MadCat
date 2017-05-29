@@ -93,6 +93,8 @@
     <Compile Include="DemoScene.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="MenuScene.cs" />
+    <Compile Include="PauseScene.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

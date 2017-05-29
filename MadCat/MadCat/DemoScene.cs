@@ -107,6 +107,10 @@ namespace MadCat
             var position = characters[0].GetComponent<ColliderComponent>().Body;
             background.Position = new Vector2(position.Position.X, App.ScreenHeight / 2);
             Camera.Position = new Vector2(position.Position.X - App.ScreenWidth / 2, -20);
+
+            if (keyboardState.IsKeyPressedRightNow(Keys.Escape)) {
+                App.Scenes.Push(new PauseScene(App));
+            }
         }
     }
 }
