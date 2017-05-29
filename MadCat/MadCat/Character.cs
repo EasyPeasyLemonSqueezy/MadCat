@@ -23,18 +23,18 @@ namespace MadCat
 
             node.AddChild(animation);
 
-            var name = new Label(Assets.Font, "MadCat") {
+            var name = new Label(Assets.Font, "NutEngine") {
                 ZOrder = 1,
-                Color = Color.BlueViolet,
+                Color = Color.Black,
                 Position = new Vector2(0, -300),
-                Scale = new Vector2(2)
+                Scale = new Vector2(1.5f)
             };
             animation.AddChild(name);
 
             Body = new RigidBody<AABB>(new AABB(new Vector2(81.0f / 2.0f, 130.0f / 2.0f))) {
                 Position = new Vector2(0.0f, -500.0f),
                 Owner = this,
-                Acceleration = new Vector2(0.0f, 2000.0f)
+                Acceleration = new Vector2(0.0f, 4000.0f)
             };
 
             Body.Mass.MassInv = 1;

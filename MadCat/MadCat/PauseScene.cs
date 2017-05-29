@@ -19,6 +19,8 @@ namespace MadCat
 
         public PauseScene(Application app) : base(app)
         {
+            App.IsMouseVisible = true;
+
             font = Content.Load<SpriteFont>("myFont");
             label = new Label(font, "Pause") {
                 ZOrder = 3,

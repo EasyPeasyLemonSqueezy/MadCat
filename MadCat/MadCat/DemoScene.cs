@@ -15,12 +15,13 @@ namespace MadCat
         private EntityManager manager;
         private BodiesManager bodies;
 
-        private Character[] characters;
+        private Character character;
         private Map map;
 
         public DemoScene(Application app) : base(app)
         {
             Assets.Init(Content);
+            App.IsMouseVisible = false;
 
             background = new Sprite(Assets.Texture, Graveyard.Tiles.BG) {
                   Position = new Vector2(App.ScreenWidth / 2, App.ScreenHeight / 2)
@@ -60,34 +61,8 @@ namespace MadCat
             manager.AddDependency<PositionComponent>(
             );
 
-            /// Create Characters.
-            characters = new Character[3];
-
-            characters[0] = new Character(World, manager, bodies);
-
-            characters[1] = new Character(World, manager, bodies);
-            characters[1].SetControls(new CharacterComponent.Controls {
-                      RunRightKey = Keys.D
-                    , RunLeftKey = Keys.A
-                    , JumpKey = Keys.W
-                    , ShootKey = Keys.Q
-                    , MeleeKey = Keys.F
-                    , SlideKey = Keys.S
-            });
-
-            characters[2] = new Character(World, manager, bodies);
-            characters[2].SetControls(new CharacterComponent.Controls {
-                      RunRightKey = Keys.L
-                    , RunLeftKey = Keys.K
-                    , JumpKey = Keys.O
-                    , ShootKey = Keys.J
-                    , MeleeKey = Keys.P
-                    , SlideKey = Keys.M
-            });
-
-            bodies.AddBody(characters[0].Body);
-            bodies.AddBody(characters[1].Body);
-            bodies.AddBody(characters[2].Body);
+            character = new Character(World, manager, bodies);
+            bodies.AddBody(character.Body);
 
             map = new Map(World, manager, bodies);
         }
@@ -95,16 +70,14 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             var keyboardState = NutInput.Keyboard.State;
-            
+
             /// Input
-            foreach (var character in characters) {
-                character.Input(keyboardState);
-            }
+            character.Input(keyboardState);
 
             bodies.Update(deltaTime);
             manager.Update(deltaTime);
 
-            var position = characters[0].GetComponent<ColliderComponent>().Body;
+            var position = character.GetComponent<ColliderComponent>().Body;
             background.Position = new Vector2(position.Position.X, App.ScreenHeight / 2);
             Camera.Position = new Vector2(position.Position.X - App.ScreenWidth / 2, -20);
 
