@@ -10,6 +10,11 @@ namespace NutEngine.Physics
         public IBody<IShape> B { get; set; }
         public IntersectionArea Intersection { get; set; }
 
+        /// Penetration allowance
+        public static float Slop { get; set; } = .05f;
+        /// Penetration percentage to correct
+        public static float PercentCorrection { get; set; } = .5f;
+
         public Collision(IBody<IShape> a, IBody<IShape> b, IntersectionArea intersection)
         {
             A = a;
@@ -19,13 +24,10 @@ namespace NutEngine.Physics
 
         public void PositionAdjustment()
         {
-            const float kSlop = .05f; // Penetration allowance
-            const float percent = .5f; // Penetration percentage to correct
-
-            var correction = (MathHelper.Max(Intersection.Depth - kSlop, 0)
+            var correction = (MathHelper.Max(Intersection.Depth - Slop, 0)
                            / (A.Mass.MassInv + B.Mass.MassInv))
                            * Intersection.Normal
-                           * percent;
+                           * PercentCorrection;
 
             A.Position -= correction * A.Mass.MassInv;
             B.Position += correction * B.Mass.MassInv;
