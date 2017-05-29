@@ -54,7 +54,9 @@ namespace NutEngine
         public void RemoveComponent<T>()
             where T : Component
         {
-            components.Remove(typeof(T));
+            if (HasComponent<T>()) {
+                components.Remove(typeof(T));
+            }
         }
 
         public bool HasComponent<T>()
@@ -77,7 +79,7 @@ namespace NutEngine
             var values = components.Values;
             var sorted = TopologicalSort.Sort(
                 values,
-                c => Manager.Dependencies[c.GetType()],
+                c => EntityManager.GetDependency(c.GetType()),
                 c => c.GetType()
             );
             components = sorted.ToDictionary(c => c.GetType(), c => c);

@@ -20,23 +20,23 @@ namespace NutEngine.Physics
             Collisions = new HashSet<Collision>();
         }
 
-        public void CalculateCollisions()
+        private void CalculateCollisions()
         {
             foreach (var pair in Pairs) {
-                if (Collider.Collide(pair.Item1, pair.Item2, out var manifold)) {
-                    Collisions.Add(new Collision(pair.Item1, pair.Item2, manifold));
+                if (Collider.Collide(pair.Item1, pair.Item2, out var intersection)) {
+                    Collisions.Add(new Collision(pair.Item1, pair.Item2, intersection));
                 }
             }
         }
 
-        public void ResolveCollisions()
+        private void ResolveCollisions()
         {
             foreach (var collision in Collisions) {
                 collision.ResolveCollision();
             }
         }
 
-        public void IntegrateVelocities(float dt)
+        private void IntegrateVelocities(float dt)
         {
             foreach (var body in Bodies) {
                 body.IntegrateVelocity(dt);
@@ -46,21 +46,21 @@ namespace NutEngine.Physics
         /// <summary>
         /// May the Force be with you.
         /// </summary>
-        public void IntegrateForces(float dt)
+        private void IntegrateForces(float dt)
         {
             foreach (var body in Bodies) {
                 body.IntegrateForces(dt);
             }
         }
 
-        public void ClearForces()
+        private void ClearForces()
         {
             foreach (var body in Bodies) {
                 body.Force = Vector2.Zero;
             }
         }
 
-        public void PositionAdjustment()
+        private void PositionAdjustment()
         {
             foreach (var collision in Collisions) {
                 collision.PositionAdjustment();
@@ -138,14 +138,14 @@ namespace NutEngine.Physics
             }
         }
 
-        public void OnUpdateAll()
+        private void OnUpdateAll()
         {
             foreach (var body in Bodies) {
                 body.OnUpdate?.Invoke();
             }
         }
 
-        public void OnCollisionAll()
+        private void OnCollisionAll()
         {
             foreach (var collision in Collisions) {
                 collision.OnCollision();

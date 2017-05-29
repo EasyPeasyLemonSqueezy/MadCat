@@ -5,7 +5,7 @@ namespace NutEngine.Physics
 {
     public static partial class Collider
     {
-        public static bool Collide(IBody<Circle> a, IBody<Circle> b, out Manifold manifold)
+        public static bool Collide(IBody<Circle> a, IBody<Circle> b, out IntersectionArea intersection)
         {
             // Probably here should be the sector collisions check,
             // but it needs additional method without manifolds
@@ -17,14 +17,14 @@ namespace NutEngine.Physics
             float radius = a.Shape.Radius + b.Shape.Radius;
 
             if (normal.LengthSquared() >= radius * radius) {
-                manifold = null;
+                intersection = null;
                 return false; // Circles doesn't collide
             }
             else {
                 float distance = normal.Length();
 
                 if (distance == 0) {
-                    manifold = new Manifold() {
+                    intersection = new IntersectionArea() {
                         Depth = a.Shape.Radius,
                         Normal = Vector2.UnitX,
                     };
@@ -32,7 +32,7 @@ namespace NutEngine.Physics
                 else {
                     var normalizable = normal / distance;
 
-                    manifold = new Manifold() {
+                    intersection = new IntersectionArea() {
                         Depth = radius - distance,
                         Normal = normalizable,
                     };
@@ -46,7 +46,7 @@ namespace NutEngine.Physics
         {
             var rSquare = (a.Shape.Radius + b.Shape.Radius) * (a.Shape.Radius + b.Shape.Radius);
 
-            return rSquare < (a.Position.X - b.Position.X) * (a.Position.X - b.Position.X)
+            return rSquare > (a.Position.X - b.Position.X) * (a.Position.X - b.Position.X)
                            + (a.Position.Y - b.Position.Y) * (a.Position.Y - b.Position.Y);
         }
     }
