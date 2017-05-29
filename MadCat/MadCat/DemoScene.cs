@@ -32,33 +32,33 @@ namespace MadCat
             manager = new EntityManager();
             bodies = new BodiesManager();
 
-            manager.AddDependency<AnimationComponent>(
+            EntityManager.AddDependency<AnimationComponent>(
                typeof(VelocityComponent),
                typeof(CharacterComponent)
            );
 
-            manager.AddDependency<ColliderComponent>(
+            EntityManager.AddDependency<ColliderComponent>(
                 typeof(VelocityComponent),
                 typeof(CharacterComponent)
             );
 
-            manager.AddDependency<GravitationComponent>(
+            EntityManager.AddDependency<GravitationComponent>(
                 typeof(CharacterComponent)
             );
 
-            manager.AddDependency<SpriteComponent>(
+            EntityManager.AddDependency<SpriteComponent>(
                 typeof(VelocityComponent)
             );
 
-            manager.AddDependency<VelocityComponent>(
+            EntityManager.AddDependency<VelocityComponent>(
                 typeof(GravitationComponent),
                 typeof(CharacterComponent)
             );
 
-            manager.AddDependency<CharacterComponent>(
+            EntityManager.AddDependency<CharacterComponent>(
             );
 
-            manager.AddDependency<PositionComponent>(
+            EntityManager.AddDependency<PositionComponent>(
             );
 
             character = new Character(World, manager, bodies);

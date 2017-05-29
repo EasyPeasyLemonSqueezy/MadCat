@@ -99,6 +99,7 @@
     <Compile Include="Physics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SplashScreenScene.cs" />
     <Compile Include="States\JumpState.cs" />
     <Compile Include="States\MeleeState.cs" />
     <Compile Include="States\RunState.cs" />

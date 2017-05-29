@@ -23,7 +23,7 @@ namespace MadCat
         protected override void Initialize()
         {
             base.Initialize();
-            var startScene = new MenuScene(this);
+            var startScene = new SplashScreenScene(this);
 
             RunWithScene(startScene);
         }
