@@ -16,15 +16,15 @@ namespace MadCat
                 PreferredBackBufferHeight = SCREEN_HEIGHT,
                 GraphicsProfile = GraphicsProfile.HiDef
             };
-
+            
             Content.RootDirectory = "Content"; /// Folder with content.
         }
 
         protected override void Initialize()
         {
             base.Initialize();
+            this.IsMouseVisible = true;
             var startScene = new DemoScene(this);
-
             RunWithScene(startScene);
         }
     }
