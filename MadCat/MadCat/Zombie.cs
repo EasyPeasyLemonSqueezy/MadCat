@@ -22,6 +22,7 @@ namespace MadCat
             body.Material.Restitution = 0.5f;
 
             AddComponents(
+                new InputComponent(),
                 new BodyComponent(body),
                 new ZombieComponent(hero),
                 new SpriteComponent(sprite),

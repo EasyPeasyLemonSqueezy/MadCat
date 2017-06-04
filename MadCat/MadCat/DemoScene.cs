@@ -53,14 +53,18 @@ namespace MadCat
                 );
             }
 
-            hero = new Hero(
-                new Vector2(480f, 270f)
-            );
+            var zombie = new Zombie(new Vector2(480, 270), null);
 
             Random random = new Random();
 
             for (int i = 0; i < 5; i++) {
                 var box = new Box(
+                    new Vector2(random.Next(960), random.Next(540))
+                );
+            }
+
+            for (int i = 0; i < 20; i++) {
+                var guy = new Hero(
                     new Vector2(random.Next(960), random.Next(540))
                 );
             }

@@ -16,16 +16,16 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             var body = Entity.GetComponent<BodyComponent>().Body;
-            var heroBody = hero.GetComponent<BodyComponent>().Body;
+            //var heroBody = hero.GetComponent<BodyComponent>().Body;
 
-            var vec = (heroBody.Position - body.Position);
-            vec.Normalize();
-            vec *= runVelocity;
+            //var vec = (heroBody.Position - body.Position);
+            //vec.Normalize();
+            //vec *= runVelocity;
 
-            body.Velocity = vec;
+            //body.Velocity = vec;
 
             var sprite = Entity.GetComponent<SpriteComponent>().Sprite;
-            sprite.Rotation = (float)Math.Atan2(vec.Y, vec.X);
+            sprite.Rotation = (float)Math.Atan2(body.Velocity.Y, body.Velocity.X);
         }
     }
 }

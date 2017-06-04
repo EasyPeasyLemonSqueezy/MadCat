@@ -22,11 +22,11 @@ namespace MadCat
             body.Material.Restitution = 0.5f;
 
             AddComponents(
-                new InputComponent(),
-                new WeaponComponent(),
+                //new InputComponent(),
+                //new WeaponComponent(),
                 new BodyComponent(body),
                 new SpriteComponent(sprite),
-                new AimComponent(Director.World),
+                //new AimComponent(Director.World),
                 new HealthComponent(1)
             );
 
@@ -35,11 +35,17 @@ namespace MadCat
             Director.World.AddChild(sprite);
 
             body.OnCollision = (collided) => {
-                if (collided.Owner is Zombie) {
-                    var zombie = collided.Owner as Zombie;
-                    if (zombie.HasComponent<ZombieComponent>()) {
-                        GetComponent<HealthComponent>().Health = 0;
-                    }
+                var entity = collided.Owner as Entity;
+                //if (zombie.HasComponent<ZombieComponent>()) {
+                //    GetComponent<HealthComponent>().Health = 0;
+                //}
+                if (!HasComponent<ZombieComponent>() && entity.HasComponent<ZombieComponent>()) {
+                    AddComponents(
+                        new InputComponent(),
+                        new ZombieComponent(null)
+                    );
+                    var blood = new Blood(GetComponent<BodyComponent>().Body.Position);
+                    GetComponent<HealthComponent>().Health = 0;
                 }
             };
         }

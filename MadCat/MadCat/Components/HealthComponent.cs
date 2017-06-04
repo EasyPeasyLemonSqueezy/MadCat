@@ -15,14 +15,14 @@ namespace MadCat
         public override void Update(float deltaTime)
         {
             if (Health <= 0) {
-                Entity.RemoveComponent<InputComponent>();
-                Entity.RemoveComponent<WeaponComponent>();
-                Entity.RemoveComponent<ZombieComponent>();
+                //Entity.RemoveComponent<InputComponent>();
+                //Entity.RemoveComponent<WeaponComponent>();
+                //Entity.RemoveComponent<ZombieComponent>();
                 Entity.GetComponent<SpriteComponent>().Sprite.Color = Color.DarkRed;
 
-                if (Entity.HasComponent<BodyComponent>()) {
-                    Entity.AddComponent(new FrictionComponent());
-                }
+                //if (Entity.HasComponent<BodyComponent>()) {
+                //    Entity.AddComponent(new FrictionComponent());
+                //}
             }
         }
     }
