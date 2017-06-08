@@ -48,38 +48,18 @@ namespace NutEngine.Physics
                 return false;
             }
 
-            // For new manifold.
             float depth;
             Vector2 normal;
-            var contact = new Vector2();
 
 
-            /// https://github.com/RandyGaul/tinyheaders/blob/master/tinyc2.h
-            /// This is the shittest code what I've ever saw, but I hope it works.
             if (xOverlap < yOverlap) {
                 depth = xOverlap;
-
-                if (distance.X < 0) {
-                    normal = -Vector2.UnitX;
-                    contact = new Vector2(a.Position.X - aExtent.X, a.Position.Y);
-                }
-                else {
-                    normal = Vector2.UnitX;
-                    contact = new Vector2(a.Position.X + aExtent.X, a.Position.Y);
-                }
+                normal = distance.X > 0 ? Vector2.UnitX : -Vector2.UnitX;
 
             }
             else {
                 depth = yOverlap;
-
-                if (distance.Y < 0) {
-                    normal = -Vector2.UnitY;
-                    contact = new Vector2(a.Position.X, a.Position.Y - aExtent.Y);
-                }
-                else {
-                    normal = Vector2.UnitY;
-                    contact = new Vector2(a.Position.X, a.Position.Y + aExtent.Y);
-                }
+                normal = distance.Y > 0 ? Vector2.UnitY : -Vector2.UnitY;
             }
 
             intersection = new IntersectionArea() {
