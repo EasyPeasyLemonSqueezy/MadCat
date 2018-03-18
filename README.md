@@ -292,7 +292,7 @@ NutPacker имеет консольный интерфейс и позволяе
 5. “Game Coding Complete”, by Mike McShaffry, David Graham
 6. “Computational Geometry”, by Mark de Berg, Otfried Cheong, Marc van Kreveld, Mark Overmar
 https://opengl-tutorial.org/assets/faq_quaternions/index.html
-7. gameprogrammingpatterns.com
+7. https://gameprogrammingpatterns.com
 8. https://monogame.net/documentation & https://github.com/MonoGame/MonoGame
 9. https://github.com/craftworkgames/MonoGame.Extended
 10. https://randygaul.net & https://github.com/RandyGaul/tinyheaders & https://github.com/RandyGaul/ImpulseEngine 
